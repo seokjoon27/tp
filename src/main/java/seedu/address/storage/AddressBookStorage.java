@@ -19,7 +19,7 @@ public interface AddressBookStorage {
 
     /**
      * Returns AddressBook data as a {@link ReadOnlyAddressBook}.
-     * Returns {@code Optional.empty()} if storage file is not found..
+     * Returns {@code Optional.empty()} if storage file is not found.
      *
      * @throws DataLoadingException if loading the data from storage failed.
      */
