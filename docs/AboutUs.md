@@ -38,9 +38,9 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 * Role: Developer
 * Responsibilities: Data
 
-### Jean Doe
+### Malcolm Chu
 
-<img src="images/malcolmchu13.png" width="200px">
+<img src="images/malcolmchu13.png.jpg" width="200px">
 
 [[github](http://github.com/malcolmchu13)]
 [[portfolio](team/johndoe.md)]
