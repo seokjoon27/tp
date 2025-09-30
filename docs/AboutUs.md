@@ -29,14 +29,14 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 * Role: Code Quality
 * Responsibilities: Check for coding standards and git conventions, ensure code quality. 
 
-### Johnny Doe
+### Ong Jun Wei(Evan)
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/evanjw2.png" width="200px">
 
-[[github](http://github.com/johndoe)] [[portfolio](team/johndoe.md)]
+[[github](https://github.com/evanjw2)] [[portfolio](team/johndoe.md)]
 
-* Role: Developer
-* Responsibilities: Data
+* Role: Team lead
+* Responsibilities: Responsible for overall project coordination.
 
 ### Jean Doe
 
