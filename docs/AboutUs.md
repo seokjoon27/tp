@@ -19,15 +19,15 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 * Role: Project Advisor
 
-### Jane Doe
+### Hong Seokjoon
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/seokjoon27.png" width="200px">
 
-[[github](http://github.com/johndoe)]
-[[portfolio](team/johndoe.md)]
+[[github](http://github.com/seokjoon27)]
+[[portfolio](team/seokjoon27.md)]
 
-* Role: Team Lead
-* Responsibilities: UI
+* Role: Code Quality
+* Responsibilities: Check for coding standards and git conventions, ensure code quality. 
 
 ### Johnny Doe
 
