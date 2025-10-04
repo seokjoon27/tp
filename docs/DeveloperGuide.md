@@ -262,29 +262,53 @@ _{Explain here how the data archiving feature will be implemented}_
 
 **Target user profile**:
 
-* has a need to manage a significant number of contacts
-* prefer desktop apps over other types
-* can type fast
-* prefers typing to mouse interactions
-* is reasonably comfortable using CLI apps
+Primary users:
+* Private tutors (individuals, not agencies).
+* Tutors who handle multiple students and parents.
+* Users who prefer typing-first commands (efficient over GUI clicks).
+* Tech-comfortable but not professional programmers.
 
-**Value proposition**: manage contacts faster than a typical mouse/GUI driven app
+Pain points:
+* Managing multiple students’ details, parents’ contacts, schedules, and payments across scattered platforms (e.g., WhatsApp, notebooks, Excel).
+* Losing time on administrative tasks instead of teaching.
+
+**Value proposition**: TutorHub provides a fast, typing-first address book tailored for tutors. It streamlines student and parent information, schedules, and payment tracking so tutors spend less time managing data and more time teaching.
 
 
 ### User stories
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​                                    | I want to …​                     | So that I can…​                                                        |
-| -------- | ------------------------------------------ | ------------------------------ | ---------------------------------------------------------------------- |
-| `* * *`  | new user                                   | see usage instructions         | refer to instructions when I forget how to use the App                 |
-| `* * *`  | user                                       | add a new person               |                                                                        |
-| `* * *`  | user                                       | delete a person                | remove entries that I no longer need                                   |
-| `* * *`  | user                                       | find a person by name          | locate details of persons without having to go through the entire list |
-| `* *`    | user                                       | hide private contact details   | minimize chance of someone else seeing them by accident                |
-| `*`      | user with many persons in the address book | sort persons by name           | locate a person easily                                                 |
-
-*{More to be added}*
+| Priority | As a …​                 | I want to …​                                           | So that I can…​                                                      |
+| -------- |-------------------------| ---------------------------------------------------- | -------------------------------------------------------------------- |
+| * * *    | tutor                   | add a new student                                     | keep track of all my students                                         |
+| * * *    | tutor                   | edit a student’s details                              | correct mistakes                                                      |
+| * * *    | tutor                   | delete a student                                      | remove students who no longer study with me                            |
+| * * *    | tutor                   | assign a student to a class or group                 | organize my students better                                           |
+| * * *    | tutor                   | view all students in a list                           | quickly find the student I want                                       |
+| * * *    | tutor                   | search for a student by name                          | quickly locate them                                                   |
+| * *      | tutor                   | add a photo for each student                           | easily recognize them                                                 |
+| * *      | tutor                   | view a student’s grades                               | prioritize their needs                                                |
+| * * *    | tutor                   | track student’s payment                                | know who has paid                                                     |
+| * *      | tutor                   | add cost per lesson for students                       | know how much to collect                                              |
+| * *      | tutor                   | add personal notes about students                      | remember important info                                               |
+| * * *    | tutor                   | add a parent contact for a student                     | communicate with their guardians                                      |
+| * * *    | tutor                   | edit parent contact information                        | update any changes                                                    |
+| * * *    | tutor                   | delete a parent contact                                 | remove outdated or incorrect info                                     |
+| * * *    | tutor                   | link multiple parents to one student                   | include all guardians                                                 |
+| * * *    | tutor                   | link multiple students to one parent                   | manage parents with multiple kids                                     |
+| * * *    | tutor                   | search for a parent by name                             | contact them easily                                                   |
+| * * *    | tutor                   | store phone numbers for students and parents           | call them                                                             |
+| * * *    | tutor                   | store email addresses for students and parents        | email them                                                            |
+| * * *    | tutor                   | store physical addresses for students and parents     | know where to go for lessons                                          |
+| * * *    | tutor                   | see all contact details for a student or parent       | not have to search multiple sources                                   |
+| * * *    | tutor                   | mark payments as paid/unpaid                            | track who has paid                                                     |
+| * * *    | tutor                   | reset all payment statuses                               | start a new billing cycle                                              |
+| * * *    | tutor                   | list unpaid/paid contacts                                 | quickly see who owes or has paid                                       |
+| * *      | tutor                   | assign a schedule (day & time) to each student          | track lessons                                                          |
+| *        | tutor                   | view students’ grades                                    | prioritize support                                                     |
+| * *      | tutor                   | hide private contact details                              | minimize chance of someone else seeing them by accident               |
+| *        | tutor                   | sort students or parents by name                          | locate a contact easily                                               |
 
 ### Use cases
 
@@ -313,7 +337,224 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case resumes at step 2.
 
-*{More to be added}*
+**Use Case: Add a New Student**
+
+**Main Success Scenario (MSS):**
+1. Tutor enters the command to add a student.
+2. System validates the input format.
+3. System stores the new student in the address book.
+4. System displays a success message: "You’ve added a new student: <Student Name>."
+   Use case ends.
+
+**Extensions:**
+* 2a. The type field is missing or invalid.
+    * 2a1. System shows error message: "Error, contact must have a type. E.g add t/<type> n/<name> p/<phone> e/<email> a/<address>, type can be s (student) or p (parent)."
+      Use case resumes at step 1.
+* 2b. Duplicate student detected.
+    * 2b1. System shows error message: "Bruh you might’ve already added this person before, please check again."
+      Use case ends.
+* 2c. Phone number invalid (not 8 digits or contains spaces/dashes).
+    * 2c1. System shows error message.
+      Use case resumes at step 1.
+
+---
+
+**Use Case: Add a New Parent**
+
+**Main Success Scenario (MSS):**
+1. Tutor enters the command to add a parent.
+2. System validates the input format.
+3. System stores the new parent in the address book.
+4. System displays a success message: "You’ve added a new Parent: <Parent Name>."
+   Use case ends.
+
+**Extensions:**
+* 2a. The type field is missing or invalid.
+    * 2a1. System shows error message: "Error, contact must have a type. E.g add t/<type> n/<name> p/<phone> e/<email> a/<address>, type can be s (student) or p (parent)."
+      Use case resumes at step 1.
+* 2b. Duplicate parent detected.
+    * 2b1. System shows error message: "Bruh you might’ve already added this person before, please check again."
+      Use case ends.
+* 2c. Phone number invalid.
+    * 2c1. System shows error message.
+      Use case resumes at step 1.
+
+---
+
+**Use Case: Link Parent to Student**
+
+**Main Success Scenario (MSS):**
+1. Tutor enters the command: link student/<Student Name> parent/<Parent Name>.
+2. System validates that both student and parent exist and have correct types.
+3. System creates a bidirectional link between student and parent.
+4. System displays success message: "Successfully reunited parent and child. Congrats!"
+   Use case ends.
+
+**Extensions:**
+* 2a. Student or parent does not exist.
+    * 2a1. System shows error message: "Error, parent or student name incorrect."
+      Use case resumes at step 1.
+* 2b. Student and parent already linked.
+    * 2b1. System shows error message: "You have already linked the two…"
+      Use case ends.
+* 2c. Parent entered in student field or vice versa.
+    * 2c1. System shows appropriate error message.
+      Use case resumes at step 1.
+
+---
+
+**Use Case: Unlink Parent from Student**
+
+**Main Success Scenario (MSS):**
+1. Tutor enters the command: unlink student/<Student Name> parent/<Parent Name>.
+2. System validates that both student and parent exist and are linked.
+3. System removes the bidirectional link.
+4. System displays success message: "Successfully removed the link between parent and student."
+   Use case ends.
+
+**Extensions:**
+* 2a. Student or parent does not exist.
+    * 2a1. System shows error message: "Error, parent or student name incorrect."
+      Use case resumes at step 1.
+* 2b. Student and parent not linked.
+    * 2b1. System shows error message: "These two are not linked."
+      Use case ends.
+
+---
+
+**Use Case: Edit Student Details**
+
+**Main Success Scenario (MSS):**
+1. Tutor enters the command to edit a student’s details.
+2. System validates the student exists and input format is correct.
+3. System updates the student’s details.
+4. System displays a success message: "Student <Student Name> details updated successfully."
+   Use case ends.
+
+**Extensions:**
+* 2a. Student not found.
+    * 2a1. System shows error message: "Error, student not found."
+      Use case resumes at step 1.
+* 2b. Input format invalid.
+    * 2b1. System shows error message.
+      Use case resumes at step 1.
+
+---
+
+**Use Case: Assign or Edit Student Schedule**
+
+**Main Success Scenario (MSS):**
+1. Tutor enters the schedule command: add/edit schedule for a student.
+2. System validates student exists and schedule format is correct.
+3. System stores or replaces the student’s schedule.
+4. System displays success message: "Schedule for <Student Name> updated."
+   Use case ends.
+
+**Extensions:**
+* 2a. Student not found.
+    * 2a1. System shows error message: "Error: Only students can have lesson schedules."
+      Use case resumes at step 1.
+* 2b. Schedule format invalid.
+    * 2b1. System shows error message.
+      Use case resumes at step 1.
+* 3a. Student already has a schedule.
+    * 3a1. System shows warning: "Warning: Student '<Student Name>' already had a schedule. Replaced with a new schedule."
+      Use case resumes at step 3.
+
+---
+
+**Use Case: Add Cost per Lesson**
+
+**Main Success Scenario (MSS):**
+1. Tutor enters the command to add cost per lesson for a student.
+2. System validates student exists and input is numeric.
+3. System stores the cost information.
+4. System displays success message: "Successfully added cost per lesson information!"
+   Use case ends.
+
+**Extensions:**
+* 2a. Input not numeric.
+    * 2a1. System shows error message: "Error, cost per lesson should be a numeric value. E.g pay/72.5"
+      Use case resumes at step 1.
+* 2b. Cost already exists.
+    * 2b1. System shows error message: "You already have the lesson cost information to this student. Please edit or check the existing price."
+      Use case ends.
+
+---
+
+**Use Case: Add Personal Notes**
+
+**Main Success Scenario (MSS):**
+1. Tutor enters the command to add a note for a student.
+2. System validates student exists and note format is correct.
+3. System stores the note.
+4. System displays success message: "Successfully added note under <Student Name>!"
+   Use case ends.
+
+**Extensions:**
+* 2a. Note too long (>50 characters) or invalid.
+    * 2a1. System shows error message: "Error, notes should be a string value. E.g note/Class president"
+      Use case resumes at step 1.
+* 2b. Maximum 5 notes reached.
+    * 2b1. System shows error message: "Maximum number of notes reached."
+      Use case ends.
+
+---
+
+**Use Case: Mark Payment as Paid/Unpaid**
+
+**Main Success Scenario (MSS):**
+1. Tutor enters the command to mark payment for a student.
+2. System validates student exists.
+3. System updates the payment status.
+4. System displays success message: "<Student Name>’s payment has been changed to paid/unpaid."
+   Use case ends.
+
+**Extensions:**
+* 2a. Student not found.
+    * 2a1. System shows error message: "Error: contact not found."
+      Use case resumes at step 1.
+* 2b. Payment already set to requested status.
+    * 2b1. System shows error message: "Payment status is already <paid/unpaid>."
+      Use case ends.
+
+---
+
+**Use Case: Reset All Payments**
+
+**Main Success Scenario (MSS):**
+1. Tutor enters the command: reset all.
+2. System validates the command format.
+3. System sets all contacts’ payment status to unpaid.
+4. System displays message: "Payment status of all contacts has been reset to unpaid."
+   Use case ends.
+
+**Extensions:**
+* 2a. Extra tokens present in the command.
+    * 2a1. System shows error message: "Invalid format. Use 'reset all' only."
+      Use case resumes at step 1.
+* 3a. No contacts exist in the system.
+    * 3a1. System shows warning: "No contacts in the address book."
+      Use case ends.
+
+---
+
+**Use Case: List Paid/Unpaid Contacts**
+
+**Main Success Scenario (MSS):**
+1. Tutor enters the command: list paid or list unpaid.
+2. System validates the command format.
+3. System retrieves contacts with matching payment status.
+4. System displays the list in the GUI with an appropriate message.
+   Use case ends.
+
+**Extensions:**
+* 2a. Command not recognized.
+    * 2a1. System shows error message: "Error: unknown command."
+      Use case resumes at step 1.
+* 3a. No contacts match the requested payment status.
+    * 3a1. System shows error message: "No contacts have payment status <paid/unpaid>."
+      Use case ends.
 
 ### Non-Functional Requirements
 
@@ -327,6 +568,16 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * **Mainstream OS**: Windows, Linux, Unix, MacOS
 * **Private contact detail**: A contact detail that is not meant to be shared with others
+
+* Student (s): A child receiving tuition.
+
+* Parent (p): A guardian linked to one or more students.
+
+* Schedule: The assigned day and time for a student’s lesson.
+
+* Note: Free-text field for extra information about a student or parent.
+
+* Payment Status: Indicator (paid/unpaid) of whether a student’s lesson fees are settled.
 
 --------------------------------------------------------------------------------------------------------------------
 
