@@ -1,5 +1,6 @@
 {
   "persons": [ {
+    "type": "s",
     "name": "Alice Pauline",
     "phone": "94351253",
     "email": "alice@example.com",
@@ -7,6 +8,7 @@
     "note" : "",
     "tags": [ "friends" ]
   }, {
+    "type": "s",
     "name": "Alice Pauline",
     "phone": "94351253",
     "email": "pauline@example.com",
