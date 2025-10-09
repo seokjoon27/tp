@@ -2,15 +2,17 @@ package seedu.address.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_Note_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_Note_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NOTE_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NOTE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
+import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 
+import org.junit.jupiter.api.BeforeEach;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.Messages;
 import seedu.address.model.AddressBook;
@@ -29,16 +31,23 @@ import seedu.address.testutil.PersonBuilder;
  */
 public class NoteCommandTest {
 
-    private static final String Note_STUB = "Some Note";
+    private static final String NOTE_STUB = "Some Note";
 
     private Model model;
+
+    @BeforeEach
+    public void setUp() {
+        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    }
+    
+    @Test
     public void execute_addNoteUnfilteredList_success() {
         Person firstPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Person editedPerson = new PersonBuilder(firstPerson).withNote(Note_STUB).build();
+        Person editedPerson = new PersonBuilder(firstPerson).withNote(NOTE_STUB).build();
 
         NoteCommand NoteCommand = new NoteCommand(INDEX_FIRST_PERSON, new Note(editedPerson.getNote().value));
 
-        String expectedMessage = String.format(NoteCommand.MESSAGE_ADD_Note_SUCCESS, editedPerson);
+        String expectedMessage = String.format(NoteCommand.MESSAGE_ADD_NOTE_SUCCESS, editedPerson);
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setPerson(firstPerson, editedPerson);
@@ -49,12 +58,12 @@ public class NoteCommandTest {
     @Test
     public void execute_deleteNoteUnfilteredList_success() {
         Person firstPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Person editedPerson = new PersonBuilder(firstPerson).withNote("").build();
+        Person editedPerson = new PersonBuilder(firstPerson).withNote(NOTE_STUB).build();
 
         NoteCommand NoteCommand = new NoteCommand(INDEX_FIRST_PERSON,
                 new Note(editedPerson.getNote().toString()));
 
-        String expectedMessage = String.format(NoteCommand.MESSAGE_DELETE_Note_SUCCESS, editedPerson);
+        String expectedMessage = String.format(NoteCommand.MESSAGE_ADD_NOTE_SUCCESS, editedPerson);
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setPerson(firstPerson, editedPerson);
@@ -68,11 +77,11 @@ public class NoteCommandTest {
 
         Person firstPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         Person editedPerson = new PersonBuilder(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()))
-                .withNote(Note_STUB).build();
+                .withNote(NOTE_STUB).build();
 
         NoteCommand NoteCommand = new NoteCommand(INDEX_FIRST_PERSON, new Note(editedPerson.getNote().value));
 
-        String expectedMessage = String.format(NoteCommand.MESSAGE_ADD_Note_SUCCESS, editedPerson);
+        String expectedMessage = String.format(NoteCommand.MESSAGE_ADD_NOTE_SUCCESS, editedPerson);
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setPerson(firstPerson, editedPerson);
@@ -83,7 +92,7 @@ public class NoteCommandTest {
     @Test
     public void execute_invalidPersonIndexUnfilteredList_failure() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
-        NoteCommand NoteCommand = new NoteCommand(outOfBoundIndex, new Note(VALID_Note_BOB));
+        NoteCommand NoteCommand = new NoteCommand(outOfBoundIndex, new Note(VALID_NOTE_BOB));
 
         assertCommandFailure(NoteCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
@@ -99,17 +108,17 @@ public class NoteCommandTest {
         // ensures that outOfBoundIndex is still in bounds of address book list
         assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
 
-        NoteCommand NoteCommand = new NoteCommand(outOfBoundIndex, new Note(VALID_Note_BOB));assertCommandFailure(NoteCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        NoteCommand NoteCommand = new NoteCommand(outOfBoundIndex, new Note(VALID_NOTE_BOB));assertCommandFailure(NoteCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
     @Test
     public void equals() {
         final NoteCommand standardCommand = new NoteCommand(INDEX_FIRST_PERSON,
-                new Note(VALID_Note_AMY));
+                new Note(VALID_NOTE_AMY));
 
         // same values -> returns true
         NoteCommand commandWithSameValues = new NoteCommand(INDEX_FIRST_PERSON,
-                new Note(VALID_Note_AMY));
+                new Note(VALID_NOTE_AMY));
         assertTrue(standardCommand.equals(commandWithSameValues));
 
         // same object -> returns true
@@ -123,10 +132,10 @@ public class NoteCommandTest {
 
         // different index -> returns false
         assertFalse(standardCommand.equals(new NoteCommand(INDEX_SECOND_PERSON,
-                new Note(VALID_Note_AMY))));
+                new Note(VALID_NOTE_AMY))));
 
         // different Note -> returns false
         assertFalse(standardCommand.equals(new NoteCommand(INDEX_FIRST_PERSON,
-                new Note(VALID_Note_BOB))));
+                new Note(VALID_NOTE_BOB))));
     }
 }

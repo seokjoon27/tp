@@ -28,21 +28,21 @@ public class NoteCommand extends Command {
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_NOTE + "Likes to swim.";
 
-    public static final String MESSAGE_ADD_Note_SUCCESS = "Added Note to Person: %1$s";
-    public static final String MESSAGE_DELETE_Note_SUCCESS = "Removed Note from Person: %1$s";
+    public static final String MESSAGE_ADD_NOTE_SUCCESS = "Added Note to Person: %1$s";
+    public static final String MESSAGE_DELETE_NOTE_SUCCESS = "Removed Note from Person: %1$s";
 
     private final Index index;
-    private final Note Note;
+    private final Note note;
 
     /**
      * @param index of the person in the filtered person list to edit the Note
-     * @param Note of the person to be updated to
+     * @param note of the person to be updated to
      */
-    public NoteCommand(Index index, Note Note) {
-        requireAllNonNull(index, Note);
+    public NoteCommand(Index index, Note note) {
+        requireAllNonNull(index, note);
 
         this.index = index;
-        this.Note = Note;
+        this.note = note;
     }
     @Override
     public CommandResult execute(Model model) throws CommandException {
@@ -55,7 +55,7 @@ public class NoteCommand extends Command {
 
         Person personToEdit = lastShownList.get(index.getZeroBased());
         Person editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
-                personToEdit.getAddress(), Note, personToEdit.getTags());
+                personToEdit.getAddress(), note, personToEdit.getTags());
 
         model.setPerson(personToEdit, editedPerson);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
@@ -68,7 +68,7 @@ public class NoteCommand extends Command {
      * {@code personToEdit}.
      */
     private String generateSuccessMessage(Person personToEdit) {
-        String message = !Note.value.isEmpty() ? MESSAGE_ADD_Note_SUCCESS : MESSAGE_DELETE_Note_SUCCESS;
+        String message = !note.value.isEmpty() ? MESSAGE_ADD_NOTE_SUCCESS : MESSAGE_DELETE_NOTE_SUCCESS;
         return String.format(message, personToEdit);
     }
 
@@ -87,6 +87,6 @@ public class NoteCommand extends Command {
         // state check
         NoteCommand e = (NoteCommand) other;
         return index.equals(e.index)
-                && Note.equals(e.Note);
+                && note.equals(e.note);
     }
 }

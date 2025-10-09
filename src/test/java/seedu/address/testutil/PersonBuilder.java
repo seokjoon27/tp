@@ -29,7 +29,7 @@ public class PersonBuilder {
     private Email email;
     private Address address;
     private Set<Tag> tags;
-    private Note Note;
+    private Note note;
     /**
      * Creates a {@code PersonBuilder} with the default details.
      */
@@ -38,7 +38,7 @@ public class PersonBuilder {
         phone = new Phone(DEFAULT_PHONE);
         email = new Email(DEFAULT_EMAIL);
         address = new Address(DEFAULT_ADDRESS);
-        Note = new Note(DEFAULT_NOTE);
+        note = new Note(DEFAULT_NOTE);
         tags = new HashSet<>();
     }
 
@@ -50,7 +50,7 @@ public class PersonBuilder {
         phone = personToCopy.getPhone();
         email = personToCopy.getEmail();
         address = personToCopy.getAddress();
-        Note = personToCopy.getNote();
+        note = personToCopy.getNote();
         tags = new HashSet<>(personToCopy.getTags());
     }
 
@@ -95,14 +95,14 @@ public class PersonBuilder {
     }
 
     public Person build() {
-        return new Person(name, phone, email, address, Note, tags);
+        return new Person(name, phone, email, address, note, tags);
     }
 
     /**
      * Sets the {@code Note} of the {@code Person} that we are building.
      */
-    public PersonBuilder withNote(String Note) {
-        this.Note = new Note(Note);
+    public PersonBuilder withNote(String note) {
+        this.note = new Note(note);
         return this;
     }
 
