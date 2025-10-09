@@ -40,7 +40,7 @@ public abstract class Person {
         this.tags.addAll(tags);
     }
 
-    public Type getType() { return type;}
+    public Type getType() { return type; }
 
     public Name getName() {
         return name;

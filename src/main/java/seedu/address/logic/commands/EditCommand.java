@@ -174,9 +174,9 @@ public class EditCommand extends Command {
             return CollectionUtil.isAnyNonNull(type, name, phone, email, address, tags);
         }
 
-        public void setType(Type type) {this.type = type;}
+        public void setType(Type type) { this.type = type; }
 
-        public Optional<Type> getType() {return Optional.ofNullable(type);}
+        public Optional<Type> getType() { return Optional.ofNullable(type); }
 
         public void setName(Name name) {
             this.name = name;

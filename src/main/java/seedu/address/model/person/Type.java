@@ -40,7 +40,7 @@ public class Type {
     }
 
     public boolean isStudent() { return value.equals(STUDENT); }
-    public boolean isParent()  { return value.equals(PARENT); }
+    public boolean isParent() { return value.equals(PARENT); }
 
     @Override
     public String toString() {
