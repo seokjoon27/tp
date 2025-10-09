@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Cost;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
@@ -26,11 +27,13 @@ public class ParserUtilTest {
     private static final String INVALID_ADDRESS = " ";
     private static final String INVALID_EMAIL = "example.com";
     private static final String INVALID_TAG = "#friend";
+    private static final String INVALID_COST = "12..3";
 
     private static final String VALID_NAME = "Rachel Walker";
     private static final String VALID_PHONE = "123456";
     private static final String VALID_ADDRESS = "123 Main Street #0505";
     private static final String VALID_EMAIL = "rachel@example.com";
+    private static final String VALID_COST = "42.5";
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "neighbour";
 
@@ -146,6 +149,29 @@ public class ParserUtilTest {
         String emailWithWhitespace = WHITESPACE + VALID_EMAIL + WHITESPACE;
         Email expectedEmail = new Email(VALID_EMAIL);
         assertEquals(expectedEmail, ParserUtil.parseEmail(emailWithWhitespace));
+    }
+
+    @Test
+    public void parseCost_null_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> ParserUtil.parseCost(null));
+    }
+
+    @Test
+    public void parseCost_invalidValue_throwsParseException() {
+        assertThrows(ParseException.class, () -> ParserUtil.parseCost(INVALID_COST));
+    }
+
+    @Test
+    public void parseCost_validValueWithoutWhitespace_returnsCost() throws Exception {
+        Cost expectedCost = new Cost(VALID_COST);
+        assertEquals(expectedCost, ParserUtil.parseCost(VALID_COST));
+    }
+
+    @Test
+    public void parseCost_validValueWithWhitespace_returnsTrimmedCost() throws Exception {
+        String costWithWhitespace = WHITESPACE + VALID_COST + WHITESPACE;
+        Cost expectedCost = new Cost(VALID_COST);
+        assertEquals(expectedCost, ParserUtil.parseCost(costWithWhitespace));
     }
 
     @Test
