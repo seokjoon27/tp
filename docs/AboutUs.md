@@ -9,9 +9,9 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 ## Project team
 
-### John Doe
+### Gabriel Kua Shih Ern
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/kuagabriel8.png" width="200px">
 
 [[homepage](http://www.comp.nus.edu.sg/~damithch)]
 [[github](https://github.com/johndoe)]
@@ -19,41 +19,41 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 * Role: Project Advisor
 
-### Jane Doe
+### Hong Seokjoon
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/seokjoon27.png" width="200px">
 
-[[github](http://github.com/johndoe)]
-[[portfolio](team/johndoe.md)]
+[[github](http://github.com/seokjoon27)]
+[[portfolio](team/seokjoon27.md)]
 
-* Role: Team Lead
-* Responsibilities: UI
+* Role: Code Quality
+* Responsibilities: Check for coding standards and git conventions, ensure code quality. 
 
-### Johnny Doe
+### Ong Jun Wei(Evan)
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/evanjw2.png" width="200px">
 
-[[github](http://github.com/johndoe)] [[portfolio](team/johndoe.md)]
+[[github](https://github.com/evanjw2)] [[portfolio](team/johndoe.md)]
 
-* Role: Developer
-* Responsibilities: Data
+* Role: Team lead
+* Responsibilities: Responsible for overall project coordination.
 
-### Jean Doe
+### Malcolm Chu
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/malcolmchu13.png" width="200px">
 
-[[github](http://github.com/johndoe)]
-[[portfolio](team/johndoe.md)]
-
-* Role: Developer
-* Responsibilities: Dev Ops + Threading
-
-### James Doe
-
-<img src="images/johndoe.png" width="200px">
-
-[[github](http://github.com/johndoe)]
+[[github](http://github.com/malcolmchu13)]
 [[portfolio](team/johndoe.md)]
 
 * Role: Developer
-* Responsibilities: UI
+* Responsibilities: VScode expert
+
+### Lim Ji Min
+
+<img src="images/limjimin-nus.png" width="200px">
+
+[[github](https://github.com/limjimin-nus)]
+[[portfolio](team/johndoe.md)]
+
+* Role: Developer
+* Responsibilities: IntelliJ Expert
