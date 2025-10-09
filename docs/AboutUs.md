@@ -27,7 +27,7 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 [[portfolio](team/seokjoon27.md)]
 
 * Role: Code Quality
-* Responsibilities: Check for coding standards and git conventions, ensure code quality. 
+* Responsibilities: Check for coding standards and git conventions, ensure code quality.
 
 ### Ong Jun Wei(Evan)
 

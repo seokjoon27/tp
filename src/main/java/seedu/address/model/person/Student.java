@@ -14,8 +14,8 @@ public class Student extends Person {
      * Constructs a {@code Student} with the specified details.
      *
      */
-    public Student(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
-        super(name, phone, email, address, tags);
+    public Student(Name name, Phone phone, Email email, Address address, Note note, Set<Tag> tags) {
+        super(name, phone, email, address, note, tags);
     }
 
 }

@@ -51,5 +51,5 @@ If you plan to use Intellij IDEA (highly recommended):
    These tutorials will help you get acquainted with the codebase.
 
    * [Tracing code](https://se-education.org/guides/tutorials/ab3TracingCode.html)
-   * [Adding a new command](https://se-education.org/guides/tutorials/ab3AddRemark.html)
+   * [Adding a new command](https://se-education.org/guides/tutorials/ab3AddNote.html)
    * [Removing fields](https://se-education.org/guides/tutorials/ab3RemovingFields.html)

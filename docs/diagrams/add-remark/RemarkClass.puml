@@ -5,7 +5,7 @@ skinparam classAttributeIconSize 0
 Class "{abstract}\nCommand" as Command {
   +execute(Model): CommandResult
 }
-Class RemarkCommand {
+Class NoteCommand {
   +COMMAND_WORD: String
   +MESSAGE_USAGE: String
   +MESSAGE_NOT_IMPLEMENTED_YET: String
@@ -13,7 +13,7 @@ Class RemarkCommand {
 }
 Class CommandException
 
-RemarkCommand -up-|> Command
+NoteCommand -up-|> Command
 Command ..> CommandException: throws >
-RemarkCommand .right.> CommandException: throws >
+NoteCommand .right.> CommandException: throws >
 @enduml
