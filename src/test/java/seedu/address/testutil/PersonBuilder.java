@@ -22,7 +22,7 @@ public class PersonBuilder {
     public static final String DEFAULT_PHONE = "85355255";
     public static final String DEFAULT_EMAIL = "amy@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
-    public static final String DEFAULT_NOTE = "She likes aardvarks.";
+    public static final String DEFAULT_NOTE = "";
 
 
     private Name name;
@@ -31,6 +31,7 @@ public class PersonBuilder {
     private Address address;
     private Set<Tag> tags;
     private Note note;
+    private seedu.address.model.person.Cost cost;
     /**
      * Creates a {@code PersonBuilder} with the default details.
      */
@@ -41,6 +42,7 @@ public class PersonBuilder {
         address = new Address(DEFAULT_ADDRESS);
         note = new Note(DEFAULT_NOTE);
         tags = new HashSet<>();
+        cost = null;
     }
 
     /**
@@ -52,6 +54,7 @@ public class PersonBuilder {
         email = personToCopy.getEmail();
         address = personToCopy.getAddress();
         note = personToCopy.getNote();
+        cost = personToCopy.getCost();
         tags = new HashSet<>(personToCopy.getTags());
     }
 
@@ -96,7 +99,7 @@ public class PersonBuilder {
     }
 
     public Person build() {
-        return new Student(name, phone, email, address, note, tags);
+        return new Student(name, phone, email, address, note, cost, tags);
     }
 
     /**
@@ -104,6 +107,14 @@ public class PersonBuilder {
      */
     public PersonBuilder withNote(String note) {
         this.note = new Note(note);
+        return this;
+    }
+
+    /**
+     * Sets the {@code Cost} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withCost(String cost) {
+        this.cost = cost != null ? new seedu.address.model.person.Cost(cost) : null;
         return this;
     }
 

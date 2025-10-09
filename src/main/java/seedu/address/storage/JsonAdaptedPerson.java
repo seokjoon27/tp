@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Cost;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Note;
@@ -31,6 +32,7 @@ class JsonAdaptedPerson {
     private final String email;
     private final String address;
     private final String note;
+    private final String cost;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
 
     /**
@@ -39,12 +41,14 @@ class JsonAdaptedPerson {
     @JsonCreator
     public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
             @JsonProperty("email") String email, @JsonProperty("address") String address,
-                             @JsonProperty("Note") String note, @JsonProperty("tags") List<JsonAdaptedTag> tags) {
+                             @JsonProperty("note") String note, @JsonProperty("cost") String cost,
+                             @JsonProperty("tags") List<JsonAdaptedTag> tags) {
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.note = note;
+        this.cost = cost;
         if (tags != null) {
             this.tags.addAll(tags);
         }
@@ -59,6 +63,7 @@ class JsonAdaptedPerson {
         email = source.getEmail().value;
         address = source.getAddress().value;
         note = source.getNote().value;
+        cost = source.getCost() != null ? source.getCost().value : null;
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
@@ -113,7 +118,17 @@ class JsonAdaptedPerson {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Note.class.getSimpleName()));
         }
         final Note modelNote = new Note(note);
-        return new Student(modelName, modelPhone, modelEmail, modelAddress, modelNote, modelTags);
+
+        final Cost modelCost;
+        if (cost == null || cost.isEmpty()) {
+            modelCost = null;
+        } else if (!Cost.isValidCost(cost)) {
+            throw new IllegalValueException(Cost.MESSAGE_CONSTRAINTS);
+        } else {
+            modelCost = new Cost(cost);
+        }
+
+        return new Student(modelName, modelPhone, modelEmail, modelAddress, modelNote, modelCost, modelTags);
     }
 
 }

@@ -23,18 +23,20 @@ public abstract class Person {
     // Data fields
     private final Address address;
     private final Note note;
+    private final Cost cost;
     private final Set<Tag> tags = new HashSet<>();
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Note note, Set<Tag> tags) {
+    public Person(Name name, Phone phone, Email email, Address address, Note note, Cost cost, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.note = note;
+        this.cost = cost;
         this.tags.addAll(tags);
     }
 
@@ -57,6 +59,11 @@ public abstract class Person {
     public Note getNote() {
         return note;
     }
+
+    public Cost getCost() {
+        return cost;
+    }
+
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
@@ -98,13 +105,15 @@ public abstract class Person {
                 && phone.equals(otherPerson.phone)
                 && email.equals(otherPerson.email)
                 && address.equals(otherPerson.address)
+                && Objects.equals(note, otherPerson.note)
+                && Objects.equals(cost, otherPerson.cost)
                 && tags.equals(otherPerson.tags);
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags);
+        return Objects.hash(name, phone, email, address, note, cost, tags);
     }
 
     @Override
@@ -114,6 +123,8 @@ public abstract class Person {
                 + ", phone=" + phone
                 + ", email=" + email
                 + ", address=" + address
+                + ", note=" + note
+                + ", cost=" + cost
                 + ", tags=" + tags
                 + "}";
     }
