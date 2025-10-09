@@ -9,23 +9,23 @@ public class NoteTest {
 
     @Test
     public void equals() {
-        Note Note = new Note("Hello");
+        Note note = new Note("Hello");
 
         // same object -> returns true
-        assertTrue(Note.equals(Note));
+        assertTrue(note.equals(note));
 
         // same values -> returns true
-        Note NoteCopy = new Note(Note.value);
-        assertTrue(Note.equals(NoteCopy));
+        Note noteCopy = new Note(note.value);
+        assertTrue(note.equals(noteCopy));
 
         // different types -> returns false
-        assertFalse(Note.equals(1));
+        assertFalse(note.equals(1));
 
         // null -> returns false
-        assertFalse(Note.equals(null));
+        assertFalse(note.equals(null));
 
         // different Note -> returns false
         Note differentNote = new Note("Bye");
-        assertFalse(Note.equals(differentNote));
+        assertFalse(note.equals(differentNote));
     }
 }
