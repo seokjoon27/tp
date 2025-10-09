@@ -9,9 +9,14 @@ import static java.util.Objects.requireNonNull;
 public class Note {
     public final String value;
 
-    public Note(String Note) {
-        requireNonNull(Note);
-        value = Note;
+    /**
+     * Constructs a Note with the specified value.
+     *
+     * @param note the content of the note; must not be null
+     */
+    public Note(String note) {
+        requireNonNull(note);
+        value = note;
     }
 
     @Override
