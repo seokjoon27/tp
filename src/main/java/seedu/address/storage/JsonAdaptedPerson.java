@@ -41,7 +41,7 @@ class JsonAdaptedPerson {
     @JsonCreator
     public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
             @JsonProperty("email") String email, @JsonProperty("address") String address,
-                             @JsonProperty("Note") String note, @JsonProperty("cost") String cost,
+                             @JsonProperty("note") String note, @JsonProperty("cost") String cost,
                              @JsonProperty("tags") List<JsonAdaptedTag> tags) {
         this.name = name;
         this.phone = phone;
@@ -119,7 +119,14 @@ class JsonAdaptedPerson {
         }
         final Note modelNote = new Note(note);
 
-        final Cost modelCost = cost != null && !cost.isEmpty() ? new Cost(cost) : null;
+        final Cost modelCost;
+        if (cost == null || cost.isEmpty()) {
+            modelCost = null;
+        } else if (!Cost.isValidCost(cost)) {
+            throw new IllegalValueException(Cost.MESSAGE_CONSTRAINTS);
+        } else {
+            modelCost = new Cost(cost);
+        }
 
         return new Student(modelName, modelPhone, modelEmail, modelAddress, modelNote, modelCost, modelTags);
     }
