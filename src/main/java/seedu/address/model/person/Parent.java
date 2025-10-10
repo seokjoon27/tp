@@ -15,7 +15,7 @@ public class Parent extends Person {
      *
      */
     public Parent(Name name, Phone phone, Email email, Address address, Note note, Cost cost, Set<Tag> tags) {
-        super(name, phone, email, address, note, cost, tags);
+        super(new Type(Type.PARENT), name, phone, email, address, note, cost, tags);
     }
 
 }

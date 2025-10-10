@@ -15,7 +15,7 @@ public class Student extends Person {
      *
      */
     public Student(Name name, Phone phone, Email email, Address address, Note note, Cost cost, Set<Tag> tags) {
-        super(name, phone, email, address, note, cost, tags);
+        super(new Type(Type.STUDENT), name, phone, email, address, note, cost, tags);
     }
 
 }

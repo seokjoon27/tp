@@ -16,6 +16,7 @@ import seedu.address.model.tag.Tag;
 public abstract class Person {
 
     // Identity fields
+    private final Type type;
     private final Name name;
     private final Phone phone;
     private final Email email;
@@ -29,8 +30,10 @@ public abstract class Person {
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Note note, Cost cost, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, tags);
+    public Person(Type type, Name name, Phone phone, Email email, Address address, Note note, Cost cost, Set<Tag> tags)
+    {
+        requireAllNonNull(type, name, phone, email, address, tags);
+        this.type = type;
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -39,6 +42,8 @@ public abstract class Person {
         this.cost = cost;
         this.tags.addAll(tags);
     }
+
+    public Type getType() { return type; }
 
     public Name getName() {
         return name;
@@ -119,7 +124,8 @@ public abstract class Person {
     @Override
     public String toString() {
         return Person.class.getCanonicalName() + "{"
-                + "name=" + name
+                + "type=" + type
+                + ", name=" + name
                 + ", phone=" + phone
                 + ", email=" + email
                 + ", address=" + address
