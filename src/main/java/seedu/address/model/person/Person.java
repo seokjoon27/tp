@@ -115,7 +115,7 @@ public abstract class Person {
     public String toString() {
         return Person.class.getCanonicalName() + "{"
                 + "type=" + type
-                + "name=" + name
+                + ", name=" + name
                 + ", phone=" + phone
                 + ", email=" + email
                 + ", address=" + address
