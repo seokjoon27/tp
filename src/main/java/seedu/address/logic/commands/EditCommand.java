@@ -114,8 +114,10 @@ public class EditCommand extends Command {
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
         Person person = updatedType.isStudent()
-                ? new Student(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedNote, updatedCost, updatedTags)
-                : new Parent(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedNote, updatedCost, updatedTags);
+                ? new Student(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedNote, updatedCost,
+                updatedTags)
+                : new Parent(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedNote, updatedCost,
+                updatedTags);
 
         return person;
     }

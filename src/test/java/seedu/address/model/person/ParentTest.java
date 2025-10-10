@@ -16,6 +16,7 @@ public class ParentTest {
                 new Email("bob.parent@example.com"),
                 new Address("45, Jurong West St 91, #04-56"),
                 new Note(""),
+                new Cost("0"),
                 new HashSet<>()
         );
     }

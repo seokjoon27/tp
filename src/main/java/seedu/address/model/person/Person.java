@@ -30,7 +30,8 @@ public abstract class Person {
     /**
      * Every field must be present and not null.
      */
-    public Person(Type type, Name name, Phone phone, Email email, Address address, Note note, Cost cost,Set<Tag> tags) {
+    public Person(Type type, Name name, Phone phone, Email email, Address address, Note note, Cost cost, Set<Tag> tags)
+    {
         requireAllNonNull(type, name, phone, email, address, tags);
         this.type = type;
         this.name = name;

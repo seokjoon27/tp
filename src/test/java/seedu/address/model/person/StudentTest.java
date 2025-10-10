@@ -16,6 +16,7 @@ public class StudentTest {
                 new Email("alice@example.com"),
                 new Address("123, Clementi Ave 3, #12-34"),
                 new Note(""),
+                new Cost("0"),
                 new HashSet<>() // no tags
         );
     }
