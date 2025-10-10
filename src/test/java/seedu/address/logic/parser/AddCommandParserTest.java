@@ -62,8 +62,9 @@ public class AddCommandParserTest {
         Person expectedPerson = new PersonBuilder(BOB).withTags(VALID_TAG_FRIEND).build();
 
         // whitespace only preamble
-        assertParseSuccess(parser, PREAMBLE_WHITESPACE + TYPE_DESC_BOB + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                + ADDRESS_DESC_BOB + TAG_DESC_FRIEND, new AddCommand(expectedPerson));
+        assertParseSuccess(parser, PREAMBLE_WHITESPACE + TYPE_DESC_BOB + NAME_DESC_BOB + PHONE_DESC_BOB
+                + EMAIL_DESC_BOB
+                + ADDRESS_DESC_BOB + PAY_DESC_BOB + TAG_DESC_FRIEND, new AddCommand(expectedPerson));
 
         // pay prefix present
         Person expectedPersonWithPay = new PersonBuilder(BOB).withTags(VALID_TAG_FRIEND)
@@ -77,6 +78,7 @@ public class AddCommandParserTest {
                 .build();
         assertParseSuccess(parser,
                 TYPE_DESC_BOB + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
+                        + PAY_DESC_BOB
                         + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
                 new AddCommand(expectedPersonMultipleTags));
 
@@ -85,7 +87,8 @@ public class AddCommandParserTest {
                 .withTags(VALID_TAG_FRIEND, VALID_TAG_HUSBAND).withCost(VALID_COST_BOB).build();
         assertParseSuccess(parser, TYPE_DESC_BOB
                         + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
-                        + TAG_DESC_HUSBAND + TAG_DESC_FRIEND + PAY_DESC_BOB,
+                        + PAY_DESC_BOB
+                        + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
                 new AddCommand(expectedPersonMultipleTagsWithPay));
     }
 
@@ -159,6 +162,7 @@ public class AddCommandParserTest {
         // zero tags
         Person expectedPerson = new PersonBuilder(AMY).withTags().build();
         assertParseSuccess(parser, TYPE_DESC_AMY + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
+                        + PAY_DESC_AMY
                         + ADDRESS_DESC_AMY,
                 new AddCommand(expectedPerson));
 
