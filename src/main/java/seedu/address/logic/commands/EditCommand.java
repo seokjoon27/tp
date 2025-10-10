@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PAY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TYPE;
@@ -23,6 +24,7 @@ import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Cost;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Note;
@@ -49,7 +51,8 @@ public class EditCommand extends Command {
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
-            + "[" + PREFIX_TAG + "TAG]...\n"
+            + "[" + PREFIX_TAG + "TAG]... "
+            + "[" + PREFIX_PAY + "COST]\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
             + PREFIX_EMAIL + "johndoe@example.com";
@@ -107,11 +110,12 @@ public class EditCommand extends Command {
         Note updatedNote = personToEdit.getNote(); // edit command does not allow editing Notes
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
+        Cost updatedCost = editPersonDescriptor.getCost().orElse(personToEdit.getCost());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
         Person person = updatedType.isStudent()
-                ? new Student(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedNote, updatedTags)
-                : new Parent(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedNote, updatedTags);
+                ? new Student(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedNote, updatedCost, updatedTags)
+                : new Parent(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedNote, updatedCost, updatedTags);
 
         return person;
     }
@@ -150,6 +154,7 @@ public class EditCommand extends Command {
         private Phone phone;
         private Email email;
         private Address address;
+        private Cost cost;
         private Set<Tag> tags;
 
         public EditPersonDescriptor() {}
@@ -164,6 +169,7 @@ public class EditCommand extends Command {
             setPhone(toCopy.phone);
             setEmail(toCopy.email);
             setAddress(toCopy.address);
+            setCost(toCopy.cost);
             setTags(toCopy.tags);
         }
 
@@ -171,7 +177,7 @@ public class EditCommand extends Command {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(type, name, phone, email, address, tags);
+            return CollectionUtil.isAnyNonNull(type, name, phone, email, address, cost, tags);
         }
 
         public void setType(Type type) { this.type = type; }
@@ -210,6 +216,14 @@ public class EditCommand extends Command {
             return Optional.ofNullable(address);
         }
 
+        public void setCost(Cost cost) {
+            this.cost = cost;
+        }
+
+        public Optional<Cost> getCost() {
+            return Optional.ofNullable(cost);
+        }
+
         /**
          * Sets {@code tags} to this object's {@code tags}.
          * A defensive copy of {@code tags} is used internally.
@@ -242,6 +256,7 @@ public class EditCommand extends Command {
             return Objects.equals(type, otherEditPersonDescriptor.type)
                     && Objects.equals(name, otherEditPersonDescriptor.name)
                     && Objects.equals(phone, otherEditPersonDescriptor.phone)
+                    && Objects.equals(cost, otherEditPersonDescriptor.cost)
                     && Objects.equals(email, otherEditPersonDescriptor.email)
                     && Objects.equals(address, otherEditPersonDescriptor.address)
                     && Objects.equals(tags, otherEditPersonDescriptor.tags);
@@ -255,6 +270,7 @@ public class EditCommand extends Command {
                     .add("phone", phone)
                     .add("email", email)
                     .add("address", address)
+                    .add("cost", cost)
                     .add("tags", tags)
                     .toString();
         }
