@@ -11,6 +11,7 @@ import seedu.address.model.person.Parent;
 import seedu.address.model.person.PaymentStatus;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Schedule;
 import seedu.address.model.person.Student;
 import seedu.address.model.person.Type;
 import seedu.address.model.tag.Tag;
@@ -27,6 +28,7 @@ public class PersonBuilder {
     public static final String DEFAULT_EMAIL = "amy@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final String DEFAULT_NOTE = "";
+    public static final String DEFAULT_SCHEDULE = "";
 
     private Type type;
     private Name name;
@@ -37,6 +39,8 @@ public class PersonBuilder {
     private Note note;
     private seedu.address.model.person.Cost cost;
     private PaymentStatus paymentStatus;
+    private Schedule schedule;
+
     /**
      * Creates a {@code PersonBuilder} with the default details.
      */
@@ -50,6 +54,7 @@ public class PersonBuilder {
         tags = new HashSet<>();
         cost = null;
         paymentStatus = new PaymentStatus(false);
+        schedule = new Schedule(DEFAULT_SCHEDULE);
     }
 
     /**
@@ -65,6 +70,11 @@ public class PersonBuilder {
         cost = personToCopy.getCost();
         paymentStatus = personToCopy.getPaymentStatus();
         tags = new HashSet<>(personToCopy.getTags());
+        if (personToCopy instanceof Student) {
+            schedule = ((Student) personToCopy).getSchedule();
+        } else {
+            schedule = new Schedule(DEFAULT_SCHEDULE);
+        }
     }
 
     /**
@@ -114,13 +124,20 @@ public class PersonBuilder {
         this.email = new Email(email);
         return this;
     }
+    /**
+     * Sets the {@code Schedule} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withSchedule(String schedule) {
+        this.schedule = new Schedule(schedule);
+        return this;
+    }
 
     /**
      * Builds and returns the {@code Person} with the accumulated values.
      */
     public Person build() {
         if (type.isStudent()) {
-            return new Student(name, phone, email, address, note, cost, paymentStatus, tags);
+            return new Student(name, phone, email, address, note, schedule, cost, paymentStatus, tags);
         }
         return new Parent(name, phone, email, address, note, cost, paymentStatus, tags);
     }

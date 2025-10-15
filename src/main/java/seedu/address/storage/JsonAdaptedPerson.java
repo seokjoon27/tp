@@ -19,6 +19,7 @@ import seedu.address.model.person.Parent;
 import seedu.address.model.person.PaymentStatus;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Schedule;
 import seedu.address.model.person.Student;
 import seedu.address.model.person.Type;
 import seedu.address.model.tag.Tag;
@@ -39,6 +40,7 @@ class JsonAdaptedPerson {
     private final String cost;
     private final Boolean paymentStatus;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
+    private final String schedule;
 
     /**
      * Constructs a {@code JsonAdaptedPerson} with the given person details.
@@ -49,7 +51,8 @@ class JsonAdaptedPerson {
                              @JsonProperty("email") String email, @JsonProperty("address") String address,
                              @JsonProperty("note") String note, @JsonProperty("cost") String cost,
                              @JsonProperty("paymentStatus") Boolean paymentStatus,
-                             @JsonProperty("tags") List<JsonAdaptedTag> tags) {
+                             @JsonProperty("tags") List<JsonAdaptedTag> tags,
+                             @JsonProperty("schedule") String schedule) {
         this.type = type;
         this.name = name;
         this.phone = phone;
@@ -58,6 +61,7 @@ class JsonAdaptedPerson {
         this.note = note;
         this.cost = cost;
         this.paymentStatus = paymentStatus;
+        this.schedule = schedule;
         if (tags != null) {
             this.tags.addAll(tags);
         }
@@ -78,6 +82,11 @@ class JsonAdaptedPerson {
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
+        if (source instanceof Student) {
+            schedule = ((Student) source).getSchedule().value;
+        } else {
+            schedule = null;
+        }
     }
 
     /**
@@ -153,11 +162,13 @@ class JsonAdaptedPerson {
         }
         final PaymentStatus modelPaymentStatus = new PaymentStatus(paymentStatus);
 
+        final Schedule modelSchedule = (schedule == null) ? new Schedule("") : new Schedule(schedule);
+
         return modelType.isStudent()
-                ? new Student(modelName, modelPhone, modelEmail, modelAddress, modelNote, modelCost,
-                    modelPaymentStatus, modelTags)
+                ? new Student(modelName, modelPhone, modelEmail, modelAddress, modelNote, modelSchedule, modelCost,
+                modelPaymentStatus, modelTags)
                 : new Parent(modelName, modelPhone, modelEmail, modelAddress, modelNote,
-                    modelCost, modelPaymentStatus, modelTags);
+                modelCost, modelPaymentStatus, modelTags);
     }
 
 }

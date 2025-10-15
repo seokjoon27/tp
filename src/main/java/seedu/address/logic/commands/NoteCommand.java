@@ -56,13 +56,31 @@ public class NoteCommand extends Command {
         }
 
         Person personToEdit = lastShownList.get(index.getZeroBased());
-        Person editedPerson = personToEdit.getType().isStudent()
-                ? new Student(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
-                personToEdit.getAddress(), note, personToEdit.getCost(), personToEdit.getPaymentStatus(),
-                personToEdit.getTags())
-                : new Parent(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
-                personToEdit.getAddress(), note, personToEdit.getCost(), personToEdit.getPaymentStatus(),
-                personToEdit.getTags());
+        Person editedPerson;
+        if (personToEdit.getType().isStudent()) {
+            Student studentToEdit = (Student) personToEdit;
+            editedPerson = new Student(
+                    studentToEdit.getName(),
+                    studentToEdit.getPhone(),
+                    studentToEdit.getEmail(),
+                    studentToEdit.getAddress(),
+                    note,
+                    studentToEdit.getSchedule(),
+                    studentToEdit.getCost(),
+                    studentToEdit.getPaymentStatus(),
+                    studentToEdit.getTags());
+        } else {
+                    editedPerson = new Parent(
+                    personToEdit.getName(),
+                    personToEdit.getPhone(),
+                    personToEdit.getEmail(),
+                    personToEdit.getAddress(),
+                    note,
+                    personToEdit.getCost(),
+                    personToEdit.getPaymentStatus(),
+                    personToEdit.getTags()
+            );
+        }
 
         model.setPerson(personToEdit, editedPerson);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
