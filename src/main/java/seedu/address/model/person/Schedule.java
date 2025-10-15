@@ -32,7 +32,6 @@ public class Schedule {
         value = value.strip();
 
         if (!value.isEmpty()) {
-            // validate input
             parse(value);
         }
 
