@@ -20,7 +20,6 @@ import seedu.address.model.person.Note;
 import seedu.address.model.person.PaymentStatus;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
-import seedu.address.model.person.Schedule;
 import seedu.address.model.person.Type;
 import seedu.address.testutil.PersonBuilder;
 
