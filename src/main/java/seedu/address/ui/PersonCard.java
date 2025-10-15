@@ -3,6 +3,7 @@ package seedu.address.ui;
 import java.util.Comparator;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
@@ -46,6 +47,8 @@ public class PersonCard extends UiPart<Region> {
     private Label note;
     @FXML
     private Label cost;
+    @FXML
+    private CheckBox paidStatus;
 
     /**
      * Creates a {@code PersonCode} with the given {@code Person} and index to display.
@@ -55,12 +58,13 @@ public class PersonCard extends UiPart<Region> {
         this.person = person;
         id.setText(displayedIndex + ". ");
         name.setText(person.getName().fullName);
-        type.setText(person.getType().value == "s" ? "Student" : "Parent");
+        type.setText(person.getType().isStudent() ? "Student" : "Parent");
         phone.setText(person.getPhone().value);
         address.setText(person.getAddress().value);
         email.setText(person.getEmail().value);
         note.setText(person.getNote().value);
         cost.setText(person.getCost() != null ? person.getCost().toString() : "");
+        paidStatus.setSelected(person.getPaymentStatus().isPaid());
         person.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
                 .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));

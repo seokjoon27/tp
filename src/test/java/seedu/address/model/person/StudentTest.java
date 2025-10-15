@@ -17,6 +17,7 @@ public class StudentTest {
                 new Address("123, Clementi Ave 3, #12-34"),
                 new Note(""),
                 new Cost("0"),
+                new PaymentStatus(false),
                 new HashSet<>() // no tags
         );
     }

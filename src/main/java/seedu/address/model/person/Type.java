@@ -39,8 +39,13 @@ public class Type {
         return t.equals(STUDENT) || t.equals(PARENT);
     }
 
-    public boolean isStudent() { return value.equals(STUDENT); }
-    public boolean isParent() { return value.equals(PARENT); }
+    public boolean isStudent() {
+        return value.equals(STUDENT);
+    }
+
+    public boolean isParent() {
+        return value.equals(PARENT);
+    }
 
     @Override
     public String toString() {

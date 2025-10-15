@@ -15,9 +15,12 @@ import seedu.address.model.person.Cost;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Note;
+import seedu.address.model.person.Parent;
+import seedu.address.model.person.PaymentStatus;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Student;
+import seedu.address.model.person.Type;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -27,28 +30,34 @@ class JsonAdaptedPerson {
 
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Person's %s field is missing!";
 
+    private final String type;
     private final String name;
     private final String phone;
     private final String email;
     private final String address;
     private final String note;
     private final String cost;
+    private final Boolean paymentStatus;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
 
     /**
      * Constructs a {@code JsonAdaptedPerson} with the given person details.
      */
     @JsonCreator
-    public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
-            @JsonProperty("email") String email, @JsonProperty("address") String address,
+    public JsonAdaptedPerson(@JsonProperty("type") String type, @JsonProperty("name") String name,
+                             @JsonProperty("phone") String phone,
+                             @JsonProperty("email") String email, @JsonProperty("address") String address,
                              @JsonProperty("note") String note, @JsonProperty("cost") String cost,
+                             @JsonProperty("paymentStatus") Boolean paymentStatus,
                              @JsonProperty("tags") List<JsonAdaptedTag> tags) {
+        this.type = type;
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.note = note;
         this.cost = cost;
+        this.paymentStatus = paymentStatus;
         if (tags != null) {
             this.tags.addAll(tags);
         }
@@ -58,12 +67,14 @@ class JsonAdaptedPerson {
      * Converts a given {@code Person} into this class for Jackson use.
      */
     public JsonAdaptedPerson(Person source) {
+        type = source.getType().value;
         name = source.getName().fullName;
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
         note = source.getNote().value;
         cost = source.getCost() != null ? source.getCost().value : null;
+        paymentStatus = source.getPaymentStatus().isPaid();
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
@@ -79,6 +90,14 @@ class JsonAdaptedPerson {
         for (JsonAdaptedTag tag : tags) {
             personTags.add(tag.toModelType());
         }
+
+        if (type == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Type.class.getSimpleName()));
+        }
+        if (!Type.isValidType(type)) {
+            throw new IllegalValueException(Type.MESSAGE_CONSTRAINTS);
+        }
+        final Type modelType = new Type(type);
 
         if (name == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName()));
@@ -128,7 +147,17 @@ class JsonAdaptedPerson {
             modelCost = new Cost(cost);
         }
 
-        return new Student(modelName, modelPhone, modelEmail, modelAddress, modelNote, modelCost, modelTags);
+        if (paymentStatus == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    PaymentStatus.class.getSimpleName()));
+        }
+        final PaymentStatus modelPaymentStatus = new PaymentStatus(paymentStatus);
+
+        return modelType.isStudent()
+                ? new Student(modelName, modelPhone, modelEmail, modelAddress, modelNote, modelCost,
+                    modelPaymentStatus, modelTags)
+                : new Parent(modelName, modelPhone, modelEmail, modelAddress, modelNote,
+                    modelCost, modelPaymentStatus, modelTags);
     }
 
 }
