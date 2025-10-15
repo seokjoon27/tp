@@ -51,11 +51,12 @@ public class LinkCommand extends Command {
         Parent parent = (Parent) parentToLink;
         Student student = (Student) studentToLink;
 
-        model.setPerson(student, student);
-        model.setPerson(parent, parent);
-
         parent.addChild(student);
         student.addParent(parent);
+
+        model.setPerson(parentToLink, parent);
+        model.setPerson(studentToLink, student);
+        model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
 
         return new CommandResult(String.format(MESSAGE_LINK_SUCCESS, student.getName(), parent.getName()));
     }

@@ -12,6 +12,7 @@ import seedu.address.model.tag.Tag;
  */
 public class Student extends Person {
     private List<Parent> parents =  new ArrayList<>();
+    private List<String> linkedNames = new ArrayList<>(); // temporary names from JSON
 
     /**
      * Constructs a {@code Student} with the specified details.
@@ -26,6 +27,14 @@ public class Student extends Person {
         if (!this.parents.contains(parent)) {
             parents.add(parent);
         }
+    }
+
+    public void setLinkedNames(List<String> names) {
+        this.linkedNames = names;
+    }
+
+    public List<String> getLinkedNames() {
+        return linkedNames;
     }
 
     public List<Parent> getParents() {

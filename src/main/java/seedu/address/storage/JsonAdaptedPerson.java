@@ -39,6 +39,7 @@ class JsonAdaptedPerson {
     private final String cost;
     private final Boolean paymentStatus;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
+    private final List<String> linkedNames = new ArrayList<>();
 
     /**
      * Constructs a {@code JsonAdaptedPerson} with the given person details.
@@ -49,7 +50,8 @@ class JsonAdaptedPerson {
                              @JsonProperty("email") String email, @JsonProperty("address") String address,
                              @JsonProperty("note") String note, @JsonProperty("cost") String cost,
                              @JsonProperty("paymentStatus") Boolean paymentStatus,
-                             @JsonProperty("tags") List<JsonAdaptedTag> tags) {
+                             @JsonProperty("tags") List<JsonAdaptedTag> tags,
+                             @JsonProperty("linkedNames") List<String> linkedNames) {
         this.type = type;
         this.name = name;
         this.phone = phone;
@@ -60,6 +62,9 @@ class JsonAdaptedPerson {
         this.paymentStatus = paymentStatus;
         if (tags != null) {
             this.tags.addAll(tags);
+        }
+        if (linkedNames != null) {
+            this.linkedNames.addAll(linkedNames);
         }
     }
 
@@ -78,6 +83,11 @@ class JsonAdaptedPerson {
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
+        if (source instanceof Student student) {
+            for (Parent parent : student.getParents()) {
+                linkedNames.add(parent.getName().fullName);
+            }
+        }
     }
 
     /**
@@ -153,11 +163,15 @@ class JsonAdaptedPerson {
         }
         final PaymentStatus modelPaymentStatus = new PaymentStatus(paymentStatus);
 
-        return modelType.isStudent()
-                ? new Student(modelName, modelPhone, modelEmail, modelAddress, modelNote, modelCost,
-                    modelPaymentStatus, modelTags)
-                : new Parent(modelName, modelPhone, modelEmail, modelAddress, modelNote,
+        if (modelType.isStudent()) {
+            Student student = new Student(modelName, modelPhone, modelEmail, modelAddress, modelNote,
                     modelCost, modelPaymentStatus, modelTags);
+            student.setLinkedNames(new ArrayList<>(linkedNames)); // <-- save JSON parent names
+            return student;
+        } else {
+            return new Parent(modelName, modelPhone, modelEmail, modelAddress, modelNote,
+                    modelCost, modelPaymentStatus, modelTags);
+        }
     }
 
 }

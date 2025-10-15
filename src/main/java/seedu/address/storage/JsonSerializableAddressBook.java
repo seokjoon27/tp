@@ -11,7 +11,9 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.person.Parent;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Student;
 
 /**
  * An Immutable AddressBook that is serializable to JSON format.
@@ -22,6 +24,8 @@ class JsonSerializableAddressBook {
     public static final String MESSAGE_DUPLICATE_PERSON = "Persons list contains duplicate person(s).";
 
     private final List<JsonAdaptedPerson> persons = new ArrayList<>();
+
+    List<Person> modelPersons = new ArrayList<>();
 
     /**
      * Constructs a {@code JsonSerializableAddressBook} with the given persons.
@@ -52,8 +56,27 @@ class JsonSerializableAddressBook {
             if (addressBook.hasPerson(person)) {
                 throw new IllegalValueException(MESSAGE_DUPLICATE_PERSON);
             }
-            addressBook.addPerson(person);
+            modelPersons.add(person);
         }
+
+        for (Person p : modelPersons) {
+            if (p instanceof Student student) {
+                for (String parentName : student.getLinkedNames()) {
+                    for (Person possibleParent : modelPersons) {
+                        if (possibleParent instanceof Parent parent
+                                && parent.getName().fullName.equals(parentName)) {
+                            student.addParent(parent);
+                            parent.addChild(student);
+                        }
+                    }
+                }
+            }
+        }
+
+        for (Person p : modelPersons) {
+            addressBook.addPerson(p);
+        }
+
         return addressBook;
     }
 
