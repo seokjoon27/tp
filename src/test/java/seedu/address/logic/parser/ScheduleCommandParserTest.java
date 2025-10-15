@@ -46,7 +46,9 @@ public class ScheduleCommandParserTest {
 
         // Invalid schedule string
         String input = targetIndex.getOneBased() + "  " + PREFIX_SCHEDULE + "InvalidSchedule";
-        assertParseFailure(parser, input, "Invalid schedule format. Use either: WEEKDAY HH:mm, MM-DD-YYYY HH:mmExample: 'Monday 14:00', '12-10-2025 14:00'");
+        assertParseFailure(parser, input,
+                "Invalid schedule format. Use either: "
+                        + "WEEKDAY HH:mm, MM-DD-YYYY HH:mmExample: 'Monday 14:00', '12-10-2025 14:00'");
     }
 
     @Test
@@ -57,6 +59,7 @@ public class ScheduleCommandParserTest {
         assertParseFailure(parser, ScheduleCommand.COMMAND_WORD, expectedMessage);
 
         // no index
-        assertParseFailure(parser, ScheduleCommand.COMMAND_WORD + " " + PREFIX_SCHEDULE + "Mon 14:00", expectedMessage);
+        assertParseFailure(parser, ScheduleCommand.COMMAND_WORD + " "
+                + PREFIX_SCHEDULE + "Mon 14:00", expectedMessage);
     }
 }
