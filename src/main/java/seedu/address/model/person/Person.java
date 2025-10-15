@@ -25,14 +25,15 @@ public abstract class Person {
     private final Address address;
     private final Note note;
     private final Cost cost;
+    private final PaymentStatus paymentStatus;
     private final Set<Tag> tags = new HashSet<>();
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Type type, Name name, Phone phone, Email email, Address address, Note note, Cost cost, Set<Tag> tags)
-    {
-        requireAllNonNull(type, name, phone, email, address, tags);
+    public Person(Type type, Name name, Phone phone, Email email, Address address, Note note,
+                  Cost cost, PaymentStatus paymentStatus, Set<Tag> tags) {
+        requireAllNonNull(type, name, phone, email, address, paymentStatus, tags);
         this.type = type;
         this.name = name;
         this.phone = phone;
@@ -40,10 +41,13 @@ public abstract class Person {
         this.address = address;
         this.note = note;
         this.cost = cost;
+        this.paymentStatus = paymentStatus;
         this.tags.addAll(tags);
     }
 
-    public Type getType() { return type; }
+    public Type getType() {
+        return type;
+    }
 
     public Name getName() {
         return name;
@@ -67,6 +71,10 @@ public abstract class Person {
 
     public Cost getCost() {
         return cost;
+    }
+
+    public PaymentStatus getPaymentStatus() {
+        return paymentStatus;
     }
 
     /**
@@ -112,13 +120,14 @@ public abstract class Person {
                 && address.equals(otherPerson.address)
                 && Objects.equals(note, otherPerson.note)
                 && Objects.equals(cost, otherPerson.cost)
+                && paymentStatus.equals(otherPerson.paymentStatus)
                 && tags.equals(otherPerson.tags);
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, note, cost, tags);
+        return Objects.hash(name, phone, email, address, note, cost, paymentStatus, tags);
     }
 
     @Override
@@ -131,6 +140,7 @@ public abstract class Person {
                 + ", address=" + address
                 + ", note=" + note
                 + ", cost=" + cost
+                + ", paymentStatus=" + paymentStatus
                 + ", tags=" + tags
                 + "}";
     }

@@ -88,6 +88,10 @@ public class PersonTest {
         // different tags -> returns false
         editedAlice = new PersonBuilder(ALICE).withTags(VALID_TAG_HUSBAND).build();
         assertFalse(ALICE.equals(editedAlice));
+
+        // different payment status -> returns false
+        editedAlice = new PersonBuilder(ALICE).withPaymentStatus(true).build();
+        assertFalse(ALICE.equals(editedAlice));
     }
 
     @Test
@@ -100,6 +104,7 @@ public class PersonTest {
                 + ", address=" + ALICE.getAddress()
                 + ", note=" + ALICE.getNote()
                 + ", cost=" + ALICE.getCost()
+                + ", paymentStatus=" + ALICE.getPaymentStatus()
                 + ", tags=" + ALICE.getTags()
                 + "}";
         assertEquals(expected, ALICE.toString());

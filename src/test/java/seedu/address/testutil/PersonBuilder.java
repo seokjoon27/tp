@@ -7,6 +7,8 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Note;
+import seedu.address.model.person.Parent;
+import seedu.address.model.person.PaymentStatus;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Student;
@@ -34,6 +36,7 @@ public class PersonBuilder {
     private Set<Tag> tags;
     private Note note;
     private seedu.address.model.person.Cost cost;
+    private PaymentStatus paymentStatus;
     /**
      * Creates a {@code PersonBuilder} with the default details.
      */
@@ -46,6 +49,7 @@ public class PersonBuilder {
         note = new Note(DEFAULT_NOTE);
         tags = new HashSet<>();
         cost = null;
+        paymentStatus = new PaymentStatus(false);
     }
 
     /**
@@ -59,6 +63,7 @@ public class PersonBuilder {
         address = personToCopy.getAddress();
         note = personToCopy.getNote();
         cost = personToCopy.getCost();
+        paymentStatus = personToCopy.getPaymentStatus();
         tags = new HashSet<>(personToCopy.getTags());
     }
 
@@ -110,8 +115,14 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Builds and returns the {@code Person} with the accumulated values.
+     */
     public Person build() {
-        return new Student(name, phone, email, address, note, cost, tags);
+        if (type.isStudent()) {
+            return new Student(name, phone, email, address, note, cost, paymentStatus, tags);
+        }
+        return new Parent(name, phone, email, address, note, cost, paymentStatus, tags);
     }
 
     /**
@@ -130,7 +141,11 @@ public class PersonBuilder {
         return this;
     }
 
-
-
-
+    /**
+     * Sets the {@code PaymentStatus} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withPaymentStatus(boolean isPaid) {
+        this.paymentStatus = new PaymentStatus(isPaid);
+        return this;
+    }
 }

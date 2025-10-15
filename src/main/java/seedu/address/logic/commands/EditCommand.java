@@ -29,6 +29,7 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Note;
 import seedu.address.model.person.Parent;
+import seedu.address.model.person.PaymentStatus;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Student;
@@ -111,13 +112,14 @@ public class EditCommand extends Command {
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Cost updatedCost = editPersonDescriptor.getCost().orElse(personToEdit.getCost());
+        PaymentStatus updatedPaymentStatus = personToEdit.getPaymentStatus();
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
         Person person = updatedType.isStudent()
                 ? new Student(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedNote, updatedCost,
-                updatedTags)
+                updatedPaymentStatus, updatedTags)
                 : new Parent(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedNote, updatedCost,
-                updatedTags);
+                updatedPaymentStatus, updatedTags);
 
         return person;
     }
@@ -182,9 +184,13 @@ public class EditCommand extends Command {
             return CollectionUtil.isAnyNonNull(type, name, phone, email, address, cost, tags);
         }
 
-        public void setType(Type type) { this.type = type; }
+        public void setType(Type type) {
+            this.type = type;
+        }
 
-        public Optional<Type> getType() { return Optional.ofNullable(type); }
+        public Optional<Type> getType() {
+            return Optional.ofNullable(type);
+        }
 
         public void setName(Name name) {
             this.name = name;

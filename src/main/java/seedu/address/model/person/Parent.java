@@ -14,8 +14,9 @@ public class Parent extends Person {
      * Constructs a {@code Parent} with the specified details.
      *
      */
-    public Parent(Name name, Phone phone, Email email, Address address, Note note, Cost cost, Set<Tag> tags) {
-        super(new Type(Type.PARENT), name, phone, email, address, note, cost, tags);
+    public Parent(Name name, Phone phone, Email email, Address address, Note note,
+                  Cost cost, PaymentStatus paymentStatus, Set<Tag> tags) {
+        super(new Type(Type.PARENT), name, phone, email, address, note, cost, paymentStatus, tags);
     }
 
 }

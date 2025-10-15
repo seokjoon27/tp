@@ -17,6 +17,7 @@ public class ParentTest {
                 new Address("45, Jurong West St 91, #04-56"),
                 new Note(""),
                 new Cost("0"),
+                new PaymentStatus(false),
                 new HashSet<>()
         );
     }
