@@ -70,7 +70,7 @@ public class NoteCommand extends Command {
                     studentToEdit.getPaymentStatus(),
                     studentToEdit.getTags());
         } else {
-                    editedPerson = new Parent(
+            editedPerson = new Parent(
                     personToEdit.getName(),
                     personToEdit.getPhone(),
                     personToEdit.getEmail(),

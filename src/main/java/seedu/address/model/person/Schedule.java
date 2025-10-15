@@ -19,10 +19,14 @@ public class Schedule {
 
     public final String value;
 
-    // Formatters
-    private static final DateTimeFormatter TIME_FORMAT = DateTimeFormatter.ofPattern("HH:mm");
     private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("MM-dd-yyyy");
+    private static final DateTimeFormatter TIME_FORMAT = DateTimeFormatter.ofPattern("HH:mm");
 
+    /**
+     * Constructs a {@code value}.
+     *
+     * @param value A valid date and time.
+     */
     public Schedule(String value) {
         requireNonNull(value);
         value = value.strip();
@@ -53,7 +57,7 @@ public class Schedule {
                 LocalTime.parse(parts[1], TIME_FORMAT);
                 return;
             } catch (IllegalArgumentException | DateTimeParseException e) {
-
+                System.out.println("Parse failed, " + e.getMessage());
             }
 
             try {
@@ -61,13 +65,13 @@ public class Schedule {
                 LocalTime.parse(parts[1], TIME_FORMAT);
                 return;
             } catch (DateTimeParseException e) {
-                throw new IllegalArgumentException("Invalid schedule format. Use either: " +
-                        "Mon 14:00, 10-20-2025 16:00");
+                throw new IllegalArgumentException("Invalid schedule format. Use either: "
+                        + "Mon 14:00, 10-20-2025 16:00");
             }
         }
 
-        throw new IllegalArgumentException("Invalid schedule format. Use either: " +
-                "Mon 14:00, 10-20-2025 16:00");
+        throw new IllegalArgumentException("Invalid schedule format. Use either: "
+                + "Mon 14:00, 10-20-2025 16:00");
     }
 
     @Override
