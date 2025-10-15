@@ -115,6 +115,7 @@ public class EditCommand extends Command {
         PaymentStatus updatedPaymentStatus = personToEdit.getPaymentStatus();
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
+
         Person person = updatedType.isStudent()
                 ? new Student(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedNote, updatedCost,
                 updatedPaymentStatus, updatedTags)

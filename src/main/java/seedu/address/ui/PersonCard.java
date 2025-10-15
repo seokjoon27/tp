@@ -3,12 +3,14 @@ package seedu.address.ui;
 import java.util.Comparator;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
+import seedu.address.model.person.Parent;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Student;
 
 /**
  * An UI component that displays information of a {@code Person}.
@@ -48,7 +50,10 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label cost;
     @FXML
-    private CheckBox paidStatus;
+    private FlowPane parents;
+    @FXML
+    private VBox parentsContainer;
+
 
     /**
      * Creates a {@code PersonCode} with the given {@code Person} and index to display.
@@ -58,15 +63,29 @@ public class PersonCard extends UiPart<Region> {
         this.person = person;
         id.setText(displayedIndex + ". ");
         name.setText(person.getName().fullName);
-        type.setText(person.getType().isStudent() ? "Student" : "Parent");
+        type.setText(person.getType().value.equals("s") ? "Student" : "Parent");
         phone.setText(person.getPhone().value);
         address.setText(person.getAddress().value);
         email.setText(person.getEmail().value);
         note.setText(person.getNote().value);
         cost.setText(person.getCost() != null ? person.getCost().toString() : "");
-        paidStatus.setSelected(person.getPaymentStatus().isPaid());
         person.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
                 .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+        if (person instanceof Student student) {
+            parents.getChildren().clear();
+            for (Parent parent : student.getParents()) {
+                Label parentLabel = new Label(parent.getName().fullName);
+                parentLabel.getStyleClass().add("cell_small_label");
+                parents.getChildren().add(parentLabel);
+            }
+            parentsContainer.setVisible(true);
+            parentsContainer.setManaged(true);
+        } else {
+            // Hide for non-students
+            parentsContainer.setVisible(false);
+            parentsContainer.setManaged(false);
+        }
+
     }
 }
