@@ -17,10 +17,10 @@ import java.time.format.DateTimeParseException;
  */
 public class Schedule {
 
-    public final String value;
-
-    private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("MM-dd-yyyy");
     private static final DateTimeFormatter TIME_FORMAT = DateTimeFormatter.ofPattern("HH:mm");
+    private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("MM-dd-yyyy");
+
+    public final String value;
 
     /**
      * Constructs a {@code value}.
