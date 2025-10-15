@@ -113,6 +113,7 @@ public class EditCommand extends Command {
         Cost updatedCost = editPersonDescriptor.getCost().orElse(personToEdit.getCost());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
+
         Person person = updatedType.isStudent()
                 ? new Student(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedNote, updatedCost,
                 updatedTags)

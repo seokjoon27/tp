@@ -34,6 +34,11 @@
       <Label fx:id="email" styleClass="cell_small_label" text="\$email" />
       <Label fx:id="note" styleClass="cell_small_label" text="\$Note" />
       <Label fx:id="cost" styleClass="cell_small_label" text="\$cost" />
+      <VBox fx:id="parentsContainer">
+        <Label text="Parents:" styleClass="cell_small_label" />
+        <FlowPane fx:id="parents" hgap="5" vgap="5" />
+      </VBox>
+
     </VBox>
   </GridPane>
 </HBox>

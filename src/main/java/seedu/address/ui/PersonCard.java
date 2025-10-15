@@ -7,7 +7,10 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
+import seedu.address.model.person.Parent;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Student;
 
 /**
  * An UI component that displays information of a {@code Person}.
@@ -46,6 +49,11 @@ public class PersonCard extends UiPart<Region> {
     private Label note;
     @FXML
     private Label cost;
+    @FXML
+    private FlowPane parents;
+    @FXML
+    private VBox parentsContainer;
+
 
     /**
      * Creates a {@code PersonCode} with the given {@code Person} and index to display.
@@ -55,7 +63,7 @@ public class PersonCard extends UiPart<Region> {
         this.person = person;
         id.setText(displayedIndex + ". ");
         name.setText(person.getName().fullName);
-        type.setText(person.getType().value == "s" ? "Student" : "Parent");
+        type.setText(person.getType().value.equals("s") ? "Student" : "Parent");
         phone.setText(person.getPhone().value);
         address.setText(person.getAddress().value);
         email.setText(person.getEmail().value);
@@ -64,5 +72,20 @@ public class PersonCard extends UiPart<Region> {
         person.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
                 .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+        if (person instanceof Student student) {
+            parents.getChildren().clear();
+            for (Parent parent : student.getParents()) {
+                Label parentLabel = new Label(parent.getName().fullName);
+                parentLabel.getStyleClass().add("cell_small_label");
+                parents.getChildren().add(parentLabel);
+            }
+            parentsContainer.setVisible(true);
+            parentsContainer.setManaged(true);
+        } else {
+            // Hide for non-students
+            parentsContainer.setVisible(false);
+            parentsContainer.setManaged(false);
+        }
+
     }
 }
