@@ -9,6 +9,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Student;
 
 /**
  * An UI component that displays information of a {@code Person}.
@@ -46,6 +47,8 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label note;
     @FXML
+    private Label schedule;
+    @FXML
     private Label cost;
     @FXML
     private CheckBox paidStatus;
@@ -63,10 +66,18 @@ public class PersonCard extends UiPart<Region> {
         address.setText(person.getAddress().value);
         email.setText(person.getEmail().value);
         note.setText(person.getNote().value);
+
         cost.setText(person.getCost() != null ? person.getCost().toString() : "");
         paidStatus.setSelected(person.getPaymentStatus().isPaid());
         person.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
                 .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+        if (person instanceof Student) {
+            schedule.setText(((Student) person).getSchedule().value);
+            schedule.setVisible(true);
+        } else {
+            schedule.setText("");
+            schedule.setVisible(false);
+        }
     }
 }

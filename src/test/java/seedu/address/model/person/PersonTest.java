@@ -96,17 +96,21 @@ public class PersonTest {
 
     @Test
     public void toStringMethod() {
-        String expected = Person.class.getCanonicalName()
-                + "{type=" + ALICE.getType()
-                + ", name=" + ALICE.getName()
-                + ", phone=" + ALICE.getPhone()
-                + ", email=" + ALICE.getEmail()
-                + ", address=" + ALICE.getAddress()
-                + ", note=" + ALICE.getNote()
-                + ", cost=" + ALICE.getCost()
-                + ", paymentStatus=" + ALICE.getPaymentStatus()
-                + ", tags=" + ALICE.getTags()
-                + "}";
-        assertEquals(expected, ALICE.toString());
+        StringBuilder expected = new StringBuilder(Person.class.getCanonicalName())
+                .append("{type=").append(ALICE.getType())
+                .append(", name=").append(ALICE.getName())
+                .append(", phone=").append(ALICE.getPhone())
+                .append(", email=").append(ALICE.getEmail())
+                .append(", address=").append(ALICE.getAddress())
+                .append(", note=").append(ALICE.getNote())
+                .append(", cost=").append(ALICE.getCost())
+                .append(", paymentStatus=").append(ALICE.getPaymentStatus());
+
+        expected.append(", tags=").append(ALICE.getTags()).append("}");
+
+        if (ALICE instanceof Student) {
+            expected.append("; Schedule: ").append(((Student) ALICE).getSchedule());
+        }
+        assertEquals(expected.toString(), ALICE.toString());
     }
 }

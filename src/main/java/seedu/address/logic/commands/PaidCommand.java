@@ -53,9 +53,11 @@ public class PaidCommand extends Command {
         Person markedPerson;
         PaymentStatus paidStatus = new PaymentStatus(true);
         if (personToMark.getType().isStudent()) {
-            markedPerson = new Student(personToMark.getName(), personToMark.getPhone(), personToMark.getEmail(),
-                    personToMark.getAddress(), personToMark.getNote(), personToMark.getCost(), paidStatus,
-                    personToMark.getTags());
+            Student studentToMark = (Student) personToMark; // safe cast
+            markedPerson = new Student(studentToMark.getName(), studentToMark.getPhone(), studentToMark.getEmail(),
+                    studentToMark.getAddress(), studentToMark.getNote(), studentToMark.getSchedule(),
+                    studentToMark.getCost(), paidStatus,
+                    studentToMark.getTags());
         } else {
             markedPerson = new Parent(personToMark.getName(), personToMark.getPhone(), personToMark.getEmail(),
                     personToMark.getAddress(), personToMark.getNote(), personToMark.getCost(), paidStatus,

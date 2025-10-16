@@ -11,7 +11,8 @@
       "tags": [
         "friends"
       ],
-      "paymentStatus": false
+      "paymentStatus": false,
+      "schedule" : ""
     },
     {
       "type": "s",
@@ -24,7 +25,8 @@
         "owesMoney",
         "friends"
       ],
-      "paymentStatus": false
+      "paymentStatus": false,
+      "schedule" : ""
     },
     {
       "type": "s",
@@ -34,7 +36,8 @@
       "address": "wall street",
       "note": "",
       "tags": [],
-      "paymentStatus": false
+      "paymentStatus": false,
+      "schedule" : ""
     },
     {
       "type": "s",
@@ -46,7 +49,8 @@
       "tags": [
         "friends"
       ],
-      "paymentStatus": false
+      "paymentStatus": false,
+      "schedule" : ""
     },
     {
       "type": "s",
@@ -56,7 +60,8 @@
       "address": "michegan ave",
       "note": "",
       "tags": [],
-      "paymentStatus": false
+      "paymentStatus": false,
+      "schedule" : ""
     },
     {
       "type": "s",
@@ -66,7 +71,8 @@
       "address": "little tokyo",
       "note": "",
       "tags": [],
-      "paymentStatus": false
+      "paymentStatus": false,
+      "schedule" : ""
     },
     {
       "type": "s",
@@ -76,7 +82,8 @@
       "address": "4th street",
       "note": "",
       "tags": [],
-      "paymentStatus": false
+      "paymentStatus": false,
+      "schedule" : ""
     }
   ]
 }
