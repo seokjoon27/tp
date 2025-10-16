@@ -17,11 +17,11 @@ import seedu.address.model.person.Student;
 public class UnlinkCommand extends Command {
     public static final String COMMAND_WORD = "unlink";
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": unlinks a student to a parent by their respective"
+            + ": unlinks a student and a parent by their respective"
             + " index numbers used in the displayed person list.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " student/ 1 parent/ 2";
-    public static final String MESSAGE_UNLINK_SUCCESS = "Unlinked student %1$s to parent %2$s.";
+    public static final String MESSAGE_UNLINK_SUCCESS = "Unlinked parent %2$s from student %1$s.";
     public static final String MESSAGE_INVALID_INDEX = "Invalid parent or student index.";
     public static final String MESSAGE_WRONG_TYPE = "Please ensure one student and one parent is input respectively.";
 
