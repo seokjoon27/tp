@@ -60,24 +60,31 @@ public class PersonCard extends UiPart<Region> {
         super(FXML);
         this.person = person;
         id.setText(displayedIndex + ". ");
-        name.setText(person.getName().fullName);
-        type.setText(person.getType().isStudent() ? "Student" : "Parent");
-        phone.setText(person.getPhone().value);
-        address.setText(person.getAddress().value);
-        email.setText(person.getEmail().value);
-        note.setText(person.getNote().value);
+        name.setText(formatField("Name", person.getName().fullName));
+        type.setText(formatField("Type", person.getType().isStudent() ? "Student" : "Parent"));
+        phone.setText(formatField("Phone", person.getPhone().value));
+        address.setText(formatField("Address", person.getAddress().value));
+        email.setText(formatField("Email", person.getEmail().value));
+        note.setText(formatField("Note", person.getNote().value));
 
-        cost.setText(person.getCost() != null ? person.getCost().toString() : "");
+        cost.setText(person.getCost() != null ? formatField("Cost", person.getCost().toString())
+                : formatField("Cost", ""));
+        paidStatus.setText("[Paid]");
         paidStatus.setSelected(person.getPaymentStatus().isPaid());
+        tags.getChildren().clear();
         person.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
                 .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
         if (person instanceof Student) {
-            schedule.setText(((Student) person).getSchedule().value);
+            schedule.setText(formatField("Schedule", ((Student) person).getSchedule().value));
             schedule.setVisible(true);
         } else {
             schedule.setText("");
             schedule.setVisible(false);
         }
+    }
+
+    private String formatField(String label, String value) {
+        return "[" + label + "] " + (value == null ? "" : value);
     }
 }
