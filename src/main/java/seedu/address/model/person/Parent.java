@@ -23,7 +23,14 @@ public class Parent extends Person {
     }
 
     public void addChild(Student child) {
-        children.add(child);
+        if (!children.contains(child)) {
+            children.add(child);
+        }
+    }
+    public void removeChild(Student child) {
+        if (children.contains(child)) {
+            children.remove(child);
+        }
     }
 
     public List<Student> getChildren() {

@@ -28,6 +28,11 @@ public class Student extends Person {
             parents.add(parent);
         }
     }
+    public void removeParent(Parent parent) {
+        if (this.parents.contains(parent)) {
+            parents.remove(parent);
+        }
+    }
 
     public void setLinkedNames(List<String> names) {
         this.linkedNames = names;
