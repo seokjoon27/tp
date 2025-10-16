@@ -69,7 +69,7 @@ public class UnlinkCommand extends Command {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof LinkCommand)) {
+        if (!(other instanceof UnlinkCommand)) {
             return false;
         }
 
