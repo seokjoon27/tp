@@ -40,4 +40,11 @@ public class NoteCommandParserTest {
         // no index
         assertParseFailure(parser, NoteCommand.COMMAND_WORD + " " + nonEmptyNote, expectedMessage);
     }
+
+    @Test
+    public void parse_noteTooLong_failure() {
+        String longNote = "a".repeat(101);
+        String userInput = INDEX_FIRST_PERSON.getOneBased() + " note/" + longNote;
+        assertParseFailure(parser, userInput, Note.MESSAGE_CONSTRAINTS);
+    }
 }

@@ -7,6 +7,9 @@ import static java.util.Objects.requireNonNull;
  * Guarantees: immutable; is always valid
  */
 public class Note {
+    public static final String MESSAGE_CONSTRAINTS = "Notes should not exceed 100 characters.";
+    public static final int MAX_LENGTH = 100;
+
     public final String value;
 
     /**
@@ -16,7 +19,17 @@ public class Note {
      */
     public Note(String note) {
         requireNonNull(note);
+        if (!isValidNoteLength(note)) {
+            throw new IllegalArgumentException(MESSAGE_CONSTRAINTS);
+        }
         value = note;
+    }
+
+    /**
+     * Returns true if the given note is 100 characters or fewer.
+     */
+    public static boolean isValidNoteLength(String test) {
+        return test.length() <= MAX_LENGTH;
     }
 
     @Override
