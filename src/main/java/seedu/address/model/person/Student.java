@@ -11,7 +11,7 @@ import seedu.address.model.tag.Tag;
  * Inherits common fields and methods from {@link Person}.
  */
 public class Student extends Person {
-    private List<Parent> parents =  new ArrayList<>();
+    private final List<Parent> parents = new ArrayList<>();
     private List<String> linkedNames = new ArrayList<>(); // temporary names from JSON
 
     /**

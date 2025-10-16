@@ -1,12 +1,15 @@
 package seedu.address.logic.parser;
 
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PARENT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_STUDENT;
+
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.LinkCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PARENT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_STUDENT;
-
+/**
+ * Parses input arguments and creates a new LinkCommand object
+ */
 public class LinkCommandParser implements Parser<LinkCommand> {
     public LinkCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =

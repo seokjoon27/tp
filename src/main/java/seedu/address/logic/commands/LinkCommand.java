@@ -1,5 +1,9 @@
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
+
+import java.util.List;
+
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
@@ -7,10 +11,9 @@ import seedu.address.model.person.Parent;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Student;
 
-import java.util.List;
-
-import static java.util.Objects.requireNonNull;
-
+/**
+ * Links a student and parent identified using it's displayed index from the address book.
+ */
 public class LinkCommand extends Command {
     public static final String COMMAND_WORD = "link";
     public static final String MESSAGE_USAGE = COMMAND_WORD
@@ -41,9 +44,6 @@ public class LinkCommand extends Command {
         }
         Person parentToLink = lastShownList.get(parentIndex.getZeroBased());
         Person studentToLink = lastShownList.get(studentIndex.getZeroBased());
-        System.out.println("Student index points to: " + studentToLink.getName() + " (" + studentToLink.getType().value + ")");
-        System.out.println("Parent index points to: " + parentToLink.getName() + " (" + parentToLink.getType().value + ")");
-
         if (!(parentToLink instanceof Parent) || !(studentToLink instanceof Student)) {
             throw new CommandException(MESSAGE_WRONG_TYPE);
         }
