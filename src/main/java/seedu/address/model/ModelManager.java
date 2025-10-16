@@ -4,6 +4,8 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -11,7 +13,9 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.model.person.Parent;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Student;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -95,7 +99,29 @@ public class ModelManager implements Model {
 
     @Override
     public void deletePerson(Person target) {
+        requireNonNull(target);
+
+        // First, remove all links that reference this person
+        removeLinksTo(target);
+
         addressBook.removePerson(target);
+    }
+
+    private void removeLinksTo(Person personToDelete) {
+        List<Person> updatedPersons = new ArrayList<>();
+
+        for (Person p : addressBook.getPersonList()) {
+            if (p instanceof Student student) {
+                // remove parent links
+                student.getParents().removeIf(parent -> parent.isSamePerson(personToDelete));
+            } else if (p instanceof Parent parent) {
+                // remove student links
+                parent.getChildren().removeIf(student -> student.isSamePerson(personToDelete));
+            }
+            updatedPersons.add(p);
+        }
+
+        addressBook.setPersons(updatedPersons);
     }
 
     @Override
