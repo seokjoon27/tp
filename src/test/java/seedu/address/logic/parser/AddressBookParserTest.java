@@ -128,7 +128,7 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_schedule() throws Exception {
-        final Schedule schedule = new Schedule("Monday 14:00");
+        final Schedule schedule = new Schedule("Monday 14:00-16:00");
 
         ScheduleCommand command = (ScheduleCommand) parser.parseCommand(
                 ScheduleCommand.COMMAND_WORD + " "

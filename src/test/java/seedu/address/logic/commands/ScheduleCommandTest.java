@@ -25,7 +25,7 @@ import seedu.address.testutil.PersonBuilder;
 
 public class ScheduleCommandTest {
 
-    private static final String SCHEDULE_STUB = "Monday 14:00";
+    private static final String SCHEDULE_STUB = "Monday 14:00-16:00";
 
     private Model model;
 
@@ -115,6 +115,7 @@ public class ScheduleCommandTest {
         assertFalse(standardCommand.equals(new ScheduleCommand(INDEX_SECOND_PERSON, new Schedule(SCHEDULE_STUB))));
 
         // different schedule -> returns false
-        assertFalse(standardCommand.equals(new ScheduleCommand(INDEX_FIRST_PERSON, new Schedule("Tuesday 16:00"))));
+        assertFalse(standardCommand.equals(new ScheduleCommand(INDEX_FIRST_PERSON,
+                new Schedule("Tuesday 16:00-18:00"))));
     }
 }

@@ -12,8 +12,8 @@ import java.time.format.DateTimeParseException;
  * Represents a schedule for a lesson.
  * Internally stores as string for backward compatibility.
  * Supports two formats:
- * "Mon 14:00"
- * "10-20-2025 16:00"
+ * "Monday 14:00-16:00"
+ * "10-20-2025 14:00-16:00"
  */
 public class Schedule {
 
@@ -23,9 +23,9 @@ public class Schedule {
     public final String value;
 
     /**
-     * Constructs a {@code value}.
+     * Constructs a {@code Schedule}.
      *
-     * @param value A valid date and time.
+     * @param value A valid date and time range.
      */
     public Schedule(String value) {
         requireNonNull(value);
@@ -40,7 +40,7 @@ public class Schedule {
 
     /**
      * Parses the schedule string to check validity.
-     * Returns true if valid, throws IllegalArgumentException if invalid.
+     * Throws IllegalArgumentException if invalid.
      */
     public static void parse(String input) {
         input = input.strip();
@@ -51,26 +51,45 @@ public class Schedule {
 
         String[] parts = input.split(" ");
         if (parts.length == 2) {
-            try {
-                DayOfWeek.valueOf(parts[0].toUpperCase());
-                LocalTime.parse(parts[1], TIME_FORMAT);
-                return;
-            } catch (IllegalArgumentException | DateTimeParseException e) {
-                System.out.println("Parse failed, " + e.getMessage());
+            String dayOrDate = parts[0];
+            String timeRange = parts[1];
+
+            // Expecting "HH:mm-HH:mm"
+            String[] timeParts = timeRange.split("-");
+            if (timeParts.length != 2) {
+                throw new IllegalArgumentException("Invalid time range format. Use HH:mm-HH:mm");
             }
 
+            LocalTime startTime;
+            LocalTime endTime;
             try {
-                LocalDate.parse(parts[0], DATE_FORMAT);
-                LocalTime.parse(parts[1], TIME_FORMAT);
-                return;
+                startTime = LocalTime.parse(timeParts[0], TIME_FORMAT);
+                endTime = LocalTime.parse(timeParts[1], TIME_FORMAT);
             } catch (DateTimeParseException e) {
-                throw new IllegalArgumentException("Invalid schedule format. Use either: "
-                        + "Mon 14:00, 10-20-2025 16:00");
+                throw new IllegalArgumentException("Invalid time format. Use HH:mm-HH:mm");
+            }
+
+            if (!endTime.isAfter(startTime)) {
+                throw new IllegalArgumentException("End time must be after start time.");
+            }
+
+            // Validate either day of week or date format
+            try {
+                DayOfWeek.valueOf(dayOrDate.toUpperCase());
+                return;
+            } catch (IllegalArgumentException e) {
+                try {
+                    LocalDate.parse(dayOrDate, DATE_FORMAT);
+                    return;
+                } catch (DateTimeParseException ex) {
+                    throw new IllegalArgumentException("Invalid schedule format. Use either: "
+                            + "Monday 14:00-16:00 or 10-20-2025 14:00-16:00");
+                }
             }
         }
 
         throw new IllegalArgumentException("Invalid schedule format. Use either: "
-                + "Mon 14:00, 10-20-2025 16:00");
+                + "Monday 14:00-16:00 or 10-20-2025 14:00-16:00");
     }
 
     @Override
