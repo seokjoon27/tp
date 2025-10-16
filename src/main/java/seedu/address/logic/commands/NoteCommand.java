@@ -24,6 +24,7 @@ public class NoteCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the Note of the person identified "
             + "by the index number used in the last person listing. "
+            + "All Note must be less than 100 characters. "
             + "Existing Note will be overwritten by the input.\n"
             + "Parameters: INDEX (must be a positive integer) "
             + PREFIX_NOTE + "[NOTE]\n"

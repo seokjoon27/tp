@@ -2,6 +2,7 @@ package seedu.address.model.person;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static seedu.address.testutil.Assert.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
@@ -27,5 +28,11 @@ public class NoteTest {
         // different Note -> returns false
         Note differentNote = new Note("Bye");
         assertFalse(note.equals(differentNote));
+    }
+
+    @Test
+    public void constructor_noteTooLong_throwsIllegalArgumentException() {
+        String longNote = "a".repeat(101); // 101 characters
+        assertThrows(IllegalArgumentException.class, () -> new Note(longNote));
     }
 }
