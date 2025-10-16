@@ -125,12 +125,25 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseCommand_paid_throwsParseException() {
+    public void parseCommand_paid() throws Exception {
         Name name = new Name("Alice Pauline");
-        String userInput = PaidCommand.COMMAND_WORD + " " + PREFIX_NAME + name.fullName;
+        PaidCommand command = (PaidCommand) parser.parseCommand(PaidCommand.COMMAND_WORD + " "
+                + PREFIX_NAME + name.fullName);
+        assertEquals(new PaidCommand(name), command);
+    }
 
-        // Expect a ParseException since parser doesn't recognize the command yet
-        assertThrows(ParseException.class, () -> parser.parseCommand(userInput));
+    @Test
+    public void parseCommand_paidIndex() throws Exception {
+        PaidCommand command = (PaidCommand) parser.parseCommand(
+                PaidCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new PaidCommand(INDEX_FIRST_PERSON), command);
+    }
+
+    @Test
+    public void parseCommand_paidCaseInsensitive() throws Exception {
+        Name name = new Name("Alice Pauline");
+        PaidCommand command = (PaidCommand) parser.parseCommand("PAID " + PREFIX_NAME + name.fullName);
+        assertEquals(new PaidCommand(name), command);
     }
 
     @Test

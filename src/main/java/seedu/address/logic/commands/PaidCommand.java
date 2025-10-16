@@ -5,7 +5,9 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.List;
+import java.util.Objects;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
@@ -16,64 +18,95 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.Student;
 
 /**
- * Marks a person as having completed payment.
+ * Toggles the payment status of a person.
  */
 public class PaidCommand extends Command {
 
     public static final String COMMAND_WORD = "paid";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Marks the person identified by the name as paid.\n"
-            + "Parameters: " + PREFIX_NAME + "NAME\n"
-            + "Example: " + COMMAND_WORD + " " + PREFIX_NAME + "Alex Yeoh";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Toggles the payment status of the person identified "
+            + "by the index or name.\n"
+            + "Parameters: INDEX (must be a positive integer) | " + PREFIX_NAME + "NAME\n"
+            + "Example: " + COMMAND_WORD + " 1 | " + COMMAND_WORD + " " + PREFIX_NAME + "Alex Yeoh";
 
     public static final String MESSAGE_MARK_PAID_SUCCESS = "Marked as paid: %1$s";
-    public static final String MESSAGE_ALREADY_PAID = "%1$s has already been marked as paid.";
+    public static final String MESSAGE_MARK_UNPAID_SUCCESS = "Marked as unpaid: %1$s";
     public static final String MESSAGE_PERSON_NOT_FOUND = "No person with the name %1$s was found.";
 
     private final Name name;
+    private final Index targetIndex;
 
+    /**
+     * Constructs a {@code PaidCommand} targeting the person identified by {@code name}.
+     */
     public PaidCommand(Name name) {
         this.name = name;
+        this.targetIndex = null;
+    }
+
+    /**
+     * Constructs a {@code PaidCommand} targeting the person at the specified {@code targetIndex}.
+     */
+    public PaidCommand(Index targetIndex) {
+        this.targetIndex = targetIndex;
+        this.name = null;
     }
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        List<Person> personList = model.getAddressBook().getPersonList();
+        Person personToMark;
 
-        Person personToMark = personList.stream()
-                .filter(person -> person.getName().equals(name))
-                .findFirst()
-                .orElseThrow(() -> new CommandException(String.format(MESSAGE_PERSON_NOT_FOUND, name)));
-
-        if (personToMark.getPaymentStatus().isPaid()) {
-            throw new CommandException(String.format(MESSAGE_ALREADY_PAID, name));
+        if (targetIndex != null) {
+            List<Person> lastShownList = model.getFilteredPersonList();
+            if (targetIndex.getZeroBased() >= lastShownList.size()) {
+                throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            }
+            personToMark = lastShownList.get(targetIndex.getZeroBased());
+        } else {
+            List<Person> personList = model.getAddressBook().getPersonList();
+            personToMark = personList.stream()
+                    .filter(person -> person.getName().equals(name))
+                    .findFirst()
+                    .orElseThrow(() -> new CommandException(String.format(MESSAGE_PERSON_NOT_FOUND, name)));
         }
 
         Person markedPerson;
-        PaymentStatus paidStatus = new PaymentStatus(true);
+        boolean newStatusIsPaid = !personToMark.getPaymentStatus().isPaid();
+        PaymentStatus updatedStatus = new PaymentStatus(newStatusIsPaid);
         if (personToMark.getType().isStudent()) {
             Student studentToMark = (Student) personToMark; // safe cast
             markedPerson = new Student(studentToMark.getName(), studentToMark.getPhone(), studentToMark.getEmail(),
                     studentToMark.getAddress(), studentToMark.getNote(), studentToMark.getSchedule(),
-                    studentToMark.getCost(), paidStatus,
+                    studentToMark.getCost(), updatedStatus,
                     studentToMark.getTags());
         } else {
             markedPerson = new Parent(personToMark.getName(), personToMark.getPhone(), personToMark.getEmail(),
-                    personToMark.getAddress(), personToMark.getNote(), personToMark.getCost(), paidStatus,
+                    personToMark.getAddress(), personToMark.getNote(), personToMark.getCost(), updatedStatus,
                     personToMark.getTags());
         }
 
         model.setPerson(personToMark, markedPerson);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
 
-        return new CommandResult(String.format(MESSAGE_MARK_PAID_SUCCESS, Messages.format(markedPerson)));
+        String successMessage = newStatusIsPaid
+                ? MESSAGE_MARK_PAID_SUCCESS
+                : MESSAGE_MARK_UNPAID_SUCCESS;
+        return new CommandResult(String.format(successMessage, Messages.format(markedPerson)));
     }
 
     @Override
     public boolean equals(Object other) {
-        return other == this
-                || (other instanceof PaidCommand
-                && name.equals(((PaidCommand) other).name));
+        if (other == this) {
+            return true;
+        }
+
+        if (!(other instanceof PaidCommand)) {
+            return false;
+        }
+
+        PaidCommand otherPaidCommand = (PaidCommand) other;
+        return Objects.equals(name, otherPaidCommand.name)
+                && Objects.equals(targetIndex, otherPaidCommand.targetIndex);
     }
 }
