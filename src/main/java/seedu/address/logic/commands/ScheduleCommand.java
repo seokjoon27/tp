@@ -28,7 +28,7 @@ public class ScheduleCommand extends Command {
             + "Parameters: INDEX (must be a positive integer) "
             + PREFIX_SCHEDULE + "SCHEDULE\n"
             + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_SCHEDULE + "Mon 10am-12pm, Wed 2pm-5pm";
+            + PREFIX_SCHEDULE + "Monday 10:00-12:00, Wednesday 14:00-15:00";
 
     public static final String MESSAGE_ADD_SCHEDULE_SUCCESS = "Updated schedule for Student: %1$s";
     public static final String MESSAGE_DELETE_SCHEDULE_SUCCESS = "Removed schedule from Student: %1$s";
