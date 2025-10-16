@@ -19,7 +19,6 @@ import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.LinkCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.NoteCommand;
-import seedu.address.logic.commands.PaidCommand;
 import seedu.address.logic.commands.ResetCommand;
 import seedu.address.logic.commands.ScheduleCommand;
 import seedu.address.logic.commands.UnlinkCommand;
