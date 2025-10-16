@@ -51,7 +51,6 @@ public class Parent extends Person {
             throw new PersonNotFoundException();
         }
     }
-
     public List<Student> getChildren() {
         return children;
     }
