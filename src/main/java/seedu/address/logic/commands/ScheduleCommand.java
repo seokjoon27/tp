@@ -82,7 +82,7 @@ public class ScheduleCommand extends Command {
         String message = !schedule.value.isEmpty()
                 ? MESSAGE_ADD_SCHEDULE_SUCCESS
                 : MESSAGE_DELETE_SCHEDULE_SUCCESS;
-        return String.format(message, studentToEdit);
+        return String.format(message, studentToEdit.getName());
     }
 
     @Override

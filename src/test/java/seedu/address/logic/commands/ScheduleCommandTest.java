@@ -47,7 +47,7 @@ public class ScheduleCommandTest {
         ScheduleCommand scheduleCommand =
                 new ScheduleCommand(INDEX_FIRST_PERSON, new Schedule(editedStudent.getSchedule().value));
 
-        String expectedMessage = String.format(ScheduleCommand.MESSAGE_ADD_SCHEDULE_SUCCESS, editedStudent);
+        String expectedMessage = String.format(ScheduleCommand.MESSAGE_ADD_SCHEDULE_SUCCESS, editedStudent.getName());
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setPerson(studentToEdit, editedStudent);
@@ -86,7 +86,7 @@ public class ScheduleCommandTest {
         ScheduleCommand scheduleCommand =
                 new ScheduleCommand(INDEX_FIRST_PERSON, new Schedule(editedStudent.getSchedule().value));
 
-        String expectedMessage = String.format(ScheduleCommand.MESSAGE_ADD_SCHEDULE_SUCCESS, editedStudent);
+        String expectedMessage = String.format(ScheduleCommand.MESSAGE_ADD_SCHEDULE_SUCCESS, editedStudent.getName());
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setPerson(studentToEdit, editedStudent);
