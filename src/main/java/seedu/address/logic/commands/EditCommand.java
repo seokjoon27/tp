@@ -32,6 +32,7 @@ import seedu.address.model.person.Parent;
 import seedu.address.model.person.PaymentStatus;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Schedule;
 import seedu.address.model.person.Student;
 import seedu.address.model.person.Type;
 import seedu.address.model.tag.Tag;
@@ -115,14 +116,31 @@ public class EditCommand extends Command {
         PaymentStatus updatedPaymentStatus = personToEdit.getPaymentStatus();
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
-
-        Person person = updatedType.isStudent()
-                ? new Student(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedNote, updatedCost,
-                updatedPaymentStatus, updatedTags)
-                : new Parent(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedNote, updatedCost,
-                updatedPaymentStatus, updatedTags);
-
-        return person;
+        if (updatedType.isStudent()) {
+            Schedule updatedSchedule = ((Student) personToEdit).getSchedule(); // preserve existing schedule
+            return new Student(
+                    updatedName,
+                    updatedPhone,
+                    updatedEmail,
+                    updatedAddress,
+                    updatedNote,
+                    updatedSchedule,
+                    updatedCost,
+                    updatedPaymentStatus,
+                    updatedTags
+            );
+        } else {
+            return new Parent(
+                    updatedName,
+                    updatedPhone,
+                    updatedEmail,
+                    updatedAddress,
+                    updatedNote,
+                    updatedCost,
+                    updatedPaymentStatus,
+                    updatedTags
+            );
+        }
     }
 
     @Override

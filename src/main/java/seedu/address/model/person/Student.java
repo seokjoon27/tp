@@ -14,13 +14,39 @@ public class Student extends Person {
     private final List<Parent> parents = new ArrayList<>();
     private List<String> linkedNames = new ArrayList<>(); // temporary names from JSON
 
+    private final Schedule schedule;
     /**
      * Constructs a {@code Student} with the specified details.
      *
      */
-    public Student(Name name, Phone phone, Email email, Address address, Note note,
+    public Student(Name name, Phone phone, Email email, Address address, Note note, Schedule schedule,
                    Cost cost, PaymentStatus paymentStatus, Set<Tag> tags) {
         super(new Type(Type.STUDENT), name, phone, email, address, note, cost, paymentStatus, tags);
+        this.schedule = schedule;
+    }
+
+    public Schedule getSchedule() {
+        return schedule;
+    }
+
+    /**
+     * Returns a copy of this student with the updated schedule.
+     * Used when executing ScheduleCommand.
+     */
+    public Student withSchedule(Schedule newSchedule) {
+        return new Student(getName(), getPhone(), getEmail(), getAddress(), getNote(),
+                newSchedule, getCost(), getPaymentStatus(), getTags());
+    }
+
+
+    @Override
+    public int hashCode() {
+        return super.hashCode() + schedule.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + "; Schedule: " + schedule;
     }
 
     public void addParent(Parent parent) {

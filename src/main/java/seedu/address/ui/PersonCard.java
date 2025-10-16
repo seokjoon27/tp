@@ -48,6 +48,8 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label note;
     @FXML
+    private Label schedule;
+    @FXML
     private Label cost;
     @FXML
     private FlowPane parents;
@@ -68,24 +70,41 @@ public class PersonCard extends UiPart<Region> {
         address.setText(person.getAddress().value);
         email.setText(person.getEmail().value);
         note.setText(person.getNote().value);
+
         cost.setText(person.getCost() != null ? person.getCost().toString() : "");
         person.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
                 .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
         if (person instanceof Student student) {
-            parents.getChildren().clear();
-            for (Parent parent : student.getParents()) {
-                Label parentLabel = new Label(parent.getName().fullName);
-                parentLabel.getStyleClass().add("cell_small_label");
-                parents.getChildren().add(parentLabel);
-            }
-            parentsContainer.setVisible(true);
-            parentsContainer.setManaged(true);
-        } else {
-            // Hide for non-students
-            parentsContainer.setVisible(false);
-            parentsContainer.setManaged(false);
+    // ----- Parents list -----
+    parents.getChildren().clear();
+    if (student.getParents() != null) {
+        for (Parent parent : student.getParents()) {
+            Label parentLabel = new Label(parent.getName().fullName);
+            parentLabel.getStyleClass().add("cell_small_label");
+            parents.getChildren().add(parentLabel);
         }
+    }
+    parentsContainer.setVisible(true);
+    parentsContainer.setManaged(true);
 
+    // ----- Schedule -----
+    if (student.getSchedule() != null) {
+        schedule.setText(student.getSchedule().value);
+    } else {
+        schedule.setText("");
+    }
+    schedule.setVisible(true);
+
+} else {
+    // Hide parents UI for non-students
+    parents.getChildren().clear();
+    parentsContainer.setVisible(false);
+    parentsContainer.setManaged(false);
+
+    // Hide schedule for non-students
+    schedule.setText("");
+    schedule.setVisible(false);
+}
     }
 }

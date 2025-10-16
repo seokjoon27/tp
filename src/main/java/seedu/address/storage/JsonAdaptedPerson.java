@@ -19,6 +19,7 @@ import seedu.address.model.person.Parent;
 import seedu.address.model.person.PaymentStatus;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Schedule;
 import seedu.address.model.person.Student;
 import seedu.address.model.person.Type;
 import seedu.address.model.tag.Tag;
@@ -40,6 +41,7 @@ class JsonAdaptedPerson {
     private final Boolean paymentStatus;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
     private final List<String> linkedNames = new ArrayList<>();
+    private final String schedule;
 
     /**
      * Constructs a {@code JsonAdaptedPerson} with the given person details.
@@ -52,6 +54,7 @@ class JsonAdaptedPerson {
                              @JsonProperty("paymentStatus") Boolean paymentStatus,
                              @JsonProperty("tags") List<JsonAdaptedTag> tags,
                              @JsonProperty("linkedNames") List<String> linkedNames) {
+                             @JsonProperty("schedule") String schedule) {
         this.type = type;
         this.name = name;
         this.phone = phone;
@@ -60,6 +63,7 @@ class JsonAdaptedPerson {
         this.note = note;
         this.cost = cost;
         this.paymentStatus = paymentStatus;
+        this.schedule = schedule;
         if (tags != null) {
             this.tags.addAll(tags);
         }
@@ -84,9 +88,16 @@ class JsonAdaptedPerson {
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
         if (source instanceof Student student) {
-            for (Parent parent : student.getParents()) {
-                linkedNames.add(parent.getName().fullName);
-            }
+        // preserve schedule
+        schedule = student.getSchedule() != null ? student.getSchedule().value : null;
+
+        // include linked parent names
+        for (Parent parent : student.getParents()) {
+            linkedNames.add(parent.getName().fullName);
+        }
+    } else {
+        schedule = null;
+    }
         }
     }
 
@@ -163,14 +174,37 @@ class JsonAdaptedPerson {
         }
         final PaymentStatus modelPaymentStatus = new PaymentStatus(paymentStatus);
 
+        final Schedule modelSchedule = (schedule == null) ? new Schedule("") : new Schedule(schedule);
+
+        
         if (modelType.isStudent()) {
-            Student student = new Student(modelName, modelPhone, modelEmail, modelAddress, modelNote,
-                    modelCost, modelPaymentStatus, modelTags);
-            student.setLinkedNames(new ArrayList<>(linkedNames)); // <-- save JSON parent names
+            // Use the constructor that preserves schedule
+            Student student = new Student(
+                    modelName,
+                    modelPhone,
+                    modelEmail,
+                    modelAddress,
+                    modelNote,
+                    modelSchedule,
+                    modelCost,
+                    modelPaymentStatus,
+                    modelTags
+            );  
+
+            student.setLinkedNames(linkedNames == null ? new ArrayList<>() : new ArrayList<>(linkedNames));
             return student;
+
         } else {
-            return new Parent(modelName, modelPhone, modelEmail, modelAddress, modelNote,
-                    modelCost, modelPaymentStatus, modelTags);
+            return new Parent(
+                    modelName,
+                    modelPhone,
+                    modelEmail,
+                    modelAddress,
+                    modelNote,
+                    modelCost,
+                    modelPaymentStatus,
+                    modelTags
+            );
         }
     }
 

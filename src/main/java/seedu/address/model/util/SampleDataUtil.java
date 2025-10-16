@@ -14,6 +14,7 @@ import seedu.address.model.person.Parent;
 import seedu.address.model.person.PaymentStatus;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Schedule;
 import seedu.address.model.person.Student;
 import seedu.address.model.tag.Tag;
 
@@ -22,17 +23,20 @@ import seedu.address.model.tag.Tag;
  */
 public class SampleDataUtil {
     public static final Note EMPTY_NOTE = new Note("");
+    public static final Schedule EMPTY_SCHEDULE = new Schedule("");
     public static final PaymentStatus UNPAID_STATUS = new PaymentStatus(false);
     public static Person[] getSamplePersons() {
         return new Person[] {
             new Student(new Name("Alex Yeoh"), new Phone("87438807"), new Email("alexyeoh@example.com"),
-                new Address("Blk 30 Geylang Street 29, #06-40"), EMPTY_NOTE, null, UNPAID_STATUS,
+                new Address("Blk 30 Geylang Street 29, #06-40"), EMPTY_NOTE, EMPTY_SCHEDULE, null, UNPAID_STATUS,
                 getTagSet("friends")),
             new Student(new Name("Bernice Yu"), new Phone("99272758"), new Email("berniceyu@example.com"),
-                new Address("Blk 30 Lorong 3 Serangoon Gardens, #07-18"), EMPTY_NOTE, null, UNPAID_STATUS,
+                new Address("Blk 30 Lorong 3 Serangoon Gardens, #07-18"), EMPTY_NOTE, EMPTY_SCHEDULE,
+                    null, UNPAID_STATUS,
                 getTagSet("colleagues", "friends")),
             new Student(new Name("Charlotte Oliveiro"), new Phone("93210283"), new Email("charlotte@example.com"),
-                new Address("Blk 11 Ang Mo Kio Street 74, #11-04"), EMPTY_NOTE, null, UNPAID_STATUS,
+                new Address("Blk 11 Ang Mo Kio Street 74, #11-04"), EMPTY_NOTE, EMPTY_SCHEDULE, null,
+                    UNPAID_STATUS,
                 getTagSet("neighbours")),
             new Parent(new Name("David Li"), new Phone("91031282"), new Email("lidavid@example.com"),
                 new Address("Blk 436 Serangoon Gardens Street 26, #16-43"), EMPTY_NOTE, null, UNPAID_STATUS,

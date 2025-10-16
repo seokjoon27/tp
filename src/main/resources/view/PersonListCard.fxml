@@ -35,6 +35,7 @@
       <Label fx:id="address" styleClass="cell_small_label" text="\$address" />
       <Label fx:id="email" styleClass="cell_small_label" text="\$email" />
       <Label fx:id="note" styleClass="cell_small_label" text="\$Note" />
+      <Label fx:id="schedule" styleClass="cell_small_label" text="\$schedule" />
       <Label fx:id="cost" styleClass="cell_small_label" text="\$cost" />
       <VBox fx:id="parentsContainer">
         <Label text="Parents:" styleClass="cell_small_label" />
