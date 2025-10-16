@@ -40,7 +40,7 @@ public class ScheduleCommandParser implements Parser<ScheduleCommand> {
         } catch (IllegalArgumentException e) {
             throw new ParseException("Invalid schedule format. Use either: "
                     + "WEEKDAY HH:mm, MM-DD-YYYY HH:mm"
-                    + "Example: 'Monday 14:00', '12-10-2025 14:00'");
+                    + "Example: 'Monday 14:00-16:00', '12-10-2025 14:00-16:00'");
         }
 
         return new ScheduleCommand(index, schedule);

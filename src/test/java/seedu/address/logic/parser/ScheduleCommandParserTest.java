@@ -22,14 +22,14 @@ public class ScheduleCommandParserTest {
         Index targetIndex = INDEX_FIRST_PERSON;
 
         // Valid schedule: day + time
-        String input1 = targetIndex.getOneBased() + " " + PREFIX_SCHEDULE + "Monday 14:00";
-        Schedule schedule1 = new Schedule("Monday 14:00");
+        String input1 = targetIndex.getOneBased() + " " + PREFIX_SCHEDULE + "Monday 14:00-16:00";
+        Schedule schedule1 = new Schedule("Monday 14:00-16:00");
         ScheduleCommand expectedCommand1 = new ScheduleCommand(targetIndex, schedule1);
         assertParseSuccess(parser, input1, expectedCommand1);
 
         // Valid schedule: date + time
-        String input2 = targetIndex.getOneBased() + " " + PREFIX_SCHEDULE + "12-10-2025 14:00";
-        Schedule schedule2 = new Schedule("12-10-2025 14:00");
+        String input2 = targetIndex.getOneBased() + " " + PREFIX_SCHEDULE + "12-10-2025 14:00-16:00";
+        Schedule schedule2 = new Schedule("12-10-2025 14:00-16:00");
         ScheduleCommand expectedCommand2 = new ScheduleCommand(targetIndex, schedule2);
         assertParseSuccess(parser, input2, expectedCommand2);
 
@@ -48,7 +48,7 @@ public class ScheduleCommandParserTest {
         String input = targetIndex.getOneBased() + "  " + PREFIX_SCHEDULE + "InvalidSchedule";
         assertParseFailure(parser, input,
                 "Invalid schedule format. Use either: "
-                        + "WEEKDAY HH:mm, MM-DD-YYYY HH:mmExample: 'Monday 14:00', '12-10-2025 14:00'");
+                        + "WEEKDAY HH:mm, MM-DD-YYYY HH:mmExample: 'Monday 14:00-16:00', '12-10-2025 14:00-16:00'");
     }
 
     @Test
@@ -60,6 +60,6 @@ public class ScheduleCommandParserTest {
 
         // no index
         assertParseFailure(parser, ScheduleCommand.COMMAND_WORD + " "
-                + PREFIX_SCHEDULE + "Mon 14:00", expectedMessage);
+                + PREFIX_SCHEDULE + "Mon 14:00-16:00", expectedMessage);
     }
 }

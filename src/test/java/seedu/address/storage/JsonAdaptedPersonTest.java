@@ -38,7 +38,7 @@ public class JsonAdaptedPersonTest {
     private static final String VALID_EMAIL = BENSON.getEmail().toString();
     private static final String VALID_ADDRESS = BENSON.getAddress().toString();
     private static final String VALID_NOTE = BENSON.getNote().toString();
-    private static final String VALID_SCHEDULE = "Monday 14:00";
+    private static final String VALID_SCHEDULE = "Monday 14:00-16:00";
     private static final String VALID_COST = "42";
     private static final boolean VALID_PAYMENT_STATUS = BENSON.getPaymentStatus().isPaid();
     private static final List<JsonAdaptedTag> VALID_TAGS = BENSON.getTags().stream()
