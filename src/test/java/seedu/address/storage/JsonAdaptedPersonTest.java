@@ -127,7 +127,7 @@ public class JsonAdaptedPersonTest {
     public void toModelType_nullEmail_throwsIllegalValueException() {
         JsonAdaptedPerson person =
                 new JsonAdaptedPerson(VALID_TYPE, VALID_NAME, VALID_PHONE, null, VALID_ADDRESS, VALID_NOTE,
-                        null, VALID_PAYMENT_STATUS, VALID_TAGS, VALID_LINKED_NAMES,  VALID_SCHEDULE);
+                        null, VALID_PAYMENT_STATUS, VALID_TAGS, VALID_LINKED_NAMES, VALID_SCHEDULE);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Email.class.getSimpleName());
         assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
@@ -163,7 +163,7 @@ public class JsonAdaptedPersonTest {
     public void toModelType_invalidCost_throwsIllegalValueException() {
         JsonAdaptedPerson person =
                 new JsonAdaptedPerson(VALID_TYPE, VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_NOTE,
-                        INVALID_COST, VALID_PAYMENT_STATUS, VALID_TAGS, VALID_SCHEDULE);
+                        INVALID_COST, VALID_PAYMENT_STATUS, VALID_TAGS, VALID_LINKED_NAMES, VALID_SCHEDULE);
         String expectedMessage = Cost.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
@@ -174,7 +174,7 @@ public class JsonAdaptedPersonTest {
         invalidTags.add(new JsonAdaptedTag(INVALID_TAG));
         JsonAdaptedPerson person =
                 new JsonAdaptedPerson(VALID_TYPE, VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_NOTE,
-                        null, VALID_PAYMENT_STATUS, invalidTags,  VALID_LINKED_NAMES, VALID_SCHEDULE);
+                        null, VALID_PAYMENT_STATUS, invalidTags, VALID_LINKED_NAMES, VALID_SCHEDULE);
         assertThrows(IllegalValueException.class, person::toModelType);
     }
 
@@ -192,7 +192,7 @@ public class JsonAdaptedPersonTest {
         String invalidSchedule = "Mon 14-16";
         JsonAdaptedPerson person =
                 new JsonAdaptedPerson(VALID_TYPE, VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_NOTE,
-                        null, VALID_PAYMENT_STATUS, VALID_TAGS, invalidSchedule);
+                        null, VALID_PAYMENT_STATUS, VALID_TAGS, VALID_LINKED_NAMES, invalidSchedule);
         assertThrows(IllegalArgumentException.class, person::toModelType);
     }
 

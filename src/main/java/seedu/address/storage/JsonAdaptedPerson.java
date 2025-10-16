@@ -53,7 +53,7 @@ class JsonAdaptedPerson {
                              @JsonProperty("note") String note, @JsonProperty("cost") String cost,
                              @JsonProperty("paymentStatus") Boolean paymentStatus,
                              @JsonProperty("tags") List<JsonAdaptedTag> tags,
-                             @JsonProperty("linkedNames") List<String> linkedNames) {
+                             @JsonProperty("linkedNames") List<String> linkedNames,
                              @JsonProperty("schedule") String schedule) {
         this.type = type;
         this.name = name;
@@ -88,17 +88,17 @@ class JsonAdaptedPerson {
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
         if (source instanceof Student student) {
-        // preserve schedule
-        schedule = student.getSchedule() != null ? student.getSchedule().value : null;
+            // preserve schedule
+            schedule = student.getSchedule() != null ? student.getSchedule().value : null;
 
-        // include linked parent names
-        for (Parent parent : student.getParents()) {
-            linkedNames.add(parent.getName().fullName);
+            // include linked parent names
+            for (Parent parent : student.getParents()) {
+                linkedNames.add(parent.getName().fullName);
+            }
+        } else {
+            schedule = null;
         }
-    } else {
-        schedule = null;
-    }
-        }
+
     }
 
     /**
@@ -176,7 +176,7 @@ class JsonAdaptedPerson {
 
         final Schedule modelSchedule = (schedule == null) ? new Schedule("") : new Schedule(schedule);
 
-        
+
         if (modelType.isStudent()) {
             // Use the constructor that preserves schedule
             Student student = new Student(
@@ -189,7 +189,7 @@ class JsonAdaptedPerson {
                     modelCost,
                     modelPaymentStatus,
                     modelTags
-            );  
+            );
 
             student.setLinkedNames(linkedNames == null ? new ArrayList<>() : new ArrayList<>(linkedNames));
             return student;
@@ -207,5 +207,4 @@ class JsonAdaptedPerson {
             );
         }
     }
-
 }

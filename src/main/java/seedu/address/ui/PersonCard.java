@@ -76,35 +76,32 @@ public class PersonCard extends UiPart<Region> {
                 .sorted(Comparator.comparing(tag -> tag.tagName))
                 .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
         if (person instanceof Student student) {
-    // ----- Parents list -----
-    parents.getChildren().clear();
-    if (student.getParents() != null) {
-        for (Parent parent : student.getParents()) {
-            Label parentLabel = new Label(parent.getName().fullName);
-            parentLabel.getStyleClass().add("cell_small_label");
-            parents.getChildren().add(parentLabel);
+            // ----- Parents list -----
+            parents.getChildren().clear();
+            if (student.getParents() != null) {
+                for (Parent parent : student.getParents()) {
+                    Label parentLabel = new Label(parent.getName().fullName);
+                    parentLabel.getStyleClass().add("cell_small_label");
+                    parents.getChildren().add(parentLabel);
+                }
+            }
+            parentsContainer.setVisible(true);
+            parentsContainer.setManaged(true);
+            // ----- Schedule -----
+            if (student.getSchedule() != null) {
+                schedule.setText(student.getSchedule().value);
+            } else {
+                schedule.setText("");
+            }
+            schedule.setVisible(true);
+        } else {
+            // Hide parents UI for non-students
+            parents.getChildren().clear();
+            parentsContainer.setVisible(false);
+            parentsContainer.setManaged(false);
+            // Hide schedule for non-students
+            schedule.setText("");
+            schedule.setVisible(false);
         }
-    }
-    parentsContainer.setVisible(true);
-    parentsContainer.setManaged(true);
-
-    // ----- Schedule -----
-    if (student.getSchedule() != null) {
-        schedule.setText(student.getSchedule().value);
-    } else {
-        schedule.setText("");
-    }
-    schedule.setVisible(true);
-
-} else {
-    // Hide parents UI for non-students
-    parents.getChildren().clear();
-    parentsContainer.setVisible(false);
-    parentsContainer.setManaged(false);
-
-    // Hide schedule for non-students
-    schedule.setText("");
-    schedule.setVisible(false);
-}
     }
 }
