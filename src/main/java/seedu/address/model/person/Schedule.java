@@ -12,7 +12,7 @@ import java.time.format.DateTimeParseException;
  * Represents a schedule for a lesson.
  * Internally stores as string for backward compatibility.
  * Supports two formats:
- * "Mon 14:00-16:00"
+ * "Monday 14:00-16:00"
  * "10-20-2025 14:00-16:00"
  */
 public class Schedule {
@@ -83,13 +83,13 @@ public class Schedule {
                     return;
                 } catch (DateTimeParseException ex) {
                     throw new IllegalArgumentException("Invalid schedule format. Use either: "
-                            + "Mon 14:00-16:00 or 10-20-2025 14:00-16:00");
+                            + "Monday 14:00-16:00 or 10-20-2025 14:00-16:00");
                 }
             }
         }
 
         throw new IllegalArgumentException("Invalid schedule format. Use either: "
-                + "Mon 14:00-16:00 or 10-20-2025 14:00-16:00");
+                + "Monday 14:00-16:00 or 10-20-2025 14:00-16:00");
     }
 
     @Override

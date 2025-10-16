@@ -48,7 +48,8 @@ public class ScheduleCommandParserTest {
         String input = targetIndex.getOneBased() + "  " + PREFIX_SCHEDULE + "InvalidSchedule";
         assertParseFailure(parser, input,
                 "Invalid schedule format. Use either: "
-                        + "WEEKDAY HH:mm, MM-DD-YYYY HH:mmExample: 'Monday 14:00-16:00', '12-10-2025 14:00-16:00'");
+                        + "WEEKDAY HH:mm-HH:mm , MM-DD-YYYY HH:mm-HH:mm Example: 'Monday 14:00-16:00', "
+                        + "'12-10-2025 14:00-16:00' End time must be after start time.");
     }
 
     @Test
