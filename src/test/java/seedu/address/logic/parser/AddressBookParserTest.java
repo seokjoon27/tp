@@ -92,9 +92,16 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseCommand_list() throws Exception {
-        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD) instanceof ListCommand);
-        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD + " 3") instanceof ListCommand);
+    public void parseCommand_listSuccess() throws Exception {
+        assertTrue(parser.parseCommand("list") instanceof ListCommand);
+        assertTrue(parser.parseCommand("list paid") instanceof ListCommand);
+        assertTrue(parser.parseCommand("list unpaid") instanceof ListCommand);
+    }
+
+    @Test
+    public void parseCommand_listThrowsParseException() {
+        assertThrows(ParseException.class, () -> parser.parseCommand("list 3"));
+        assertThrows(ParseException.class, () -> parser.parseCommand("list abc"));
     }
 
     @Test
