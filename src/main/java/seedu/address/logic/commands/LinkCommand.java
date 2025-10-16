@@ -28,6 +28,12 @@ public class LinkCommand extends Command {
     private final Index parentIndex;
     private final Index studentIndex;
 
+    /**
+     * Constructs a {@code LinkCommand} with the specified student and parent indexes.
+     *
+     * @param student the {@link Index} of the student to be linked
+     * @param parent the {@link Index} of the parent to be linked
+     */
     public LinkCommand(Index student, Index parent) {
         this.studentIndex = student;
         this.parentIndex = parent;

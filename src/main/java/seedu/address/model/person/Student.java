@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -48,15 +50,32 @@ public class Student extends Person {
     public String toString() {
         return super.toString() + "; Schedule: " + schedule;
     }
-
+    /**
+     * Adds a parent {@link Parent} to this student's list of parents.
+     * If the parent is already linked, throw an exception.
+     *
+     * @param parent the {@link Student} to be added
+     * @throws DuplicatePersonException if the parent is already linked
+     */
     public void addParent(Parent parent) {
         if (!this.parents.contains(parent)) {
             parents.add(parent);
+        } else {
+            throw new DuplicatePersonException();
         }
     }
+    /**
+     * Removes a parent {@link Parent} from this student's list of parents.
+     * If the parent is not currently linked, an exception is thrown.
+     *
+     * @param parent the {@link Parent} to be removed from this student's parents
+     * @throws PersonNotFoundException if the parent is not currently linked
+     */
     public void removeParent(Parent parent) {
         if (this.parents.contains(parent)) {
             parents.remove(parent);
+        } else {
+            throw new PersonNotFoundException();
         }
     }
 

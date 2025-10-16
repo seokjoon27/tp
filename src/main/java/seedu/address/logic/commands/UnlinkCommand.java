@@ -27,7 +27,12 @@ public class UnlinkCommand extends Command {
 
     private final Index parentIndex;
     private final Index studentIndex;
-
+    /**
+     * Constructs an {@code UnlinkCommand} with the specified student and parent indexes.
+     *
+     * @param student the {@link Index} of the student to be unlinked
+     * @param parent the {@link Index} of the parent to be unlinked
+     */
     public UnlinkCommand(Index student, Index parent) {
         this.studentIndex = student;
         this.parentIndex = parent;

@@ -11,6 +11,14 @@ import seedu.address.logic.parser.exceptions.ParseException;
  * Parses input arguments and creates a new UnlinkCommand object
  */
 public class UnlinkCommandParser implements Parser<UnlinkCommand> {
+    /**
+     * Parses the given {@code String} of arguments in the context of an {@code UnlinkCommand}
+     * and returns an {@code UnlinkCommand} object for execution.
+     *
+     * @param args the input string containing the student and parent indexes with prefixes
+     * @return an {@code UnlinkCommand} constructed with the parsed student and parent indexes
+     * @throws ParseException if the input string is missing required prefixes or contains invalid indexes
+     */
     public UnlinkCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_PARENT, PREFIX_STUDENT);
