@@ -40,6 +40,7 @@ class JsonAdaptedPerson {
     private final String cost;
     private final Boolean paymentStatus;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
+    private final List<String> linkedNames = new ArrayList<>();
     private final String schedule;
 
     /**
@@ -52,6 +53,7 @@ class JsonAdaptedPerson {
                              @JsonProperty("note") String note, @JsonProperty("cost") String cost,
                              @JsonProperty("paymentStatus") Boolean paymentStatus,
                              @JsonProperty("tags") List<JsonAdaptedTag> tags,
+                             @JsonProperty("linkedNames") List<String> linkedNames,
                              @JsonProperty("schedule") String schedule) {
         this.type = type;
         this.name = name;
@@ -64,6 +66,9 @@ class JsonAdaptedPerson {
         this.schedule = schedule;
         if (tags != null) {
             this.tags.addAll(tags);
+        }
+        if (linkedNames != null) {
+            this.linkedNames.addAll(linkedNames);
         }
     }
 
@@ -82,11 +87,18 @@ class JsonAdaptedPerson {
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
-        if (source instanceof Student) {
-            schedule = ((Student) source).getSchedule().value;
+        if (source instanceof Student student) {
+            // preserve schedule
+            schedule = student.getSchedule() != null ? student.getSchedule().value : null;
+
+            // include linked parent names
+            for (Parent parent : student.getParents()) {
+                linkedNames.add(parent.getName().fullName);
+            }
         } else {
             schedule = null;
         }
+
     }
 
     /**
@@ -164,11 +176,35 @@ class JsonAdaptedPerson {
 
         final Schedule modelSchedule = (schedule == null) ? new Schedule("") : new Schedule(schedule);
 
-        return modelType.isStudent()
-                ? new Student(modelName, modelPhone, modelEmail, modelAddress, modelNote, modelSchedule, modelCost,
-                modelPaymentStatus, modelTags)
-                : new Parent(modelName, modelPhone, modelEmail, modelAddress, modelNote,
-                modelCost, modelPaymentStatus, modelTags);
-    }
 
+        if (modelType.isStudent()) {
+            // Use the constructor that preserves schedule
+            Student student = new Student(
+                    modelName,
+                    modelPhone,
+                    modelEmail,
+                    modelAddress,
+                    modelNote,
+                    modelSchedule,
+                    modelCost,
+                    modelPaymentStatus,
+                    modelTags
+            );
+
+            student.setLinkedNames(linkedNames == null ? new ArrayList<>() : new ArrayList<>(linkedNames));
+            return student;
+
+        } else {
+            return new Parent(
+                    modelName,
+                    modelPhone,
+                    modelEmail,
+                    modelAddress,
+                    modelNote,
+                    modelCost,
+                    modelPaymentStatus,
+                    modelTags
+            );
+        }
+    }
 }

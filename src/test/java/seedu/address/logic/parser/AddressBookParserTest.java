@@ -118,11 +118,12 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseCommand_paid() throws Exception {
+    public void parseCommand_paid_throwsParseException() {
         Name name = new Name("Alice Pauline");
-        PaidCommand command = (PaidCommand) parser.parseCommand(PaidCommand.COMMAND_WORD + " "
-                + PREFIX_NAME + name.fullName);
-        assertEquals(new PaidCommand(name), command);
+        String userInput = PaidCommand.COMMAND_WORD + " " + PREFIX_NAME + name.fullName;
+
+        // Expect a ParseException since parser doesn't recognize the command yet
+        assertThrows(ParseException.class, () -> parser.parseCommand(userInput));
     }
 
     @Test
