@@ -10,11 +10,6 @@ Tutorhub is a **fast, typing first address book for private tutors** to organise
 
 * Table of Contents
 {:toc}
-1. [Quick Start](#quick-start)
-2. [Features](#features)
-3. [FAQ](#faq)
-4. [Known Issues](#known-issues)
-5. [Command summary](#command-summary)
 --------------------------------------------------------------------------------------------------------------------
 
 ## Quick start
@@ -365,7 +360,9 @@ Examples:
 * `RESET ALL` — Works the same (case-insensitive).
 * `reset all now` — Invalid. Shows: *Error: invalid format. Use "reset all" only.*
 
-:bulb: **Tip:**  Use the `reset all` command at the start of each billing cycle to quickly clear all previous payment records.
+:bulb: **Tip:**  
+Use the `reset all` command at the start of each billing cycle to quickly clear all previous payment records.
+
 
 
 ### Exiting the program : `exit`
