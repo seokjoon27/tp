@@ -301,11 +301,11 @@ Assigns a cost to a contact when adding them as contact
 * To edit the COST of a specific student, simply type `edit INDEX ... pay/COST`
 
 Format:                         
-`Add type/s ... pay/COST`
+`add type/s ... pay/COST`
 
 Examples:
-* `Add n/malcolm type/s ... pay/100` - Adds a student named malcolm whose cost per lesson is $100
-* `Edit 1 pay/100` - edits contact at INDEX 1 to have cost be $100
+* `add n/malcolm type/s ... pay/100` - Adds a student named malcolm whose cost per lesson is $100
+* `edit 1 pay/100` - edits contact at INDEX 1 to have cost be $100
 
 The cost appears in the GUI under the student’s profile as:
 ```
@@ -315,7 +315,7 @@ The cost appears in the GUI under the student’s profile as:
 
 ### Checking who has paid and who hasn’t : `list paid` and `list unpaid`
 
-Shows contacts filtered by payment status, or lists all contacts.
+Shows contacts filtered by payment status.
 
 * list paid — shows only contacts whose payment status is Paid.
 * list unpaid — shows only contacts whose payment status is Unpaid.
