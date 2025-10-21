@@ -39,7 +39,7 @@ public class ScheduleCommandParser implements Parser<ScheduleCommand> {
             schedule = new Schedule(scheduleString);
         } catch (IllegalArgumentException e) {
             throw new ParseException("Invalid schedule format. Use either: "
-                    + "WEEKDAY HH:mm-HH:mm , MM-DD-YYYY HH:mm-HH:mm "
+                    + "DAY HH:mm-HH:mm or MM-DD-YYYY HH:mm-HH:mm "
                     + "Example: 'Monday 14:00-16:00', '12-10-2025 14:00-16:00'"
                     + " End time must be after start time.");
         }
