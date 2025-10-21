@@ -115,9 +115,7 @@ Adds a person to the address book. There are 2 types of person to be added: Pare
 Format: `add n/NAME type/TYPE p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​`
 
 
-<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-A person can have any number of tags (including 0)
-</div>
+:bulb: **Tip:** A person can have any number of tags (including 0)
 
 
 Examples:
@@ -265,10 +263,9 @@ Examples:
 * `note 2 note/Needs extra help in math` — Adds a note under the second student.
 * `note 1` — Deletes the note(s) under the first student.
 
-
-<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
+:bulb: **Tip:**
 Use the `note` command to record useful or must-know information about a student that isn’t already captured by other fields.
-</div>
+
 
 
 
@@ -347,9 +344,8 @@ Examples:
 * `paid 1`-toggles payment status of contact at INDEX 1
 * `paid n/Alex yeoh`- toggles payment status of contact named Alex Yeoh
 
-<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-Use the paid command to track whether a student has paid you for a lesson. The payment status will be displayed in the GUI using a checkbox in the top right corner. 
-</div>
+:bulb: **Tip:**
+Use the `paid` command to track whether a student has paid you for a lesson. The payment status will be displayed in the GUI using a checkbox in the top right corner. 
 
 
 ### Resetting payment status for every Student : `reset all`
@@ -369,9 +365,7 @@ Examples:
 * `RESET ALL` — Works the same (case-insensitive).
 * `reset all now` — Invalid. Shows: *Error: invalid format. Use "reset all" only.*
 
-<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-Use the `reset all` command at the start of each billing cycle to quickly clear all previous payment records.
-</div>
+:bulb: **Tip:**  Use the `reset all` command at the start of each billing cycle to quickly clear all previous payment records.
 
 
 ### Exiting the program : `exit`
