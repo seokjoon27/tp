@@ -1,7 +1,4 @@
----
-layout: page
-title: User Guide
----
+
 # TutorHub
 
 Tutorhub is a **fast, typing first address book for private tutors** to organise student details streamlining communication and tracking so tutors spend less time managing data and more time teaching.
