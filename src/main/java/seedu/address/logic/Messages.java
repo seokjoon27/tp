@@ -6,6 +6,7 @@ import java.util.stream.Stream;
 
 import seedu.address.logic.parser.Prefix;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Student;
 
 /**
  * Container for user visible messages.
@@ -33,22 +34,40 @@ public class Messages {
 
     /**
      * Formats the {@code person} for display to the user.
+     * Include Schedule only if the person is a student.
      */
     public static String format(Person person) {
         final StringBuilder builder = new StringBuilder();
+
         builder.append(person.getName())
-                .append("(")
+                .append(" (")
                 .append(person.getType())
                 .append(")")
                 .append("; Phone: ")
                 .append(person.getPhone())
-                .append("; Email: ")
-                .append(person.getEmail())
                 .append("; Address: ")
                 .append(person.getAddress())
-                .append("; Tags: ");
-        person.getTags().forEach(builder::append);
+                .append("; Email: ")
+                .append(person.getEmail());
+
+        if (person.getNote() != null && !person.getNote().value.isEmpty()) {
+            builder.append("; Note: ").append(person.getNote());
+        }
+
+        if (person instanceof Student) {
+            Student student = (Student) person;
+            if (student.getSchedule() != null) {
+                builder.append("; Schedule: ").append(student.getSchedule());
+            }
+        }
+
+        builder.append("; Cost: ").append(person.getCost());
+
+        if (!person.getTags().isEmpty()) {
+            builder.append("; Tags: ");
+            person.getTags().forEach(builder::append);
+        }
+
         return builder.toString();
     }
-
 }
