@@ -49,7 +49,7 @@ public class CommandTestUtil {
     public static final String VALID_SCHEDULE_AMY = "Monday 14:00-16:00";
     public static final String VALID_SCHEDULE_BOB = "12-10-2025 10:00-12:00";
 
-    public static final String SCHEDULE_DESC_AMY = " " + PREFIX_SCHEDULE + VALID_SCHEDULE_AMY;
+    public static final String SCHEDULE_DESC_AMY = " " + PREFIX_SCHEDULE + "";
     public static final String SCHEDULE_DESC_BOB = " " + PREFIX_SCHEDULE + VALID_SCHEDULE_BOB;
     public static final String TYPE_DESC_AMY = " " + PREFIX_TYPE + VALID_TYPE_AMY;
     public static final String TYPE_DESC_BOB = " " + PREFIX_TYPE + VALID_TYPE_BOB;
@@ -63,7 +63,7 @@ public class CommandTestUtil {
     public static final String ADDRESS_DESC_BOB = " " + PREFIX_ADDRESS + VALID_ADDRESS_BOB;
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
-    public static final String NOTE_DESC_AMY = " " + PREFIX_NOTE + VALID_NOTE_AMY;
+    public static final String NOTE_DESC_AMY = " " + PREFIX_NOTE + "";
     public static final String NOTE_DESC_BOB = " " + PREFIX_NOTE + VALID_NOTE_BOB;
     public static final String PAY_DESC_AMY = " " + PREFIX_PAY + VALID_COST_AMY;
     public static final String PAY_DESC_BOB = " " + PREFIX_PAY + VALID_COST_BOB;
