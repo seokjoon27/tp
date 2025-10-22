@@ -4,8 +4,10 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NOTE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PAY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TYPE;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
@@ -54,6 +56,8 @@ public class EditCommand extends Command {
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
             + "[" + PREFIX_TAG + "TAG]... "
+            + "[" + PREFIX_NOTE + "NOTE] "
+            + "[" + PREFIX_SCHEDULE + "SCHEDULE] "
             + "[" + PREFIX_PAY + "COST]\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
@@ -103,21 +107,23 @@ public class EditCommand extends Command {
      * Creates and returns a {@code Person} with the details of {@code personToEdit}
      * edited with {@code editPersonDescriptor}.
      */
-    private static Person createEditedPerson(Person personToEdit, EditPersonDescriptor editPersonDescriptor) {
+    private static Person createEditedPerson(Person personToEdit, EditPersonDescriptor editPersonDescriptor) throws CommandException {
         assert personToEdit != null;
 
         Type updatedType = editPersonDescriptor.getType().orElse(personToEdit.getType());
         Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
-        Note updatedNote = personToEdit.getNote(); // edit command does not allow editing Notes
+        Note updatedNote = editPersonDescriptor.getNote().orElse(personToEdit.getNote());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Cost updatedCost = editPersonDescriptor.getCost().orElse(personToEdit.getCost());
         PaymentStatus updatedPaymentStatus = personToEdit.getPaymentStatus();
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
-        if (updatedType.isStudent()) {
-            Schedule updatedSchedule = ((Student) personToEdit).getSchedule(); // preserve existing schedule
+        if (personToEdit instanceof Student) {
+            Schedule updatedSchedule = editPersonDescriptor.getSchedule()
+                    .orElse(((Student) personToEdit).getSchedule());
+
             return new Student(
                     updatedName,
                     updatedPhone,
@@ -130,6 +136,11 @@ public class EditCommand extends Command {
                     updatedTags
             );
         } else {
+            // If the user tries to edit schedule of a Parent, it returns an error
+            if (editPersonDescriptor.getSchedule().isPresent()) {
+                throw new CommandException("Cannot edit schedule for a parent.");
+            }
+
             return new Parent(
                     updatedName,
                     updatedPhone,
@@ -179,6 +190,8 @@ public class EditCommand extends Command {
         private Address address;
         private Cost cost;
         private Set<Tag> tags;
+        private Note note;
+        private Schedule schedule;
 
         public EditPersonDescriptor() {}
 
@@ -194,13 +207,15 @@ public class EditCommand extends Command {
             setAddress(toCopy.address);
             setCost(toCopy.cost);
             setTags(toCopy.tags);
+            setNote(toCopy.note);
+            setSchedule(toCopy.schedule);
         }
 
         /**
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(type, name, phone, email, address, cost, tags);
+            return CollectionUtil.isAnyNonNull(type, name, phone, email, address, cost, tags, schedule, note);
         }
 
         public void setType(Type type) {
@@ -251,6 +266,21 @@ public class EditCommand extends Command {
             return Optional.ofNullable(cost);
         }
 
+        public void setNote(Note note) {
+            this.note = note;
+        }
+
+        public Optional<Note> getNote() {
+            return Optional.ofNullable(note);
+        }
+
+        public void setSchedule(Schedule schedule) {
+            this.schedule = schedule;
+        }
+
+        public Optional<Schedule> getSchedule() {
+            return Optional.ofNullable(schedule);
+        }
         /**
          * Sets {@code tags} to this object's {@code tags}.
          * A defensive copy of {@code tags} is used internally.
@@ -286,7 +316,9 @@ public class EditCommand extends Command {
                     && Objects.equals(cost, otherEditPersonDescriptor.cost)
                     && Objects.equals(email, otherEditPersonDescriptor.email)
                     && Objects.equals(address, otherEditPersonDescriptor.address)
-                    && Objects.equals(tags, otherEditPersonDescriptor.tags);
+                    && Objects.equals(tags, otherEditPersonDescriptor.tags)
+                    && Objects.equals(note, otherEditPersonDescriptor.note)
+                    && Objects.equals(schedule, otherEditPersonDescriptor.schedule);
         }
 
         @Override
@@ -299,6 +331,8 @@ public class EditCommand extends Command {
                     .add("address", address)
                     .add("cost", cost)
                     .add("tags", tags)
+                    .add("note", note)
+                    .add("schedule", schedule)
                     .toString();
         }
     }

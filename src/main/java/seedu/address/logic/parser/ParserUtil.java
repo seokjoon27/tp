@@ -13,7 +13,9 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Cost;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Note;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Schedule;
 import seedu.address.model.person.Type;
 import seedu.address.model.tag.Tag;
 
@@ -154,4 +156,35 @@ public class ParserUtil {
         }
         return tagSet;
     }
+
+    /**
+     * Parses a {@code String note} into a {@code Note}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code note} is invalid.
+     */
+    public static Note parseNote(String note) throws ParseException {
+        requireNonNull(note);
+        String trimmedNote = note.trim();
+        if (!Note.isValidNoteLength(trimmedNote)) {
+            throw new ParseException(Note.MESSAGE_CONSTRAINTS);
+        }
+        return new Note(trimmedNote);
+    }
+
+    /**
+     * Parses a {@code String schedule} into a {@code Schedule}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code schedule} is invalid.
+     */
+    public static Schedule parseSchedule(String schedule) throws ParseException {
+        requireNonNull(schedule);
+        String trimmedSchedule = schedule.trim();
+        if (!Schedule.isValidSchedule(trimmedSchedule)) {
+            throw new ParseException(Schedule.MESSAGE_CONSTRAINTS);
+        }
+        return new Schedule(trimmedSchedule);
+    }
+
 }
