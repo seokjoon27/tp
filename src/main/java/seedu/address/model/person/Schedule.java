@@ -188,13 +188,13 @@ public class Schedule implements Comparable<Schedule> {
      */
     @Override
     public int compareTo(Schedule other) {
-        if (this.isEmpty() && other.isEmpty()){
+        if (this.isEmpty() && other.isEmpty()) {
             return 0;
         }
-        if (this.isEmpty()){
+        if (this.isEmpty()) {
             return 1;
         }
-        if (other.isEmpty()){
+        if (other.isEmpty()) {
             return -1;
         }
 
