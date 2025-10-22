@@ -56,12 +56,12 @@ public class PersonUtil {
         descriptor.getEmail().ifPresent(email -> sb.append(PREFIX_EMAIL).append(email.value).append(" "));
         descriptor.getAddress().ifPresent(address -> sb.append(PREFIX_ADDRESS).append(address.value).append(" "));
         descriptor.getNote().ifPresentOrElse(
-                note -> sb.append(PREFIX_NOTE).append(note.value).append(" "),
-                () -> sb.append(PREFIX_NOTE).append("").append(" ")
+                note -> sb.append(PREFIX_NOTE).append(note.value).append(" ")
+                , () -> sb.append(PREFIX_NOTE).append("").append(" ")
         );
         descriptor.getSchedule().ifPresentOrElse(
-                schedule -> sb.append(PREFIX_SCHEDULE).append(schedule.value).append(" "),
-                () -> sb.append(PREFIX_SCHEDULE).append("No schedule set").append(" ")
+                schedule -> sb.append(PREFIX_SCHEDULE).append(schedule.value).append(" ")
+                , () -> sb.append(PREFIX_SCHEDULE).append("No schedule set").append(" ")
         );
         if (descriptor.getTags().isPresent()) {
             Set<Tag> tags = descriptor.getTags().get();
