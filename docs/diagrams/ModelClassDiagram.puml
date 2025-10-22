@@ -13,7 +13,14 @@ Class ModelManager
 Class UserPrefs
 
 Class UniquePersonList
-Class Person
+Class "{abstract}\nPerson" as Person
+Class Student
+Class Parent
+Class Type
+Class Schedule
+Class Note
+Class Cost
+Class PaymentStatus
 Class Address
 Class Email
 Class Name
@@ -37,11 +44,21 @@ UserPrefs .up.|> ReadOnlyUserPrefs
 
 AddressBook *--> "1" UniquePersonList
 UniquePersonList --> "~* all" Person
+
+Person *--> Type
 Person *--> Name
 Person *--> Phone
 Person *--> Email
 Person *--> Address
 Person *--> "*" Tag
+Person *--> Note
+Person *--> PaymentStatus
+Person *--> Cost
+
+Student --|> Person
+Parent --|> Person
+
+Student *--> Schedule
 
 Person -[hidden]up--> I
 UniquePersonList -[hidden]right-> I
