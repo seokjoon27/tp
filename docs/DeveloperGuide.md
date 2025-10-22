@@ -157,6 +157,10 @@ This section describes some noteworthy details on how certain features are imple
 
 ### \[Proposed\] Undo/redo feature
 
+**Reset command and parsing note**
+
+The `reset all` command is parsed by `ResetCommandParser` which implements the `Parser<ResetCommand>` interface. The parser accepts only the exact lowercase token `all`. Mixed case or uppercase tokens are rejected with the error message `Invalid format. Use 'reset all' only.` This matches the product behavior and keeps the command grammar unambiguous.
+
 #### Proposed Implementation
 
 The proposed undo/redo mechanism is facilitated by `VersionedAddressBook`. It extends `AddressBook` with an undo/redo history, stored internally as an `addressBookStateList` and `currentStatePointer`. Additionally, it implements the following operations:
