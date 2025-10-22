@@ -2,13 +2,12 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.logging.Logger;
-
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.logging.Logger;
 
 /**
  * Represents a schedule for a lesson.
@@ -17,12 +16,11 @@ import java.time.format.DateTimeParseException;
  *  - "10-20-2025 14:00-16:00"
  */
 public class Schedule implements Comparable<Schedule> {
+    public static final String MESSAGE_CONSTRAINTS =
+            "Invalid schedule format. Use either: 'Monday 14:00-16:00' or '10-20-2025 14:00-16:00'.";
     private static final DateTimeFormatter TIME_FORMAT = DateTimeFormatter.ofPattern("HH:mm");
     private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("MM-dd-yyyy");
     private static final Logger logger = Logger.getLogger(Schedule.class.getName());
-
-    public static final String MESSAGE_CONSTRAINTS =
-            "Invalid schedule format. Use either: 'Monday 14:00-16:00' or '10-20-2025 14:00-16:00'.";
 
     public final String value;
     private final LocalDate date;
@@ -52,20 +50,36 @@ public class Schedule implements Comparable<Schedule> {
 
         ParsedSchedule parsed = parse(value);
         this.value = value;
-        this.date = parsed.date;
-        this.dayOfWeek = parsed.dayOfWeek;
-        this.startTime = parsed.startTime;
-        this.endTime = parsed.endTime;
+        this.date = parsed.getDate();
+        this.dayOfWeek = parsed.getDayOfWeek();
+        this.startTime = parsed.getStartTime();
+        this.endTime = parsed.getEndTime();
     }
 
     /**
      * Internal parsed result holder.
      */
     private static class ParsedSchedule {
-        LocalDate date;
-        DayOfWeek dayOfWeek;
-        LocalTime startTime;
-        LocalTime endTime;
+        private LocalDate date;
+        private DayOfWeek dayOfWeek;
+        private LocalTime startTime;
+        private LocalTime endTime;
+
+        public LocalDate getDate() {
+            return date;
+        }
+
+        public DayOfWeek getDayOfWeek() {
+            return dayOfWeek;
+        }
+
+        public LocalTime getStartTime() {
+            return startTime;
+        }
+
+        public LocalTime getEndTime() {
+            return endTime;
+        }
     }
 
     /**
@@ -174,9 +188,15 @@ public class Schedule implements Comparable<Schedule> {
      */
     @Override
     public int compareTo(Schedule other) {
-        if (this.isEmpty() && other.isEmpty()) return 0;
-        if (this.isEmpty()) return 1;
-        if (other.isEmpty()) return -1;
+        if (this.isEmpty() && other.isEmpty()){
+            return 0;
+        }
+        if (this.isEmpty()){
+            return 1;
+        }
+        if (other.isEmpty()){
+            return -1;
+        }
 
         if (this.date != null && other.date != null) {
             int dateCompare = this.date.compareTo(other.date);
