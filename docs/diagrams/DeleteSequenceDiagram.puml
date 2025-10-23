@@ -67,4 +67,11 @@ deactivate DeleteCommand
 
 [<--LogicManager
 deactivate LogicManager
+
+alt valid input
+    DeleteCommandParser -> DeleteCommand : new DeleteCommand(index)
+else invalid input
+    DeleteCommandParser --> AddressBookParser : throw ParseException
+end
+
 @enduml

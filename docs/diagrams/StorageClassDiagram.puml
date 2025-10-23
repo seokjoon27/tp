@@ -28,8 +28,9 @@ Class HiddenOutside #FFFFFF
 HiddenOutside ..> Storage
 
 StorageManager .up.|> Storage
-StorageManager -up-> "1" UserPrefsStorage
-StorageManager -up-> "1" AddressBookStorage
+StorageManager --> AddressBookStorage
+StorageManager --> UserPrefsStorage
+
 
 Storage -left-|> UserPrefsStorage
 Storage -right-|> AddressBookStorage
