@@ -11,9 +11,14 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TYPE;
 
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
-import java.util.stream.Stream;
+import java.util.stream.Collectors;
 
+import seedu.address.logic.Messages;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
@@ -35,6 +40,9 @@ import seedu.address.model.tag.Tag;
  * Parses input arguments and creates a new AddCommand object
  */
 public class AddCommandParser implements Parser<AddCommand> {
+    private static final Map<String, String> REQUIRED_PREFIX_DISPLAY_NAMES = createRequiredPrefixDisplayNames();
+    private static final List<Prefix> REQUIRED_PREFIXES_ORDER = List.of(
+            PREFIX_TYPE, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS);
 
     /**
      * Parses the given {@code String} of arguments in the context of the AddCommand
@@ -46,9 +54,20 @@ public class AddCommandParser implements Parser<AddCommand> {
                 ArgumentTokenizer.tokenize(args, PREFIX_TYPE, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
                         PREFIX_ADDRESS, PREFIX_TAG, PREFIX_NOTE, PREFIX_SCHEDULE, PREFIX_PAY);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_TYPE, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_EMAIL)
-                || !argMultimap.getPreamble().isEmpty()) {
+        if (!argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+        }
+
+        List<Prefix> missingRequiredPrefixes = REQUIRED_PREFIXES_ORDER.stream()
+                .filter(prefix -> argMultimap.getValue(prefix).isEmpty())
+                .collect(Collectors.toList());
+
+        if (!missingRequiredPrefixes.isEmpty()) {
+            String missingFields = missingRequiredPrefixes.stream()
+                    .map(prefix -> prefix + REQUIRED_PREFIX_DISPLAY_NAMES.get(prefix.getPrefix()))
+                    .collect(Collectors.joining(", "));
+            throw new ParseException(String.format(Messages.MESSAGE_MISSING_REQUIRED_FIELDS,
+                    missingFields, AddCommand.MESSAGE_USAGE));
         }
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_TYPE, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
@@ -85,12 +104,13 @@ public class AddCommandParser implements Parser<AddCommand> {
         return new AddCommand(person);
     }
 
-    /**
-     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
-     * {@code ArgumentMultimap}.
-     */
-    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
-        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
+    private static Map<String, String> createRequiredPrefixDisplayNames() {
+        Map<String, String> displayNames = new LinkedHashMap<>();
+        displayNames.put(PREFIX_TYPE.getPrefix(), "TYPE");
+        displayNames.put(PREFIX_NAME.getPrefix(), "NAME");
+        displayNames.put(PREFIX_PHONE.getPrefix(), "PHONE");
+        displayNames.put(PREFIX_EMAIL.getPrefix(), "EMAIL");
+        displayNames.put(PREFIX_ADDRESS.getPrefix(), "ADDRESS");
+        return Collections.unmodifiableMap(displayNames);
     }
-
 }
