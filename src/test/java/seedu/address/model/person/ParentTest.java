@@ -1,7 +1,7 @@
 package seedu.address.model.person;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import java.util.HashSet;
 
@@ -28,6 +28,7 @@ public class ParentTest {
         assertEquals("p", p.getType().toString(), "Parent must carry type 'p'");
     }
 
+
     @Test
     public void equals_sameValues_true() {
         Parent p1 = makeParent("Bob");
@@ -39,6 +40,6 @@ public class ParentTest {
     public void equals_differentName_false() {
         Parent p1 = makeParent("Bob");
         Parent p2 = makeParent("Charlie");
-        assertNotEquals(p1, p2);
+        assertFalse(p1.equals(p2));
     }
 }
