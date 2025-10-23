@@ -25,14 +25,14 @@ public class LinkCommandParserTest {
     public void parse_missingParentPrefix_throwsParseException() {
         // Missing parent prefix
         String userInput = " student/1";
-        assertParseFailure(parser, userInput, "Missing parent index.");
+        assertParseFailure(parser, userInput, "Missing parent index. Example: link student/1 parent/2");
     }
 
     @Test
     public void parse_missingStudentPrefix_throwsParseException() {
         // Missing student prefix
         String userInput = " parent/2";
-        assertParseFailure(parser, userInput, "Missing student index.");
+        assertParseFailure(parser, userInput, "Missing student index. Example: link student/1 parent/2");
     }
 
     @Test
