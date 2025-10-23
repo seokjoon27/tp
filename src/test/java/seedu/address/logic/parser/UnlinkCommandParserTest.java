@@ -28,13 +28,13 @@ public class UnlinkCommandParserTest {
     @Test
     public void parse_missingParentPrefix_throwsParseException() {
         String userInput = " " + PREFIX_STUDENT + "1";
-        assertParseFailure(parser, userInput, "Missing parent index.");
+        assertParseFailure(parser, userInput, "Missing parent index. Example: unlink student/1 parent/2");
     }
 
     @Test
     public void parse_missingStudentPrefix_throwsParseException() {
         String userInput = " " + PREFIX_PARENT + "2";
-        assertParseFailure(parser, userInput, "Missing student index.");
+        assertParseFailure(parser, userInput, "Missing student index. Example: unlink student/1 parent/2");
     }
 
     @Test
