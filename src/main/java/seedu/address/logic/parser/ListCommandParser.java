@@ -52,6 +52,7 @@ public class ListCommandParser implements Parser<ListCommand> {
                             + "  list          (show all)\n"
                             + "  list paid     (filter paid)\n"
                             + "  list unpaid   (filter unpaid)\n"
+                            + "  list schedule (filter schedules)\n"
                             + "For name search, use: find n/<keywords>"
             );
         }
