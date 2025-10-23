@@ -15,7 +15,7 @@ public class ResetCommandParser implements Parser<ResetCommand> {
     public ResetCommand parse(String args) throws ParseException {
         String trimmed = args == null ? "" : args.trim();
 
-        if (trimmed.isEmpty() || !trimmed.equalsIgnoreCase("all")) {
+        if (trimmed.isEmpty() || !trimmed.equals("all")) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                             "Error: invalid format. Use \"reset all\" only."));
