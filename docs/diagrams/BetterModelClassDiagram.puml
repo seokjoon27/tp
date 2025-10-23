@@ -8,14 +8,25 @@ AddressBook *-right-> "1" UniquePersonList
 AddressBook *-right-> "1" UniqueTagList
 UniqueTagList -[hidden]down- UniquePersonList
 UniqueTagList -[hidden]down- UniquePersonList
+Class "{abstract}\nPerson" as Person
+
 
 UniqueTagList -right-> "*" Tag
 UniquePersonList -right-> Person
 
 Person -up-> "*" Tag
 
+Person *--> Type
 Person *--> Name
 Person *--> Phone
 Person *--> Email
 Person *--> Address
+Person *--> Note
+Person *--> Cost
+Person *--> PaymentStatus
+
+Student -left-|> Person
+Student *--> Schedule
+
+Parent -left-|> Person
 @enduml
