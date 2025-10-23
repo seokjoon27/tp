@@ -7,6 +7,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NOTE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PAY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TYPE;
 
@@ -43,7 +44,7 @@ public class AddCommandParser implements Parser<AddCommand> {
     public AddCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_TYPE, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
-                        PREFIX_ADDRESS, PREFIX_TAG, PREFIX_NOTE, PREFIX_PAY);
+                        PREFIX_ADDRESS, PREFIX_TAG, PREFIX_NOTE, PREFIX_SCHEDULE, PREFIX_PAY);
 
         if (!arePrefixesPresent(argMultimap, PREFIX_TYPE, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_EMAIL)
                 || !argMultimap.getPreamble().isEmpty()) {
@@ -57,8 +58,20 @@ public class AddCommandParser implements Parser<AddCommand> {
         Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get());
         Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
         Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get());
-        Note note = new Note(""); // add command does not allow adding Notes straight away
-        Schedule schedule = new Schedule(""); // schedule will be empty when added
+        Note note;
+        if (argMultimap.getValue(PREFIX_NOTE).isPresent()) {
+            note = ParserUtil.parseNote(argMultimap.getValue(PREFIX_NOTE).get());
+        } else {
+            note = new Note("");
+        }
+        Schedule schedule = null;
+        if (type.isStudent()) {
+            schedule = argMultimap.getValue(PREFIX_SCHEDULE).isPresent()
+                    ? ParserUtil.parseSchedule(argMultimap.getValue(PREFIX_SCHEDULE).get())
+                    : new Schedule("");
+        } else if (type.isParent() && argMultimap.getValue(PREFIX_SCHEDULE).isPresent()) {
+            throw new ParseException("Parents cannot have a schedule.");
+        }
         Cost cost = argMultimap.getValue(PREFIX_PAY).isPresent()
                 ? ParserUtil.parseCost(argMultimap.getValue(PREFIX_PAY).get())
                 : null;

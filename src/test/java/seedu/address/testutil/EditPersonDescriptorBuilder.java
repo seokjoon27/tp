@@ -9,8 +9,11 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Cost;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Note;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Schedule;
+import seedu.address.model.person.Student;
 import seedu.address.model.person.Type;
 import seedu.address.model.tag.Tag;
 
@@ -39,6 +42,11 @@ public class EditPersonDescriptorBuilder {
         descriptor.setPhone(person.getPhone());
         descriptor.setEmail(person.getEmail());
         descriptor.setAddress(person.getAddress());
+        descriptor.setNote(person.getNote());
+        if (person instanceof Student) {
+            Student student = (Student) person;
+            descriptor.setSchedule(student.getSchedule());
+        }
         descriptor.setCost(person.getCost());
         descriptor.setTags(person.getTags());
     }
@@ -80,6 +88,22 @@ public class EditPersonDescriptorBuilder {
      */
     public EditPersonDescriptorBuilder withAddress(String address) {
         descriptor.setAddress(new Address(address));
+        return this;
+    }
+
+    /**
+     * Sets the {@code Note} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withNote(String note) {
+        descriptor.setNote(new Note(note));
+        return this;
+    }
+
+    /**
+     * Sets the {@code Cost} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withSchedule(String schedule) {
+        descriptor.setSchedule(new Schedule(schedule));
         return this;
     }
 

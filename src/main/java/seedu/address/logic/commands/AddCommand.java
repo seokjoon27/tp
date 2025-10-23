@@ -4,8 +4,10 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NOTE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PAY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TYPE;
 
@@ -29,16 +31,27 @@ public class AddCommand extends Command {
             + PREFIX_PHONE + "PHONE "
             + PREFIX_EMAIL + "EMAIL "
             + PREFIX_ADDRESS + "ADDRESS "
+            + "[" + PREFIX_NOTE + "NOTE] "
+            + "[" + PREFIX_SCHEDULE + "SCHEDULE (students only)] "
             + "[" + PREFIX_PAY + "COST] "
             + "[" + PREFIX_TAG + "TAG]...\n"
-            + "Example: " + COMMAND_WORD + " "
+            + "Example (Student): " + COMMAND_WORD + " "
             + PREFIX_TYPE + "s "
             + PREFIX_NAME + "John Doe "
             + PREFIX_PHONE + "98765432 "
             + PREFIX_EMAIL + "johnd@example.com "
             + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 "
+            + PREFIX_NOTE + "Prefers online lessons "
+            + PREFIX_SCHEDULE + "Monday 14:00-16:00 "
             + PREFIX_PAY + "100 "
-            + PREFIX_TAG + "friends";
+            + PREFIX_TAG + "friends\n"
+            + "Example (Parent): " + COMMAND_WORD + " "
+            + PREFIX_TYPE + "p "
+            + PREFIX_NAME + "Jane Smith "
+            + PREFIX_PHONE + "87654321 "
+            + PREFIX_EMAIL + "janes@example.com "
+            + PREFIX_ADDRESS + "123, Clementi Road, #04-12 "
+            + PREFIX_NOTE + "Mother of John";
 
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";
     public static final String MESSAGE_SUCCESS_WITH_COST = "Successfully added cost per lesson information!\n"

@@ -76,8 +76,9 @@ public class PersonCard extends UiPart<Region> {
                 ? formatField("Cost", person.getCost().toString())
                 : formatField("Cost", ""));
 
-        paidStatus.setText("[Paid]");
-        paidStatus.setSelected(person.getPaymentStatus().isPaid());
+        boolean isPaid = person.getPaymentStatus().isPaid();
+        paidStatus.setSelected(isPaid);
+        paidStatus.setText(isPaid ? "[Paid]" : "[Unpaid]");
 
         tags.getChildren().clear();
         person.getTags().stream()
