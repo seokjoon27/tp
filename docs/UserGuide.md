@@ -87,7 +87,7 @@ Tutorhub is a **fast, typing first address book for private tutors** to organise
 ### Viewing help : `help`
 
 
-Shows a message explaining how to access the help page.
+Shows a list of all commands accepted in Tutorhub.
 
 
 ![help message](images/helpMessage.png)

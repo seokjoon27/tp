@@ -14,10 +14,55 @@ import seedu.address.commons.core.LogsCenter;
  * Controller for a help page
  */
 public class HelpWindow extends UiPart<Stage> {
-
-    public static final String USERGUIDE_URL = "https://se-education.org/addressbook-level3/UserGuide.html";
-    public static final String HELP_MESSAGE = "Refer to the user guide: " + USERGUIDE_URL;
-
+    @SuppressWarnings("checkstyle:LineLength")
+    public static final String HELP_MESSAGE = " Add:  add type/s n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...\n"
+                                              + "             e.g. add n/James Ho p/22224444 e/jamesho@example.com a/12"
+                                              + "3, Clementi Rd, 1234665 t/friend t/colleague\n"
+                                              + "──────────────────────────────────────────────────────────────────────"
+                                              + "─────────────────────────\n"
+                                              + " Clear:  clear\n"
+                                              + "──────────────────────────────────────────────────────────────────────"
+                                              + "─────────────────────────\n"
+                                              + " Delete:  delete INDEX\n"
+                                              + "                  e.g. delete 3\n"
+                                              + "──────────────────────────────────────────────────────────────────────"
+                                              + "─────────────────────────\n"
+                                              + " Edit:  edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] "
+                                              + "[t/TAG]...\n"
+                                              + "             e.g. edit 2 n/James Lee e/jameslee@example.com    \n"
+                                              + "──────────────────────────────────────────────────────────────────────"
+                                              + "─────────────────────────\n"
+                                              + " Find:  find KEYWORD [MORE_KEYWORDS]\n"
+                                              + "              e.g. find James Jake\n"
+                                              + "──────────────────────────────────────────────────────────────────────"
+                                              + "─────────────────────────\n"
+                                              + " List:  list\n"
+                                              + "──────────────────────────────────────────────────────────────────────"
+                                              + "─────────────────────────\n"
+                                              + " List paid/unpaid:  list paid  ||  list unpaid\n"
+                                              + "──────────────────────────────────────────────────────────────────────"
+                                              + "─────────────────────────\n"
+                                              + " Help:  help\n"
+                                              + "──────────────────────────────────────────────────────────────────────"
+                                              + "─────────────────────────\n"
+                                              + " Schedule:  schedule INDEX schedule/DAY TIME-TIME\n"
+                                              + "                       e.g. schedule 1 schedule/Monday 16:00-18:00\n"
+                                              + "──────────────────────────────────────────────────────────────────────"
+                                              + "─────────────────────────\n"
+                                              + " Note:  note INDEX note/NOTE\n"
+                                              + "──────────────────────────────────────────────────────────────────────"
+                                              + "─────────────────────────\n"
+                                              + " Paid:  paid INDEX or paid n/NAME\n"
+                                              + "──────────────────────────────────────────────────────────────────────"
+                                              + "─────────────────────────\n"
+                                              + " Reset all:  reset all\n"
+                                              + "──────────────────────────────────────────────────────────────────────"
+                                              + "─────────────────────────\n"
+                                              + " Link:  link student/INDEX parent/INDEX\n"
+                                              + "             e.g. link student/1 parent/5\n"
+                                              + "──────────────────────────────────────────────────────────────────────"
+                                              + "─────────────────────────\n"
+                                              + " Unlink:  unlink student/INDEX parent/INDEX\n";
     private static final Logger logger = LogsCenter.getLogger(HelpWindow.class);
     private static final String FXML = "HelpWindow.fxml";
 
@@ -96,7 +141,7 @@ public class HelpWindow extends UiPart<Stage> {
     private void copyUrl() {
         final Clipboard clipboard = Clipboard.getSystemClipboard();
         final ClipboardContent url = new ClipboardContent();
-        url.putString(USERGUIDE_URL);
+        url.putString(HELP_MESSAGE);
         clipboard.setContent(url);
     }
 }
