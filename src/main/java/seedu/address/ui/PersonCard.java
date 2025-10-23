@@ -1,6 +1,7 @@
 package seedu.address.ui;
 
 import java.util.Comparator;
+import java.util.stream.Collectors;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
@@ -105,9 +106,13 @@ public class PersonCard extends UiPart<Region> {
             parentsContainer.setManaged(true);
             parentsContainer.setVisible(true);
 
-            student.getParents().stream()
+            String parentNames = student.getParents().stream()
                     .sorted(Comparator.comparing(parent -> parent.getName().fullName))
-                    .forEach(parent -> parents.getChildren().add(new Label(parent.getName().fullName)));
+                    .map(parent -> parent.getName().fullName)
+                    .collect(Collectors.joining(", "));
+
+            parents.getChildren().clear();
+            parents.getChildren().add(new Label(parentNames));
         } else {
             schedule.setText("");
             schedule.setVisible(false);
