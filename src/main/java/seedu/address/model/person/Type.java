@@ -15,7 +15,7 @@ public class Type {
     public static final String STUDENT = "s";
     public static final String PARENT = "p";
 
-    public final String value;
+    public final String value; //DEFENSIVE PROGRAMMING: IMMUTABILITY
 
     /**
      * Constructs a {@code Type}.
@@ -25,7 +25,7 @@ public class Type {
     public Type(String type) {
         requireNonNull(type);
         checkArgument(isValidType(type), MESSAGE_CONSTRAINTS);
-        this.value = type.trim().toLowerCase(); // always normalize to lowercase
+        this.value = type.trim().toLowerCase();
     }
 
     /**

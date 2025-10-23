@@ -46,6 +46,8 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private FlowPane tags;
     @FXML
+    private Label tagsLine;
+    @FXML
     private Label note;
     @FXML
     private Label schedule;
@@ -78,10 +80,17 @@ public class PersonCard extends UiPart<Region> {
         paidStatus.setSelected(isPaid);
         paidStatus.setText(isPaid ? "[Paid]" : "[Unpaid]");
 
+        type.setManaged(false);
+        type.setVisible(false);
+
         tags.getChildren().clear();
-        person.getTags().stream()
-                .sorted(Comparator.comparing(tag -> tag.tagName))
-                .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+
+        String chipText = person.getType().isStudent() ? "Student" : "Parent";
+        Label typeChip = new Label(chipText);
+        typeChip.getStyleClass().addAll("chip", person.getType().isStudent() ? "chip-student" : "chip-parent");
+
+        tags.getChildren().add(typeChip);
+        tagsLine.setText(formatField("Tags", joinTags(person)));
 
         parents.getChildren().clear();
 

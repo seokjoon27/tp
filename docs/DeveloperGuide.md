@@ -117,7 +117,7 @@ How the parsing works:
 ### Model component
 **API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
 
-<img src="images/ModelClassDiagram.png" width="450" />
+<img src="images/ModelClassDiagram.png" width="600" />
 
 
 The `Model` component,
@@ -127,9 +127,28 @@ The `Model` component,
 * stores a `UserPref` object that represents the user’s preferences. This is exposed to the outside as a `ReadOnlyUserPref` objects.
 * does not depend on any of the other three components (as the `Model` represents data entities of the domain, they should make sense on their own without depending on other components)
 
+The `Person` class is now abstract and represents the common attributes shared by all people in the system (e.g., name, phone, email, address, note, cost, payment status, and tags).
+
+Two concrete subclasses extend `Person`:
+
+`Student` – represents a student, with an additional `Schedule` field indicating their availability or timetable.
+
+`Parent` – represents a parent, who does not have a `Schedule` field.
+
+This design allows the Model to handle shared logic through the abstract `Person` class while allowing each subtype (`Student` and `Parent`) to define their own specific properties and behaviors.
+
+:bulb: **Design Rational:**
+This class hierarchy improves extensibility and maintainability:
+
+* Extensibility: Adding new person types (e.g., `Teacher`) only requires subclassing `Person`.
+
+* Encapsulation: Each attribute type (e.g., Email, Note, Schedule) validates and encapsulates its own data.
+
+* Reusability: Shared logic resides in `Person`, while subclass-specific logic resides in `Student` or `Parent`.
+
 <div markdown="span" class="alert alert-info">:information_source: **Note:** An alternative (arguably, a more OOP) model is given below. It has a `Tag` list in the `AddressBook`, which `Person` references. This allows `AddressBook` to only require one `Tag` object per unique tag, instead of each `Person` needing their own `Tag` objects.<br>
 
-<img src="images/BetterModelClassDiagram.png" width="450" />
+<img src="images/BetterModelClassDiagram.png" width="600" />
 
 </div>
 
