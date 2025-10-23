@@ -68,23 +68,17 @@ public class PersonCard extends UiPart<Region> {
         super(FXML);
         this.person = person;
         id.setText(displayedIndex + ". ");
-        name.setText(formatField("Name", person.getName().fullName));
+        name.setText(person.getName().fullName);
         type.setText(formatField("Type", person.getType().isStudent() ? "Student" : "Parent"));
-        phone.setText(formatField("Phone", person.getPhone().value));
-        address.setText(formatField("Address", person.getAddress().value));
-        email.setText(formatField("Email", person.getEmail().value));
-        note.setText(formatField("Note", person.getNote().value));
-
-        cost.setText(person.getCost() != null
-                ? formatField("Cost", person.getCost().toString())
-                : formatField("Cost", ""));
+        setRow(phone, "Phone", person.getPhone().value);
+        setRow(address, "Address", person.getAddress().value);
+        setRow(email, "Email", person.getEmail().value);
+        setRow(note, "Note", person.getNote() == null ? null : person.getNote().value);
+        setRow(cost, "Cost", person.getCost() == null ? null : person.getCost().toString());
 
         boolean isPaid = person.getPaymentStatus().isPaid();
         paidStatus.setSelected(isPaid);
         paidStatus.setText(isPaid ? "[Paid]" : "[Unpaid]");
-
-        type.setManaged(false);
-        type.setVisible(false);
 
         tags.getChildren().clear();
 
@@ -93,16 +87,14 @@ public class PersonCard extends UiPart<Region> {
         typeChip.getStyleClass().addAll("chip", person.getType().isStudent() ? "chip-student" : "chip-parent");
 
         tags.getChildren().add(typeChip);
-        tagsLine.setText(formatField("Tags", joinTags(person)));
-
+        setRow(tagsLine, "Tags", joinTags(person));
         parents.getChildren().clear();
+
 
         if (person instanceof Student student) {
             schedule.setText(student.getSchedule() != null
                     ? formatField("Schedule", student.getSchedule().value)
                     : formatField("Schedule", ""));
-            schedule.setVisible(true);
-
             parentsContainer.setManaged(true);
             parentsContainer.setVisible(true);
 
@@ -114,8 +106,7 @@ public class PersonCard extends UiPart<Region> {
             parents.getChildren().clear();
             parents.getChildren().add(new Label(parentNames));
         } else {
-            schedule.setText("");
-            schedule.setVisible(false);
+            setRow(schedule, null, null);
 
             parentsContainer.setManaged(false);
             parentsContainer.setVisible(false);
@@ -126,6 +117,20 @@ public class PersonCard extends UiPart<Region> {
     private String formatField(String label, String value) {
         return "[" + label + "] " + (value == null ? "" : value);
     }
+
+    /** Show a label row only when value is present; otherwise hide & unmanage (no layout gap). */
+    private void setRow(Label label, String field, String value) {
+        boolean hasValue = value != null && !value.isBlank();
+        label.setManaged(hasValue);
+        label.setVisible(hasValue);
+        if (hasValue) {
+            label.setText(formatField(field, value));
+        } else {
+            label.setText("");
+        }
+    }
+
+    /** Returns a comma-joined list of tags or null if empty (so the row is hidden). */
     private String joinTags(Person p) {
         if (p.getTags() == null || p.getTags().isEmpty()) {
             return "none";
@@ -134,5 +139,6 @@ public class PersonCard extends UiPart<Region> {
                 .map(t -> t.tagName)
                 .sorted(String::compareToIgnoreCase)
                 .collect(java.util.stream.Collectors.joining(", "));
+
     }
 }
