@@ -75,7 +75,6 @@ public class PersonCard extends UiPart<Region> {
         setRow(note, "Note", person.getNote() == null ? null : person.getNote().value);
         setRow(cost, "Cost", person.getCost() == null ? null : person.getCost().toString());
 
-
         boolean isPaid = person.getPaymentStatus().isPaid();
         paidStatus.setSelected(isPaid);
         paidStatus.setText(isPaid ? "[Paid]" : "[Unpaid]");
