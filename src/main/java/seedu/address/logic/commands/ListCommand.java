@@ -25,7 +25,7 @@ public class ListCommand extends Command {
             + "  list                (show all)\n"
             + "  list paid           (show only paid)\n"
             + "  list unpaid         (show only unpaid)\n"
-            + "  list schedule       (show schedules)\n";
+            + "  list schedule       (show only contacts with schedules)\n";
 
     /** Default success message shown when listing all persons. */
     public static final String MESSAGE_SUCCESS = "Listed all persons";
