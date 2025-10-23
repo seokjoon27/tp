@@ -13,6 +13,7 @@ import seedu.address.model.person.Person;
  *   {@code list} — show all persons
  *   {@code list paid} — show only persons whose payment status is paid
  *   {@code list unpaid} — show only persons whose payment status is unpaid
+ *   {@code list schedule} — show only students (who have schedules)
  */
 public class ListCommand extends Command {
 
@@ -24,6 +25,7 @@ public class ListCommand extends Command {
             + "  list                (show all)\n"
             + "  list paid           (show only paid)\n"
             + "  list unpaid         (show only unpaid)\n"
+            + "  list schedule       (show schedules)\n"
             + "  list alice tan      (name contains ‘alice’ AND ‘tan’)\n";
 
     /** Default success message shown when listing all persons. */
