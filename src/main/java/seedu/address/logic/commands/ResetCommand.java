@@ -20,7 +20,7 @@ public class ResetCommand extends Command {
     public static final String COMMAND_WORD = "reset";
 
     public static final String MESSAGE_USAGE = "reset all: Resets payment status to UNPAID for all contacts.\n"
-            + "Example: reset all";
+            + "Example:" + COMMAND_WORD + " all (case sensitive)";
 
     public static final String MESSAGE_SUCCESS = "Payment status of all contacts has been reset to unpaid.";
 
@@ -76,6 +76,6 @@ public class ResetCommand extends Command {
 
     @Override
     public boolean equals(Object other) {
-        return other == this || other instanceof ResetCommand;
+        return other instanceof ResetCommand;
     }
 }
