@@ -183,19 +183,19 @@ public class AddCommandParserTest {
 
         // missing phone prefix
         String missingTypeAndPhoneMessage = String.format(Messages.MESSAGE_MISSING_REQUIRED_FIELDS,
-                "t/TYPE, p/PHONE", AddCommand.MESSAGE_USAGE);
+                PREFIX_TYPE + "TYPE, " + PREFIX_PHONE + "PHONE", AddCommand.MESSAGE_USAGE);
         assertParseFailure(parser, NAME_DESC_BOB + VALID_PHONE_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB,
                 missingTypeAndPhoneMessage);
 
         // missing email prefix
         String missingTypeAndEmailMessage = String.format(Messages.MESSAGE_MISSING_REQUIRED_FIELDS,
-                "t/TYPE, e/EMAIL", AddCommand.MESSAGE_USAGE);
+                PREFIX_TYPE + "TYPE, " + PREFIX_EMAIL + "EMAIL", AddCommand.MESSAGE_USAGE);
         assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + VALID_EMAIL_BOB + ADDRESS_DESC_BOB,
                 missingTypeAndEmailMessage);
 
         // missing address prefix
         String missingTypeAndAddressMessage = String.format(Messages.MESSAGE_MISSING_REQUIRED_FIELDS,
-                "t/TYPE, a/ADDRESS", AddCommand.MESSAGE_USAGE);
+                PREFIX_TYPE + "TYPE, " + PREFIX_ADDRESS + "ADDRESS", AddCommand.MESSAGE_USAGE);
         assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + VALID_ADDRESS_BOB,
                 missingTypeAndAddressMessage);
 
