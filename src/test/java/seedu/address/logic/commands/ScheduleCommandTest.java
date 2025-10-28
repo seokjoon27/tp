@@ -34,45 +34,39 @@ public class ScheduleCommandTest {
         model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
     }
 
-    @Test
-    public void execute_addScheduleUnfilteredList_success() {
-        Person firstPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+    // Helper method to create a student, ScheduleCommand and expected model, then assert success
+    private void assertScheduleCommandSuccess(Index index, String scheduleValue) {
+        Person originalPerson = model.getFilteredPersonList().get(index.getZeroBased());
+        Student studentToEdit = (Student) new PersonBuilder(originalPerson).withType("s").build();
+        model.setPerson(originalPerson, studentToEdit);
 
-        // Ensure we are editing a student
-        Student studentToEdit = (Student) new PersonBuilder(firstPerson).withType("s").build();
-        model.setPerson(firstPerson, studentToEdit);
+        Student editedStudent = (Student) new PersonBuilder(studentToEdit).withSchedule(scheduleValue).build();
+        ScheduleCommand command = new ScheduleCommand(index, new Schedule(scheduleValue));
 
-        Student editedStudent = (Student) new PersonBuilder(studentToEdit).withSchedule(SCHEDULE_STUB).build();
-
-        ScheduleCommand scheduleCommand =
-                new ScheduleCommand(INDEX_FIRST_PERSON, new Schedule(editedStudent.getSchedule().value));
-
-        String expectedMessage = String.format(ScheduleCommand.MESSAGE_ADD_SCHEDULE_SUCCESS, editedStudent.getName());
+        String expectedMessage = scheduleValue.isEmpty()
+                ? String.format(ScheduleCommand.MESSAGE_DELETE_SCHEDULE_SUCCESS, editedStudent.getName())
+                : String.format(ScheduleCommand.MESSAGE_ADD_SCHEDULE_SUCCESS, editedStudent.getName());
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setPerson(studentToEdit, editedStudent);
 
-        assertCommandSuccess(scheduleCommand, model, expectedMessage, expectedModel);
+        assertCommandSuccess(command, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_addScheduleUnfilteredList_success() {
+        assertScheduleCommandSuccess(INDEX_FIRST_PERSON, SCHEDULE_STUB);
     }
 
     @Test
     public void execute_deleteScheduleUnfilteredList_success() {
-        Person firstPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Student studentToEdit =
-                (Student) new PersonBuilder(firstPerson).withType("s").withSchedule(SCHEDULE_STUB).build();
-        model.setPerson(firstPerson, studentToEdit);
+        assertScheduleCommandSuccess(INDEX_FIRST_PERSON, "");
+    }
 
-        Student editedStudent = (Student) new PersonBuilder(studentToEdit).withSchedule("").build();
-        ScheduleCommand scheduleCommand =
-                new ScheduleCommand(INDEX_FIRST_PERSON, new Schedule(""));
-
-        String expectedMessage =
-                String.format(ScheduleCommand.MESSAGE_DELETE_SCHEDULE_SUCCESS, editedStudent.getName());
-
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.setPerson(studentToEdit, editedStudent);
-
-        assertCommandSuccess(scheduleCommand, model, expectedMessage, expectedModel);
+    @Test
+    public void execute_filteredList_success() {
+        showPersonAtIndex(model, INDEX_FIRST_PERSON);
+        assertScheduleCommandSuccess(INDEX_FIRST_PERSON, SCHEDULE_STUB);
     }
 
     @Test
@@ -85,33 +79,12 @@ public class ScheduleCommandTest {
 
     @Test
     public void execute_nonStudent_failure() {
-        Person parentPerson = new PersonBuilder().withType("p").build(); // Parent
+        Person parentPerson = new PersonBuilder().withType("p").build();
         model.setPerson(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()), parentPerson);
 
         ScheduleCommand scheduleCommand = new ScheduleCommand(INDEX_FIRST_PERSON, new Schedule(SCHEDULE_STUB));
 
         assertCommandFailure(scheduleCommand, model, ScheduleCommand.MESSAGE_NOT_STUDENT);
-    }
-
-    @Test
-    public void execute_filteredList_success() {
-        showPersonAtIndex(model, INDEX_FIRST_PERSON);
-
-        Student studentToEdit = (Student) new PersonBuilder(model.getFilteredPersonList()
-                .get(INDEX_FIRST_PERSON.getZeroBased())).withType("s").build();
-        model.setPerson(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()), studentToEdit);
-
-        Student editedStudent = (Student) new PersonBuilder(studentToEdit).withSchedule(SCHEDULE_STUB).build();
-
-        ScheduleCommand scheduleCommand =
-                new ScheduleCommand(INDEX_FIRST_PERSON, new Schedule(editedStudent.getSchedule().value));
-
-        String expectedMessage = String.format(ScheduleCommand.MESSAGE_ADD_SCHEDULE_SUCCESS, editedStudent.getName());
-
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.setPerson(studentToEdit, editedStudent);
-
-        assertCommandSuccess(scheduleCommand, model, expectedMessage, expectedModel);
     }
 
     @Test
