@@ -313,18 +313,50 @@ The cost appears in the GUI under the student’s profile as:
 ```
 
 
-### Checking who has paid and who hasn’t : `list paid` and `list unpaid`
+### 📅 Listing Contacts by Payment or Schedule: `list`
 
-Shows contacts filtered by payment status.
+Displays contacts filtered by their **payment status** or **schedule information**.
 
-* list paid — shows only contacts whose payment status is Paid.
-* list unpaid — shows only contacts whose payment status is Unpaid.
-* Any other argument (e.g., list abc, list 3) is invalid and results in an error message.
-* Arguments are case-insensitive (e.g., list Paid, list UNPAID work).
+---
 
-Format:          
-* `list paid`    
-* `list unpaid`  
+#### 💰 Checking who has paid or not
+Use these commands to filter by payment status:
+
+* `list paid` — shows only contacts whose payment status is **Paid**.
+* `list unpaid` — shows only contacts whose payment status is **Unpaid**.
+
+✅ Arguments are **case-insensitive** and **whitespace-insensitive**  
+(e.g., `list Paid`, `list    unpaid` work).
+
+---
+
+#### 🗓️ Checking schedules
+Use these commands to filter by schedule details:
+
+* `list schedule` — shows all contacts **who have a schedule set**.
+* `list Monday` — shows contacts with schedules that fall on **Monday**.
+* `list 12-12-2025` — shows contacts with schedules on the **12th of December 2025**.
+
+✅ Days are **case-insensitive** (`list MONDAY`, `list monday` work).  
+✅ Dates must follow the **MM-dd-yyyy** format.
+
+---
+
+#### ❌ Invalid arguments
+Any other argument (e.g., `list abc`, `list 123`) is invalid and will result in an error message.
+
+---
+
+#### 🧭 Format Summary
+```
+list
+list paid
+list unpaid
+list schedule
+list <DAY>
+list <DATE>
+```
+
 
 ### Tracking payment status of each Student : `paid`
 
