@@ -31,6 +31,22 @@ public class NoteTest {
     }
 
     @Test
+    public void isValidNoteLength() {
+        // Defensive coding: empty note
+        assertTrue(Note.isValidNoteLength(""));
+
+        // Defensive coding: at boundary
+        assertTrue(Note.isValidNoteLength("a".repeat(100)));
+
+        // Defensive coding: right below boundary
+        assertTrue(Note.isValidNoteLength("a".repeat(99)));
+
+        // Defensive coding: above boundary
+        assertFalse(Note.isValidNoteLength("a".repeat(101)));
+    }
+
+
+    @Test
     public void constructor_noteTooLong_throwsIllegalArgumentException() {
         String longNote = "a".repeat(101); // 101 characters
         assertThrows(IllegalArgumentException.class, () -> new Note(longNote));

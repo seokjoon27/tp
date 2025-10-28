@@ -49,11 +49,21 @@ public class Schedule implements Comparable<Schedule> {
         }
 
         ParsedSchedule parsed = parse(value);
-        this.value = value;
         this.date = parsed.getDate();
         this.dayOfWeek = parsed.getDayOfWeek();
         this.startTime = parsed.getStartTime();
         this.endTime = parsed.getEndTime();
+
+        if (this.dayOfWeek != null) {
+            String dayStr = this.dayOfWeek.toString().substring(0, 1).toUpperCase()
+                    + this.dayOfWeek.toString().substring(1).toLowerCase();
+            this.value = dayStr + " " + TIME_FORMAT.format(this.startTime) + "-" + TIME_FORMAT.format(this.endTime);
+        } else if (this.date != null) {
+            this.value = DATE_FORMAT.format(this.date) + " " + TIME_FORMAT.format(this.startTime)
+                    + "-" + TIME_FORMAT.format(this.endTime);
+        } else {
+            this.value = "";
+        }
     }
 
     /**
@@ -83,44 +93,97 @@ public class Schedule implements Comparable<Schedule> {
     }
 
     /**
-     * Parses and validates the input schedule string.
+     * Parses and validates a schedule string into a {@link ParsedSchedule}.
+     * Supports formats: "DAY HH:mm-HH:mm" or "MM-DD-YYYY HH:mm-HH:mm".
+     * @param input The schedule string to parse.
+     * @return A {@link ParsedSchedule} object with parsed date/day and times.
+     * @throws IllegalArgumentException if input is invalid.
      */
     private static ParsedSchedule parse(String input) {
-        String[] parts = input.split(" ");
-        if (parts.length != 2) {
-            throw new IllegalArgumentException(MESSAGE_CONSTRAINTS);
+        input = normalizeInput(input);
+        if (input.isEmpty()) {
+            return new ParsedSchedule();
         }
 
-        String dayOrDate = parts[0];
-        String timeRange = parts[1];
-        String[] timeParts = timeRange.split("-");
-
-        if (timeParts.length != 2) {
-            throw new IllegalArgumentException("Invalid time range format. Use HH:mm-HH:mm");
-        }
+        String dayOrDate = extractDayOrDate(input);
+        String timeRange = extractTimeRange(input);
 
         ParsedSchedule result = new ParsedSchedule();
+        parseTimeRange(timeRange, result);
+        parseDayOrDate(dayOrDate, result);
 
+        return result;
+    }
+
+    /**
+     * Normalizes input by trimming and replacing multiple spaces with a single space.
+     * @param input Raw schedule string.
+     * @return Normalized schedule string.
+     */
+    private static String normalizeInput(String input) {
+        return input.strip().replaceAll("\\s+", " ");
+    }
+
+    /**
+     * Extracts the first part of the schedule string representing day or date.
+     * @param input Normalized schedule string.
+     * @return Day of week or date portion of the input.
+     * @throws IllegalArgumentException if input does not contain a space separator.
+     */
+    private static String extractDayOrDate(String input) {
+        int firstSpace = input.indexOf(' ');
+        if (firstSpace == -1) {
+            throw new IllegalArgumentException(MESSAGE_CONSTRAINTS);
+        }
+        return input.substring(0, firstSpace);
+    }
+
+    /**
+     * Extracts the time range portion from the schedule string.
+     * @param input Normalized schedule string.
+     * @return Time range string (e.g., "14:00-16:00").
+     */
+    private static String extractTimeRange(String input) {
+        int firstSpace = input.indexOf(' ');
+        return input.substring(firstSpace + 1).strip();
+    }
+
+    /**
+     * Parses a time range string into start and end times, and stores them in the result.
+     * @param timeRange Time range string (format "HH:mm-HH:mm").
+     * @param result ParsedSchedule object to store start and end times.
+     * @throws IllegalArgumentException if time format is invalid or end time is before start time.
+     */
+    private static void parseTimeRange(String timeRange, ParsedSchedule result) {
+        String[] parts = timeRange.split("\\s*-\\s*");
+        if (parts.length != 2) {
+            throw new IllegalArgumentException("Invalid time range format. Use HH:mm-HH:mm");
+        }
         try {
-            result.startTime = LocalTime.parse(timeParts[0], TIME_FORMAT);
-            result.endTime = LocalTime.parse(timeParts[1], TIME_FORMAT);
+            result.startTime = LocalTime.parse(parts[0], TIME_FORMAT);
+            result.endTime = LocalTime.parse(parts[1], TIME_FORMAT);
         } catch (DateTimeParseException e) {
             throw new IllegalArgumentException("Invalid time format. Use HH:mm-HH:mm");
         }
-
         if (!result.endTime.isAfter(result.startTime)) {
             throw new IllegalArgumentException("End time must be after start time.");
         }
+    }
 
+    /**
+     * Parses a string representing a day or date and stores it in the result.
+     * @param dayOrDate String representing a day (e.g., "Monday") or date (e.g., "12-10-2025").
+     * @param result ParsedSchedule object to store the dayOfWeek or date.
+     * @throws IllegalArgumentException if the string is not a valid day or date.
+     */
+    private static void parseDayOrDate(String dayOrDate, ParsedSchedule result) {
         try {
             result.dayOfWeek = DayOfWeek.valueOf(dayOrDate.toUpperCase());
             result.date = null;
-            return result;
         } catch (IllegalArgumentException ignored) {
             try {
                 result.date = LocalDate.parse(dayOrDate, DATE_FORMAT);
                 result.dayOfWeek = null;
-                return result;
             } catch (DateTimeParseException ex) {
                 throw new IllegalArgumentException(MESSAGE_CONSTRAINTS);
             }
@@ -172,9 +235,18 @@ public class Schedule implements Comparable<Schedule> {
 
     @Override
     public boolean equals(Object other) {
-        return other == this
-                || (other instanceof Schedule
-                && value.equals(((Schedule) other).value));
+        if (other == this) {
+            return true;
+        }
+
+        if (!(other instanceof Schedule)) {
+            return false;
+        }
+
+        Schedule otherSchedule = (Schedule) other;
+        boolean isSameValue = value.equals(otherSchedule.value);
+
+        return isSameValue;
     }
 
     @Override

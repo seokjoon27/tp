@@ -10,57 +10,69 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.ScheduleCommand;
-import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Schedule;
 
 public class ScheduleCommandParserTest {
 
-    private ScheduleCommandParser parser = new ScheduleCommandParser();
+    private static final String VALID_DAY_SCHEDULE = "Monday 14:00-16:00";
+    private static final String VALID_DATE_SCHEDULE = "12-10-2025 14:00-16:00";
+    private static final String INVALID_SCHEDULE = "InvalidSchedule";
+    private final ScheduleCommandParser parser = new ScheduleCommandParser();
+
+    // Helper for parse success
+    private void assertParseSuccessForSchedule(String userInput, Index index, String scheduleValue) {
+        ScheduleCommand expectedCommand = new ScheduleCommand(index, new Schedule(scheduleValue));
+        assertParseSuccess(parser, userInput, expectedCommand);
+    }
+
+    // Helper for parse failure
+    private void assertParseFailureForSchedule(String userInput, String expectedMessage) {
+        assertParseFailure(parser, userInput, expectedMessage);
+    }
 
     @Test
-    public void parse_validScheduleSpecified_success() throws ParseException {
+    public void parse_validScheduleSpecified_success() throws Exception {
         Index targetIndex = INDEX_FIRST_PERSON;
 
-        // Valid schedule: day + time
-        String input1 = targetIndex.getOneBased() + " " + PREFIX_SCHEDULE + "Monday 14:00-16:00";
-        Schedule schedule1 = new Schedule("Monday 14:00-16:00");
-        ScheduleCommand expectedCommand1 = new ScheduleCommand(targetIndex, schedule1);
-        assertParseSuccess(parser, input1, expectedCommand1);
+        assertParseSuccessForSchedule(targetIndex.getOneBased() + " " + PREFIX_SCHEDULE + VALID_DAY_SCHEDULE,
+                targetIndex, VALID_DAY_SCHEDULE);
 
-        // Valid schedule: date + time
-        String input2 = targetIndex.getOneBased() + " " + PREFIX_SCHEDULE + "12-10-2025 14:00-16:00";
-        Schedule schedule2 = new Schedule("12-10-2025 14:00-16:00");
-        ScheduleCommand expectedCommand2 = new ScheduleCommand(targetIndex, schedule2);
-        assertParseSuccess(parser, input2, expectedCommand2);
+        assertParseSuccessForSchedule(targetIndex.getOneBased() + " " + PREFIX_SCHEDULE + VALID_DATE_SCHEDULE,
+                targetIndex, VALID_DATE_SCHEDULE);
 
-        // Empty schedule
-        String input3 = targetIndex.getOneBased() + " " + PREFIX_SCHEDULE;
-        Schedule schedule3 = new Schedule("");
-        ScheduleCommand expectedCommand3 = new ScheduleCommand(targetIndex, schedule3);
-        assertParseSuccess(parser, input3, expectedCommand3);
+        assertParseSuccessForSchedule(targetIndex.getOneBased()
+                + " " + PREFIX_SCHEDULE, targetIndex, "");
     }
 
     @Test
     public void parse_invalidScheduleFormat_failure() {
         Index targetIndex = INDEX_FIRST_PERSON;
+        String message = "Invalid schedule format. Use either: "
+                + "DAY HH:mm-HH:mm or MM-DD-YYYY HH:mm-HH:mm Example: 'Monday 14:00-16:00', "
+                + "'12-10-2025 14:00-16:00' End time must be after start time.";
 
-        // Invalid schedule string
-        String input = targetIndex.getOneBased() + "  " + PREFIX_SCHEDULE + "InvalidSchedule";
-        assertParseFailure(parser, input,
-                "Invalid schedule format. Use either: "
-                        + "DAY HH:mm-HH:mm or MM-DD-YYYY HH:mm-HH:mm Example: 'Monday 14:00-16:00', "
-                        + "'12-10-2025 14:00-16:00' End time must be after start time.");
+        assertParseFailureForSchedule(targetIndex.getOneBased()
+                + " " + PREFIX_SCHEDULE + INVALID_SCHEDULE, message);
+        assertParseFailureForSchedule(targetIndex.getOneBased()
+                + " " + PREFIX_SCHEDULE + "Monday 16:00-14:00", message);
+        assertParseFailureForSchedule(targetIndex.getOneBased()
+                + " " + PREFIX_SCHEDULE + "Monday 14-16", message);
     }
 
     @Test
     public void parse_missingCompulsoryField_failure() {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, ScheduleCommand.MESSAGE_USAGE);
 
-        // no arguments
-        assertParseFailure(parser, ScheduleCommand.COMMAND_WORD, expectedMessage);
+        assertParseFailureForSchedule(ScheduleCommand.COMMAND_WORD, expectedMessage);
+        assertParseFailureForSchedule(ScheduleCommand.COMMAND_WORD + " " + PREFIX_SCHEDULE + "Mon 14:00-16:00",
+                expectedMessage);
+    }
 
-        // no index
-        assertParseFailure(parser, ScheduleCommand.COMMAND_WORD + " "
-                + PREFIX_SCHEDULE + "Mon 14:00-16:00", expectedMessage);
+    //Defensive coding: Extra whitespace
+    @Test
+    public void parse_whitespaceTolerance_success() throws Exception {
+        Index targetIndex = INDEX_FIRST_PERSON;
+        String input = "  " + targetIndex.getOneBased() + "   " + PREFIX_SCHEDULE + "   " + VALID_DAY_SCHEDULE + "   ";
+        assertParseSuccessForSchedule(input, targetIndex, VALID_DAY_SCHEDULE);
     }
 }

@@ -13,38 +13,77 @@ import seedu.address.logic.commands.NoteCommand;
 import seedu.address.model.person.Note;
 
 public class NoteCommandParserTest {
-    private NoteCommandParser parser = new NoteCommandParser();
-    private final String nonEmptyNote = "Some Note.";
 
-    @Test
-    public void parse_indexSpecified_success() {
-        // have Note
-        Index targetIndex = INDEX_FIRST_PERSON;
-        String userInput = targetIndex.getOneBased() + " " + PREFIX_NOTE + nonEmptyNote;
-        NoteCommand expectedCommand = new NoteCommand(INDEX_FIRST_PERSON, new Note(nonEmptyNote));
-        assertParseSuccess(parser, userInput, expectedCommand);
+    private static final String VALID_NOTE = "Some Note.";
+    private static final String EMPTY_NOTE = "";
+    private static final String LONG_NOTE = "a".repeat(Note.MAX_LENGTH + 1);
+    private final NoteCommandParser parser = new NoteCommandParser();
 
-        // no Note
-        userInput = targetIndex.getOneBased() + " " + PREFIX_NOTE;
-        expectedCommand = new NoteCommand(INDEX_FIRST_PERSON, new Note(""));
+    // Helper for parse success
+    private void assertParseSuccessForNote(String userInput, Index index, String noteValue) {
+        NoteCommand expectedCommand = new NoteCommand(index, new Note(noteValue));
         assertParseSuccess(parser, userInput, expectedCommand);
     }
 
+    // Helper for parse failure
+    private void assertParseFailureForNote(String userInput, String expectedMessage) {
+        assertParseFailure(parser, userInput, expectedMessage);
+    }
+
     @Test
-    public void parse_missingCompulsoryField_failure() {
+    public void parse_validArgsWithNote_success() {
+        assertParseSuccessForNote(INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_NOTE + VALID_NOTE,
+                INDEX_FIRST_PERSON, VALID_NOTE);
+    }
+
+    //Defensive Coding: extra whitespace
+    @Test
+    public void parse_validArgsWithExtraWhitespace_success() {
+        String userInput = "   " + INDEX_FIRST_PERSON.getOneBased() + "   " + PREFIX_NOTE + "   " + VALID_NOTE + "   ";
+        assertParseSuccessForNote(userInput, INDEX_FIRST_PERSON, VALID_NOTE.trim());
+    }
+
+    @Test
+    public void parse_missingIndex_failure() {
+        String userInput = PREFIX_NOTE + VALID_NOTE;
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, NoteCommand.MESSAGE_USAGE);
-
-        // no parameters
-        assertParseFailure(parser, NoteCommand.COMMAND_WORD, expectedMessage);
-
-        // no index
-        assertParseFailure(parser, NoteCommand.COMMAND_WORD + " " + nonEmptyNote, expectedMessage);
+        assertParseFailureForNote(userInput, expectedMessage);
     }
 
+    //Defensive Coding: empty note
+    @Test
+    public void parse_noParameters_failure() {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, NoteCommand.MESSAGE_USAGE);
+        assertParseFailureForNote("", expectedMessage);
+    }
+
+    @Test
+    public void parse_invalidIndex_failure() {
+        String userInput = "a " + PREFIX_NOTE + VALID_NOTE;
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, NoteCommand.MESSAGE_USAGE);
+        assertParseFailureForNote(userInput, expectedMessage);
+    }
+
+    //Defensive Coding: 101 characters, exceeds boundary
     @Test
     public void parse_noteTooLong_failure() {
-        String longNote = "a".repeat(101);
-        String userInput = INDEX_FIRST_PERSON.getOneBased() + " note/" + longNote;
-        assertParseFailure(parser, userInput, Note.MESSAGE_CONSTRAINTS);
+        String userInput = INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_NOTE + LONG_NOTE;
+        assertParseFailureForNote(userInput, Note.MESSAGE_CONSTRAINTS);
+    }
+
+    //Defensive Coding: 100 characters boundary
+    @Test
+    public void parse_noteAtMaxLength_success() {
+        String validBoundaryNote = "a".repeat(Note.MAX_LENGTH);
+        String userInput = INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_NOTE + validBoundaryNote;
+        assertParseSuccessForNote(userInput, INDEX_FIRST_PERSON, validBoundaryNote);
+    }
+
+    //Defensive Coding: 99 characters
+    @Test
+    public void parse_noteAtSuitableLength_success() {
+        String validBoundaryNote = "a".repeat(Note.MAX_LENGTH - 1);
+        String userInput = INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_NOTE + validBoundaryNote;
+        assertParseSuccessForNote(userInput, INDEX_FIRST_PERSON, validBoundaryNote);
     }
 }

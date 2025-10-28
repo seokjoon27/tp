@@ -4,6 +4,8 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE;
 
+import java.util.logging.Logger;
+
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.ScheduleCommand;
@@ -14,6 +16,7 @@ import seedu.address.model.person.Schedule;
  * Parses input arguments and creates a new {@code ScheduleCommand} object
  */
 public class ScheduleCommandParser implements Parser<ScheduleCommand> {
+    private static final Logger logger = Logger.getLogger(ScheduleCommandParser.class.getName());
 
     /**
      * Parses the given {@code String} of arguments in the context of the {@code ScheduleCommand}
@@ -23,6 +26,7 @@ public class ScheduleCommandParser implements Parser<ScheduleCommand> {
     @Override
     public ScheduleCommand parse(String args) throws ParseException {
         requireNonNull(args);
+        logger.fine("Parsing ScheduleCommand args: " + args);
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_SCHEDULE);
 
         Index index;

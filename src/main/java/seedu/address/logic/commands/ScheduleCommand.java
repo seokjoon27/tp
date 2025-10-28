@@ -5,6 +5,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.Messages;
@@ -34,6 +35,8 @@ public class ScheduleCommand extends Command {
     public static final String MESSAGE_DELETE_SCHEDULE_SUCCESS = "Removed schedule from Student: %1$s";
     public static final String MESSAGE_NOT_STUDENT = "This person is not a student, so a schedule cannot be added.";
 
+    private static final Logger logger = Logger.getLogger(ScheduleCommand.class.getName());
+
     private final Index index;
     private final Schedule schedule;
 
@@ -50,13 +53,16 @@ public class ScheduleCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireAllNonNull(model);
+        logger.info("Executing ScheduleCommand for index " + index.getOneBased());
         List<Person> lastShownList = model.getFilteredPersonList();
+        assert model.getFilteredPersonList() != null : "Filtered person list should not be null";
 
         if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
         Person personToEdit = lastShownList.get(index.getZeroBased());
+        assert personToEdit != null : "Person to edit should not be null";
 
         // Ensure only students can have schedules
         if (!(personToEdit instanceof Student)) {
