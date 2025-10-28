@@ -119,9 +119,18 @@ public class NoteCommand extends Command {
 
     @Override
     public boolean equals(Object other) {
-        return other == this
-                || (other instanceof NoteCommand
-                && index.equals(((NoteCommand) other).index)
-                && note.equals(((NoteCommand) other).note));
+        if (other == this) {
+            return true;
+        }
+
+        if (!(other instanceof NoteCommand)) {
+            return false;
+        }
+
+        NoteCommand otherCommand = (NoteCommand) other;
+        boolean isSameIndex = index.equals(otherCommand.index);
+        boolean isSameNote = note.equals(otherCommand.note);
+
+        return isSameIndex && isSameNote;
     }
 }

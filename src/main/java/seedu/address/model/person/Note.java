@@ -40,9 +40,18 @@ public class Note {
 
     @Override
     public boolean equals(Object other) {
-        return other == this
-                || (other instanceof Note
-                && value.equals(((Note) other).value));
+        if (other == this) {
+            return true;
+        }
+
+        if (!(other instanceof Note)) {
+            return false;
+        }
+
+        Note otherNote = (Note) other;
+        boolean isSameValue = value.equals(otherNote.value);
+
+        return isSameValue;
     }
 
     @Override

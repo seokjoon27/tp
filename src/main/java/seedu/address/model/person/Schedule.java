@@ -172,9 +172,18 @@ public class Schedule implements Comparable<Schedule> {
 
     @Override
     public boolean equals(Object other) {
-        return other == this
-                || (other instanceof Schedule
-                && value.equals(((Schedule) other).value));
+        if (other == this) {
+            return true;
+        }
+
+        if (!(other instanceof Schedule)) {
+            return false;
+        }
+
+        Schedule otherSchedule = (Schedule) other;
+        boolean isSameValue = value.equals(otherSchedule.value);
+
+        return isSameValue;
     }
 
     @Override
