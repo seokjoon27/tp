@@ -22,8 +22,6 @@ import seedu.address.model.person.Student;
  */
 public class NoteCommand extends Command {
 
-    private static final Logger logger = Logger.getLogger(NoteCommand.class.getName());
-
     public static final String COMMAND_WORD = "note";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the Note of the person identified "
@@ -37,6 +35,8 @@ public class NoteCommand extends Command {
 
     public static final String MESSAGE_ADD_NOTE_SUCCESS = "Added Note to Person: %1$s";
     public static final String MESSAGE_DELETE_NOTE_SUCCESS = "Removed Note from Person: %1$s";
+
+    private static final Logger logger = Logger.getLogger(NoteCommand.class.getName());
 
     private final Index index;
     private final Note note;
