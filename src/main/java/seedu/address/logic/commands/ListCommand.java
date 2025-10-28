@@ -14,6 +14,8 @@ import seedu.address.model.person.Person;
  *   {@code list paid} — show only persons whose payment status is paid
  *   {@code list unpaid} — show only persons whose payment status is unpaid
  *   {@code list schedule} — show only students (who have schedules)
+ *   {@code list <DAY>} — show students with schedules on a specific day (e.g., Monday)
+ *   {@code list <DATE>} — show students with schedules on a specific date (e.g., 12-12-2025)
  */
 public class ListCommand extends Command {
 
@@ -25,7 +27,9 @@ public class ListCommand extends Command {
             + "  list                (show all)\n"
             + "  list paid           (show only paid)\n"
             + "  list unpaid         (show only unpaid)\n"
-            + "  list schedule       (show only contacts with schedules)\n";
+            + "  list schedule       (show only contacts with schedules)\n"
+            + "  list <DAY>          — show schedules on a specific day (e.g., list Monday)"
+            + "  list <DATE>         — show schedules on a specific date (e.g., list 12-12-2025)";
 
     /** Default success message shown when listing all persons. */
     public static final String MESSAGE_SUCCESS = "Listed all persons";
