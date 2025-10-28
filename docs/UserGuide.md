@@ -1,12 +1,13 @@
+---
+layout: page
+title: User Guide
+---
 
-# TutorHub
-
-Tutorhub is a **fast, typing first address book for private tutors** to organise student details streamlining communication and tracking so tutors spend less time managing data and more time teaching.
-
-
+Tutorhub is a **fast, typing first address book for private tutors** to organise student details by streamlining communication and tracking so tutors spend less time managing data and more time teaching.
 
 * Table of Contents
 {:toc}
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## Quick start
@@ -19,7 +20,7 @@ Tutorhub is a **fast, typing first address book for private tutors** to organise
 1. Download the latest `.jar` file from [here](https://github.com/AY2526S1-CS2103T-W10-1/tp/releases/tag/v1.3.0).
 
 
-1. Copy the file to the folder you want to use as the _home folder_ for your AddressBook.
+1. Copy the file to the folder you want to use as the _home folder_ for your Tutorhub.
 
 
 1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar tutorhub.jar` command to run the application.<br>
@@ -107,7 +108,10 @@ Adds a person to the address book. There are 2 types of person to be added: Pare
 Format: `add n/NAME type/TYPE p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​`
 
 
-:bulb: **Tip:** A person can have any number of tags (including 0)
+<div markdown="span" class="alert alert-primary">
+:bulb: **Tip:**<br>
+A person can have any number of tags (including 0)
+</div>
 
 
 Examples:
@@ -255,10 +259,10 @@ Examples:
 * `note 2 note/Needs extra help in math` — Adds a note under the second student.
 * `note 1` — Deletes the note(s) under the first student.
 
-:bulb: **Tip:**
+<div markdown="span" class="alert alert-primary">
+:bulb: **Tip:**<br>
 Use the `note` command to record useful or must-know information about a student that isn’t already captured by other fields.
-
-
+</div>
 
 
 ### Assigning a lesson schedule: `schedule`
@@ -368,8 +372,10 @@ Examples:
 * `paid 1`-toggles payment status of contact at INDEX 1
 * `paid n/Alex yeoh`- toggles payment status of contact named Alex Yeoh
 
-:bulb: **Tip:**
+<div markdown="span" class="alert alert-primary">
+:bulb: **Tip:**<br>
 Use the `paid` command to track whether a student has paid you for a lesson. The payment status will be displayed in the GUI using a checkbox in the top right corner. 
+</div>
 
 
 ### Resetting payment status for every Student : `reset all`
@@ -389,8 +395,10 @@ Examples:
 * `RESET ALL` — Works the same (case-insensitive).
 * `reset all now` — Invalid. Shows: *Error: invalid format. Use "reset all" only.*
 
-:bulb: **Tip:**  
+<div markdown="span" class="alert alert-primary">
+:bulb: **Tip:**<br>
 Use the `reset all` command at the start of each billing cycle to quickly clear all previous payment records.
+</div>
 
 
 
@@ -406,18 +414,18 @@ Format: `exit`
 ### Saving the data
 
 
-AddressBook data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
+Tutorhub data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
 
 
 ### Editing the data file
 
 
-AddressBook data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
+Tutorhub data are saved automatically as a JSON file `[JAR file location]/data/tutorhub.json`. Advanced users are welcome to update data directly by editing that data file.
 
 
 <div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
-If your changes to the data file makes its format invalid, AddressBook will discard all data and start with an empty data file at the next run. Hence, it is recommended to take a backup of the file before editing it.<br>
-Furthermore, certain edits can cause the AddressBook to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
+If your changes to the data file makes its format invalid, Tutorhub will discard all data and start with an empty data file at the next run. Hence, it is recommended to take a backup of the file before editing it.<br>
+Furthermore, certain edits can cause the Tutorhub to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </div>
 
 
