@@ -25,7 +25,8 @@ public class NoteCommandParser implements Parser<NoteCommand> {
      */
     public NoteCommand parse(String args) throws ParseException {
         requireNonNull(args);
-        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_NOTE);
+        String normalizedArgs = args.replaceAll("(?i)NOTE/", "note/");
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(normalizedArgs, PREFIX_NOTE);
         assert argMultimap != null : "ArgumentMultimap should not be null after tokenization";
 
 
