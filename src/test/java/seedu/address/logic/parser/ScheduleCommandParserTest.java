@@ -40,7 +40,8 @@ public class ScheduleCommandParserTest {
         assertParseSuccessForSchedule(targetIndex.getOneBased() + " " + PREFIX_SCHEDULE + VALID_DATE_SCHEDULE,
                 targetIndex, VALID_DATE_SCHEDULE);
 
-        assertParseSuccessForSchedule(targetIndex.getOneBased() + " " + PREFIX_SCHEDULE, targetIndex, "");
+        assertParseSuccessForSchedule(targetIndex.getOneBased()
+                + " " + PREFIX_SCHEDULE, targetIndex, "");
     }
 
     @Test
@@ -50,9 +51,12 @@ public class ScheduleCommandParserTest {
                 + "DAY HH:mm-HH:mm or MM-DD-YYYY HH:mm-HH:mm Example: 'Monday 14:00-16:00', "
                 + "'12-10-2025 14:00-16:00' End time must be after start time.";
 
-        assertParseFailureForSchedule(targetIndex.getOneBased() + " " + PREFIX_SCHEDULE + INVALID_SCHEDULE, message);
-        assertParseFailureForSchedule(targetIndex.getOneBased() + " " + PREFIX_SCHEDULE + "Monday 16:00-14:00", message);
-        assertParseFailureForSchedule(targetIndex.getOneBased() + " " + PREFIX_SCHEDULE + "Monday 14-16", message);
+        assertParseFailureForSchedule(targetIndex.getOneBased()
+                + " " + PREFIX_SCHEDULE + INVALID_SCHEDULE, message);
+        assertParseFailureForSchedule(targetIndex.getOneBased()
+                + " " + PREFIX_SCHEDULE + "Monday 16:00-14:00", message);
+        assertParseFailureForSchedule(targetIndex.getOneBased()
+                + " " + PREFIX_SCHEDULE + "Monday 14-16", message);
     }
 
     @Test
