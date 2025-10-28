@@ -101,7 +101,9 @@ public class Schedule implements Comparable<Schedule> {
      */
     private static ParsedSchedule parse(String input) {
         input = normalizeInput(input);
-        if (input.isEmpty()) return new ParsedSchedule();
+        if (input.isEmpty()) {
+            return new ParsedSchedule();
+        }
 
         String dayOrDate = extractDayOrDate(input);
         String timeRange = extractTimeRange(input);
@@ -130,7 +132,9 @@ public class Schedule implements Comparable<Schedule> {
      */
     private static String extractDayOrDate(String input) {
         int firstSpace = input.indexOf(' ');
-        if (firstSpace == -1) throw new IllegalArgumentException(MESSAGE_CONSTRAINTS);
+        if (firstSpace == -1) {
+            throw new IllegalArgumentException(MESSAGE_CONSTRAINTS);
+        }
         return input.substring(0, firstSpace);
     }
 
@@ -152,7 +156,9 @@ public class Schedule implements Comparable<Schedule> {
      */
     private static void parseTimeRange(String timeRange, ParsedSchedule result) {
         String[] parts = timeRange.split("\\s*-\\s*");
-        if (parts.length != 2) throw new IllegalArgumentException("Invalid time range format. Use HH:mm-HH:mm");
+        if (parts.length != 2) {
+            throw new IllegalArgumentException("Invalid time range format. Use HH:mm-HH:mm");
+        }
         try {
             result.startTime = LocalTime.parse(parts[0], TIME_FORMAT);
             result.endTime = LocalTime.parse(parts[1], TIME_FORMAT);
