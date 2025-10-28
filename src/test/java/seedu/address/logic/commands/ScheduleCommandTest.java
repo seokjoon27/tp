@@ -58,14 +58,16 @@ public class ScheduleCommandTest {
     @Test
     public void execute_deleteScheduleUnfilteredList_success() {
         Person firstPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Student studentToEdit = (Student) new PersonBuilder(firstPerson).withType("s").withSchedule(SCHEDULE_STUB).build();
+        Student studentToEdit =
+                (Student) new PersonBuilder(firstPerson).withType("s").withSchedule(SCHEDULE_STUB).build();
         model.setPerson(firstPerson, studentToEdit);
 
         Student editedStudent = (Student) new PersonBuilder(studentToEdit).withSchedule("").build();
         ScheduleCommand scheduleCommand =
                 new ScheduleCommand(INDEX_FIRST_PERSON, new Schedule(""));
 
-        String expectedMessage = String.format(ScheduleCommand.MESSAGE_DELETE_SCHEDULE_SUCCESS, editedStudent.getName());
+        String expectedMessage =
+                String.format(ScheduleCommand.MESSAGE_DELETE_SCHEDULE_SUCCESS, editedStudent.getName());
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setPerson(studentToEdit, editedStudent);

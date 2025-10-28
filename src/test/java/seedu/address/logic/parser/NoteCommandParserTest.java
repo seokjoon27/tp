@@ -13,10 +13,10 @@ import seedu.address.logic.commands.NoteCommand;
 import seedu.address.model.person.Note;
 
 public class NoteCommandParserTest {
-    private final NoteCommandParser parser = new NoteCommandParser();
     private static final String VALID_NOTE = "Some Note.";
     private static final String EMPTY_NOTE = "";
     private static final String LONG_NOTE = "a".repeat(Note.MAX_LENGTH + 1);
+    private final NoteCommandParser parser = new NoteCommandParser();
 
     @Test
     public void parse_validArgsWithNote_success() {
