@@ -50,6 +50,20 @@ public class ScheduleCommandParserTest {
                 "Invalid schedule format. Use either: "
                         + "DAY HH:mm-HH:mm or MM-DD-YYYY HH:mm-HH:mm Example: 'Monday 14:00-16:00', "
                         + "'12-10-2025 14:00-16:00' End time must be after start time.");
+
+        // End time before start time
+        String input2 = targetIndex.getOneBased() + " " + PREFIX_SCHEDULE + "Monday 16:00-14:00";
+        assertParseFailure(parser, input2,
+                "Invalid schedule format. Use either: "
+                        + "DAY HH:mm-HH:mm or MM-DD-YYYY HH:mm-HH:mm Example: 'Monday 14:00-16:00', "
+                        + "'12-10-2025 14:00-16:00' End time must be after start time.");
+
+        // Invalid time format
+        String input3 = targetIndex.getOneBased() + " " + PREFIX_SCHEDULE + "Monday 14-16";
+        assertParseFailure(parser, input3,
+                "Invalid schedule format. Use either: "
+                        + "DAY HH:mm-HH:mm or MM-DD-YYYY HH:mm-HH:mm Example: 'Monday 14:00-16:00', "
+                        + "'12-10-2025 14:00-16:00' End time must be after start time.");
     }
 
     @Test
@@ -62,5 +76,16 @@ public class ScheduleCommandParserTest {
         // no index
         assertParseFailure(parser, ScheduleCommand.COMMAND_WORD + " "
                 + PREFIX_SCHEDULE + "Mon 14:00-16:00", expectedMessage);
+    }
+
+    //Defensive coding: test for whitespace acceptance.
+    @Test
+    public void parse_whitespaceTolerance_success() throws ParseException {
+        Index targetIndex = INDEX_FIRST_PERSON;
+
+        String input = "  " + targetIndex.getOneBased() + "   " + PREFIX_SCHEDULE + "   Monday 14:00-16:00   ";
+        Schedule schedule = new Schedule("Monday 14:00-16:00");
+        ScheduleCommand expectedCommand = new ScheduleCommand(targetIndex, schedule);
+        assertParseSuccess(parser, input, expectedCommand);
     }
 }
