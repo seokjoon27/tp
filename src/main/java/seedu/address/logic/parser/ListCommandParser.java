@@ -146,7 +146,9 @@ public class ListCommandParser implements Parser<ListCommand> {
     }
 
     private static String capitalize(String s) {
-        if (s.isEmpty()) return s;
+        if (s.isEmpty()) {
+            return s;
+        }
         return s.substring(0, 1).toUpperCase() + s.substring(1).toLowerCase();
     }
 }
