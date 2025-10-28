@@ -51,12 +51,14 @@ public class ScheduleCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireAllNonNull(model);
         List<Person> lastShownList = model.getFilteredPersonList();
+        assert model.getFilteredPersonList() != null : "Filtered person list should not be null";
 
         if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
         Person personToEdit = lastShownList.get(index.getZeroBased());
+        assert personToEdit != null : "Person to edit should not be null";
 
         // Ensure only students can have schedules
         if (!(personToEdit instanceof Student)) {

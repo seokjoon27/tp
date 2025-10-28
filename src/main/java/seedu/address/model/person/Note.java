@@ -14,8 +14,8 @@ public class Note {
 
     /**
      * Constructs a Note with the specified value.
-     *
      * @param note the content of the note; must not be null
+     * @throws IllegalArgumentException if note exceeds 100 characters
      */
     public Note(String note) {
         requireNonNull(note);
@@ -29,6 +29,7 @@ public class Note {
      * Returns true if the given note is 100 characters or fewer.
      */
     public static boolean isValidNoteLength(String test) {
+        requireNonNull(test);
         return test.length() <= MAX_LENGTH;
     }
 
@@ -39,9 +40,9 @@ public class Note {
 
     @Override
     public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof Note // instanceof handles nulls
-                && value.equals(((Note) other).value)); // state check
+        return other == this
+                || (other instanceof Note
+                && value.equals(((Note) other).value));
     }
 
     @Override

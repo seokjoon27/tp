@@ -246,7 +246,7 @@ Format:
 * Adds a note to the student at the specified `INDEX`.
 * The `INDEX` refers to the index number shown in the displayed person list.
 * Duplicate notes are **allowed**.
-* Notes longer than **50 characters** are not allowed.
+* Notes longer than **100 characters** are not allowed.
 * To delete the existing note(s) under a student, simply type `note INDEX` without adding a note value.
 
 

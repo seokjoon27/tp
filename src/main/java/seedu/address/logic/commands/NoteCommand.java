@@ -5,6 +5,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NOTE;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.Messages;
@@ -16,9 +17,12 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.Student;
 
 /**
- * Changes the Note of an existing person in the address book.
+ * Adds or removes a note for a specified person in the address book.
+ * A note replaces the existing one and must be under 100 characters.
  */
 public class NoteCommand extends Command {
+
+    private static final Logger logger = Logger.getLogger(NoteCommand.class.getName());
 
     public static final String COMMAND_WORD = "note";
 
@@ -49,6 +53,7 @@ public class NoteCommand extends Command {
     }
     @Override
     public CommandResult execute(Model model) throws CommandException {
+        assert model != null : "Model cannot be null";
 
         List<Person> lastShownList = model.getFilteredPersonList();
 
@@ -57,36 +62,50 @@ public class NoteCommand extends Command {
         }
 
         Person personToEdit = lastShownList.get(index.getZeroBased());
-        Person editedPerson;
-        if (personToEdit.getType().isStudent()) {
-            Student studentToEdit = (Student) personToEdit;
-            editedPerson = new Student(
-                    studentToEdit.getName(),
-                    studentToEdit.getPhone(),
-                    studentToEdit.getEmail(),
-                    studentToEdit.getAddress(),
-                    note,
-                    studentToEdit.getSchedule(),
-                    studentToEdit.getCost(),
-                    studentToEdit.getPaymentStatus(),
-                    studentToEdit.getTags());
-        } else {
-            editedPerson = new Parent(
-                    personToEdit.getName(),
-                    personToEdit.getPhone(),
-                    personToEdit.getEmail(),
-                    personToEdit.getAddress(),
-                    note,
-                    personToEdit.getCost(),
-                    personToEdit.getPaymentStatus(),
-                    personToEdit.getTags()
-            );
-        }
+        logger.info("Executing NoteCommand for person: " + personToEdit.getName());
+
+        Person editedPerson = createEditedPerson(personToEdit, note);
 
         model.setPerson(personToEdit, editedPerson);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
 
         return new CommandResult(generateSuccessMessage(editedPerson));
+    }
+
+    /**
+     * Creates a copy of {@code personToEdit} with the updated note.
+     */
+    private Person createEditedPerson(Person personToEdit, Note updatedNote) {
+        requireAllNonNull(personToEdit, updatedNote);
+
+        if (personToEdit instanceof Student student) {
+            return new Student(
+                    student.getName(),
+                    student.getPhone(),
+                    student.getEmail(),
+                    student.getAddress(),
+                    updatedNote,
+                    student.getSchedule(),
+                    student.getCost(),
+                    student.getPaymentStatus(),
+                    student.getTags()
+            );
+        } else if (personToEdit instanceof Parent parent) {
+            return new Parent(
+                    parent.getName(),
+                    parent.getPhone(),
+                    parent.getEmail(),
+                    parent.getAddress(),
+                    updatedNote,
+                    parent.getCost(),
+                    parent.getPaymentStatus(),
+                    parent.getTags()
+            );
+        }
+
+        // Defensive coding: should never reach here if all Person types are handled
+        assert false : "Unhandled Person subtype in NoteCommand";
+        return personToEdit;
     }
 
     /**
@@ -100,19 +119,9 @@ public class NoteCommand extends Command {
 
     @Override
     public boolean equals(Object other) {
-        // short circuit if same object
-        if (other == this) {
-            return true;
-        }
-
-        // instanceof handles nulls
-        if (!(other instanceof NoteCommand)) {
-            return false;
-        }
-
-        // state check
-        NoteCommand e = (NoteCommand) other;
-        return index.equals(e.index)
-                && note.equals(e.note);
+        return other == this
+                || (other instanceof NoteCommand
+                && index.equals(((NoteCommand) other).index)
+                && note.equals(((NoteCommand) other).note));
     }
 }
