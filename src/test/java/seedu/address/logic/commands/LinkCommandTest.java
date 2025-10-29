@@ -20,6 +20,16 @@ import seedu.address.model.person.Parent;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Student;
 
+/**
+ * Contains integration tests (interaction with the Model) and unit tests for {@code LinkCommand}.
+ *
+ * Equivalence partitions:
+ * 1. Valid input → success.
+ * 2. Invalid index (out of range) → failure.
+ * 3. Wrong type (not student or parent) → failure.
+ * 4. Equality tests → correct equals() behavior.
+ * 5. Boundary indices (first and last) → success.
+ */
 public class LinkCommandTest {
 
     private Model model;
@@ -29,19 +39,20 @@ public class LinkCommandTest {
         model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
     }
 
+    /**
+     * EP1: Valid student-parent indices → successful link.
+     */
     @Test
     public void execute_validIndices_success() throws Exception {
         // Assume first person is student, second is parent
         Person studentPerson = model.getFilteredPersonList().get(0);
         Person parentPerson = model.getFilteredPersonList().get(1);
 
-        // Ensure types are correct (replace with actual types if your TypicalPersons differ)
         if (!(studentPerson instanceof Student student) || !(parentPerson instanceof Parent parent)) {
-            return; // skip if test data not properly set up
+            return; // skip if TypicalPersons not aligned
         }
 
         LinkCommand command = new LinkCommand(Index.fromOneBased(1), Index.fromOneBased(2));
-
         String expectedMessage = String.format(LinkCommand.MESSAGE_LINK_SUCCESS, student.getName(), parent.getName());
 
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
@@ -50,9 +61,8 @@ public class LinkCommandTest {
 
         expectedParent.addChild(expectedStudent);
         expectedStudent.addParent(expectedParent);
-
-        expectedModel.setPerson(expectedModel.getFilteredPersonList().get(0), expectedStudent);
-        expectedModel.setPerson(expectedModel.getFilteredPersonList().get(1), expectedParent);
+        expectedModel.setPerson(expectedStudent, expectedStudent);
+        expectedModel.setPerson(expectedParent, expectedParent);
 
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
 
@@ -62,40 +72,109 @@ public class LinkCommandTest {
         assertTrue(linkedStudent.getParents().contains(linkedParent));
     }
 
+    /**
+     * EP2: Invalid index (out of range) → failure.
+     */
     @Test
-    public void execute_invalidIndex_throwsCommandException() {
-        Index outOfBoundsIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
-        LinkCommand command = new LinkCommand(INDEX_FIRST_PERSON, outOfBoundsIndex);
+    public void execute_invalidIndex_failure() {
+        Index outOfBounds = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
+        LinkCommand command = new LinkCommand(INDEX_FIRST_PERSON, outOfBounds);
         assertCommandFailure(command, model, LinkCommand.MESSAGE_INVALID_INDEX);
     }
 
+    /**
+     * EP3: Wrong type (e.g., both students or both parents) → failure.
+     */
     @Test
-    public void execute_wrongTypes_throwsCommandException() {
-        // Assume both indices point to non-student/non-parent (like two students)
+    public void execute_wrongTypes_failure() {
+        // Both indices point to non-student/non-parent combination
         LinkCommand command = new LinkCommand(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON);
-        // You can force both to same type in TypicalPersons if needed
         assertCommandFailure(command, model, LinkCommand.MESSAGE_WRONG_TYPE);
     }
 
+    /**
+     * EP4: Equality tests.
+     */
     @Test
     public void equals() {
         LinkCommand linkFirstSecond = new LinkCommand(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON);
         LinkCommand linkSecondFirst = new LinkCommand(INDEX_SECOND_PERSON, INDEX_FIRST_PERSON);
 
-        // same object -> returns true
+        // same object → true
         assertEquals(linkFirstSecond, linkFirstSecond);
 
-        // same values -> returns true
-        LinkCommand linkFirstSecondCopy = new LinkCommand(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON);
-        assertEquals(linkFirstSecond, linkFirstSecondCopy);
+        // same values → true
+        LinkCommand copy = new LinkCommand(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON);
+        assertEquals(linkFirstSecond, copy);
 
-        // different types -> returns false
+        // different types → false
         assertNotEquals(1, linkFirstSecond);
 
-        // null -> returns false
+        // null → false
         assertNotEquals(null, linkFirstSecond);
 
-        // different indices -> returns false
+        // different indices → false
         assertNotEquals(linkFirstSecond, linkSecondFirst);
+    }
+
+    /**
+     * EP5a: Boundary test — first valid index (lower bound).
+     */
+    @Test
+    public void execute_firstIndexBoundary_success() throws Exception {
+        Index studentIndex = Index.fromOneBased(1);
+        Index parentIndex = Index.fromOneBased(2);
+
+        Person studentPerson = model.getFilteredPersonList().get(studentIndex.getZeroBased());
+        Person parentPerson = model.getFilteredPersonList().get(parentIndex.getZeroBased());
+
+        if (!(studentPerson instanceof Student student) || !(parentPerson instanceof Parent parent)) {
+            return;
+        }
+
+        LinkCommand command = new LinkCommand(studentIndex, parentIndex);
+        String expectedMessage = String.format(LinkCommand.MESSAGE_LINK_SUCCESS, student.getName(), parent.getName());
+
+        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        Parent expectedParent = (Parent) expectedModel.getFilteredPersonList().get(parentIndex.getZeroBased());
+        Student expectedStudent = (Student) expectedModel.getFilteredPersonList().get(studentIndex.getZeroBased());
+
+        expectedParent.addChild(expectedStudent);
+        expectedStudent.addParent(expectedParent);
+        expectedModel.setPerson(expectedStudent, expectedStudent);
+        expectedModel.setPerson(expectedParent, expectedParent);
+
+        assertCommandSuccess(command, model, expectedMessage, expectedModel);
+    }
+
+    /**
+     * EP5b: Boundary test — last valid index (upper bound).
+     */
+    @Test
+    public void execute_lastIndexBoundary_success() throws Exception {
+        int size = model.getFilteredPersonList().size();
+        Index studentIndex = Index.fromOneBased(size - 1);
+        Index parentIndex = Index.fromOneBased(size);
+
+        Person studentPerson = model.getFilteredPersonList().get(studentIndex.getZeroBased());
+        Person parentPerson = model.getFilteredPersonList().get(parentIndex.getZeroBased());
+
+        if (!(studentPerson instanceof Student student) || !(parentPerson instanceof Parent parent)) {
+            return;
+        }
+
+        LinkCommand command = new LinkCommand(studentIndex, parentIndex);
+        String expectedMessage = String.format(LinkCommand.MESSAGE_LINK_SUCCESS, student.getName(), parent.getName());
+
+        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        Parent expectedParent = (Parent) expectedModel.getFilteredPersonList().get(parentIndex.getZeroBased());
+        Student expectedStudent = (Student) expectedModel.getFilteredPersonList().get(studentIndex.getZeroBased());
+
+        expectedParent.addChild(expectedStudent);
+        expectedStudent.addParent(expectedParent);
+        expectedModel.setPerson(expectedStudent, expectedStudent);
+        expectedModel.setPerson(expectedParent, expectedParent);
+
+        assertCommandSuccess(command, model, expectedMessage, expectedModel);
     }
 }

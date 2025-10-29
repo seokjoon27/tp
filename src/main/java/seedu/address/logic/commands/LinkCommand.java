@@ -15,73 +15,82 @@ import seedu.address.model.person.Student;
  * Links a student and parent identified using it's displayed index from the address book.
  */
 public class LinkCommand extends Command {
-    public static final String COMMAND_WORD = "link";
-    public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Links a student to a parent by their respective"
-            + " index numbers used in the displayed person list.\n"
-            + "Parameters: INDEX (must be a positive integer)\n"
-            + "Example: " + COMMAND_WORD + " student/ 1 parent/ 2";
-    public static final String MESSAGE_LINK_SUCCESS = "Linked student %1$s to parent %2$s.";
-    public static final String MESSAGE_INVALID_INDEX = "Invalid parent or student index.";
-    public static final String MESSAGE_WRONG_TYPE = "Please ensure one student and one parent is input respectively.";
 
-    private final Index parentIndex;
+    public static final String COMMAND_WORD = "link";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Links a student to a parent using their indices.\n"
+            + "Parameters: student/STUDENT_INDEX parent/PARENT_INDEX\n"
+            + "Example: " + COMMAND_WORD + " student/1 parent/4";
+
+    public static final String MESSAGE_LINK_SUCCESS = "Linked %1$s to %2$s";
+    public static final String MESSAGE_INVALID_INDEX = "One or both indices are invalid.";
+    public static final String MESSAGE_WRONG_TYPE = "Please ensure one student and one parent are input respectively.";
+    public static final String MESSAGE_SAME_INDEX = "You cannot link a person to themselves.";
+    public static final String MESSAGE_ALREADY_LINKED = "These two persons are already linked.";
+
     private final Index studentIndex;
+    private final Index parentIndex;
 
     /**
-     * Constructs a {@code LinkCommand} with the specified student and parent indexes.
-     *
-     * @param student the {@link Index} of the student to be linked
-     * @param parent the {@link Index} of the parent to be linked
+     * Creates a LinkCommand to link a student and a parent.
      */
-    public LinkCommand(Index student, Index parent) {
-        this.studentIndex = student;
-        this.parentIndex = parent;
-
+    public LinkCommand(Index studentIndex, Index parentIndex) {
+        requireNonNull(studentIndex);
+        requireNonNull(parentIndex);
+        this.studentIndex = studentIndex;
+        this.parentIndex = parentIndex;
     }
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
         List<Person> lastShownList = model.getFilteredPersonList();
-        if (parentIndex.getZeroBased() >= lastShownList.size()
-                || studentIndex.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(MESSAGE_INVALID_INDEX);
+
+        if (studentIndex.getZeroBased() >= lastShownList.size()
+                || parentIndex.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(MESSAGE_INVALID_INDEX); // EP2
         }
-        Person parentToLink = lastShownList.get(parentIndex.getZeroBased());
-        Person studentToLink = lastShownList.get(studentIndex.getZeroBased());
-        if (!(parentToLink instanceof Parent) || !(studentToLink instanceof Student)) {
+
+        if (studentIndex.equals(parentIndex)) {
+            throw new CommandException(MESSAGE_SAME_INDEX); // EP4
+        }
+
+        Person studentPerson = lastShownList.get(studentIndex.getZeroBased());
+        Person parentPerson = lastShownList.get(parentIndex.getZeroBased());
+
+        if (!(studentPerson instanceof Student)) {
             throw new CommandException(MESSAGE_WRONG_TYPE);
         }
 
-        Parent parent = (Parent) parentToLink;
-        Student student = (Student) studentToLink;
+        if (!(parentPerson instanceof Parent)) {
+            throw new CommandException(MESSAGE_WRONG_TYPE);
+        }
 
-        parent.addChild(student);
+        Student student = (Student) studentPerson;
+        Parent parent = (Parent) parentPerson;
+
+        // EP5: Already linked
+        if (student.getParents().contains(parent) || parent.getChildren().contains(student)) {
+            throw new CommandException(MESSAGE_ALREADY_LINKED);
+        }
+
+        // Perform linking
         student.addParent(parent);
+        parent.addChild(student);
 
-        model.setPerson(parentToLink, parent);
-        model.setPerson(studentToLink, student);
-        model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
+        model.setPerson(student, student);
+        model.setPerson(parent, parent);
 
-        return new CommandResult(String.format(MESSAGE_LINK_SUCCESS, student.getName(), parent.getName()));
+        String result = String.format(MESSAGE_LINK_SUCCESS, student.getName(), parent.getName());
+        return new CommandResult(result);
     }
 
     @Override
     public boolean equals(Object other) {
-        // short circuit if same object
-        if (other == this) {
-            return true;
-        }
-
-        // instanceof handles nulls
-        if (!(other instanceof LinkCommand)) {
-            return false;
-        }
-
-        // state check
-        LinkCommand otherLinkCommand = (LinkCommand) other;
-        return parentIndex.equals(otherLinkCommand.parentIndex)
-                && studentIndex.equals(otherLinkCommand.studentIndex);
+        return other == this
+                || (other instanceof LinkCommand
+                && studentIndex.equals(((LinkCommand) other).studentIndex)
+                && parentIndex.equals(((LinkCommand) other).parentIndex));
     }
 }
