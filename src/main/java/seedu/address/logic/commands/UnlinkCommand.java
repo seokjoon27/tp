@@ -12,55 +12,71 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.Student;
 
 /**
- * Unlinks a student and parent identified using it's displayed index from the address book.
+ * Unlinks a student and a parent identified using their displayed indexes from the address book.
  */
 public class UnlinkCommand extends Command {
-    public static final String COMMAND_WORD = "unlink";
-    public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": unlinks a student and a parent by their respective"
-            + " index numbers used in the displayed person list.\n"
-            + "Parameters: INDEX (must be a positive integer)\n"
-            + "Example: " + COMMAND_WORD + " student/ 1 parent/ 2";
-    public static final String MESSAGE_UNLINK_SUCCESS = "Unlinked parent %2$s from student %1$s.";
-    public static final String MESSAGE_INVALID_INDEX = "Invalid parent or student index.";
-    public static final String MESSAGE_WRONG_TYPE = "Please ensure one student and one parent is input respectively.";
 
-    private final Index parentIndex;
+    public static final String COMMAND_WORD = "unlink";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Unlinks a student and a parent by their respective "
+            + "index numbers shown in the displayed person list.\n"
+            + "Parameters: student/STUDENT_INDEX parent/PARENT_INDEX (must be positive integers)\n"
+            + "Example: " + COMMAND_WORD + " student/1 parent/2";
+
+    public static final String MESSAGE_UNLINK_SUCCESS = "Unlinked %2$s from %1$s.";
+    public static final String MESSAGE_INVALID_INDEX = "Invalid student or parent index.";
+    public static final String MESSAGE_WRONG_TYPE = "Please ensure one student and one parent are input respectively.";
+    public static final String MESSAGE_NOT_LINKED = "The student and parent are already not linked.";
+
     private final Index studentIndex;
+    private final Index parentIndex;
+
     /**
      * Constructs an {@code UnlinkCommand} with the specified student and parent indexes.
      *
-     * @param student the {@link Index} of the student to be unlinked
-     * @param parent the {@link Index} of the parent to be unlinked
+     * @param studentIndex the {@link Index} of the student to be unlinked
+     * @param parentIndex the {@link Index} of the parent to be unlinked
      */
-    public UnlinkCommand(Index student, Index parent) {
-        this.studentIndex = student;
-        this.parentIndex = parent;
-
+    public UnlinkCommand(Index studentIndex, Index parentIndex) {
+        this.studentIndex = studentIndex;
+        this.parentIndex = parentIndex;
     }
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
         List<Person> lastShownList = model.getFilteredPersonList();
-        if (parentIndex.getZeroBased() >= lastShownList.size()
-                || studentIndex.getZeroBased() >= lastShownList.size()) {
+
+        // Check index bounds
+        if (studentIndex.getZeroBased() >= lastShownList.size()
+                || parentIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(MESSAGE_INVALID_INDEX);
         }
-        Person parentToUnlink = lastShownList.get(parentIndex.getZeroBased());
-        Person studentToUnlink = lastShownList.get(studentIndex.getZeroBased());
-        if (!(parentToUnlink instanceof Parent) || !(studentToUnlink instanceof Student)) {
+
+        Person studentPerson = lastShownList.get(studentIndex.getZeroBased());
+        Person parentPerson = lastShownList.get(parentIndex.getZeroBased());
+
+        // Validate types
+        if (!(studentPerson instanceof Student) || !(parentPerson instanceof Parent)) {
             throw new CommandException(MESSAGE_WRONG_TYPE);
         }
 
-        Parent parent = (Parent) parentToUnlink;
-        Student student = (Student) studentToUnlink;
+        Student student = (Student) studentPerson;
+        Parent parent = (Parent) parentPerson;
 
+        // Check if they are currently linked
+        if (!student.getParents().contains(parent) || !parent.getChildren().contains(student)) {
+            throw new CommandException(MESSAGE_NOT_LINKED);
+        }
+
+        // Perform unlink
         parent.removeChild(student);
         student.removeParent(parent);
 
-        model.setPerson(parentToUnlink, parent);
-        model.setPerson(studentToUnlink, student);
+        // Update model
+        model.setPerson(parentPerson, parent);
+        model.setPerson(studentPerson, student);
         model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
 
         return new CommandResult(String.format(MESSAGE_UNLINK_SUCCESS, student.getName(), parent.getName()));
@@ -68,17 +84,14 @@ public class UnlinkCommand extends Command {
 
     @Override
     public boolean equals(Object other) {
-        // short circuit if same object
         if (other == this) {
             return true;
         }
 
-        // instanceof handles nulls
         if (!(other instanceof UnlinkCommand)) {
             return false;
         }
 
-        // state check
         UnlinkCommand otherUnlinkCommand = (UnlinkCommand) other;
         return parentIndex.equals(otherUnlinkCommand.parentIndex)
                 && studentIndex.equals(otherUnlinkCommand.studentIndex);
