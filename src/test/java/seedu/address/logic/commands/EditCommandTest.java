@@ -166,6 +166,24 @@ public class EditCommandTest {
     }
 
     @Test
+    public void execute_editParentCost_throwsCommandException() {
+        Model localModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        Person parent = new PersonBuilder().withType("p")
+                .withName("Parent Example")
+                .withPhone("91234567")
+                .withEmail("parent@example.com")
+                .withAddress("1 Parent Street")
+                .withCost("0")
+                .build();
+        localModel.addPerson(parent);
+        Index parentIndex = Index.fromOneBased(localModel.getFilteredPersonList().size());
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withCost(VALID_COST_BOB).build();
+        EditCommand editCommand = new EditCommand(parentIndex, descriptor);
+
+        assertCommandFailure(editCommand, localModel, EditCommand.MESSAGE_PARENT_COST_IMMUTABLE);
+    }
+
+    @Test
     public void equals() {
         final EditCommand standardCommand = new EditCommand(INDEX_FIRST_PERSON, DESC_AMY);
 
