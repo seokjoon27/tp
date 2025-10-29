@@ -106,7 +106,7 @@ public class HelpWindow extends UiPart<Stage> {
         logger.fine("Showing help page about the application.");
 
         Stage stage = getRoot();
-        stage.setResizable(true);
+        stage.setResizable(false);
         stage.setFullScreen(false);
         stage.setMaximized(false);
         stage.setMinWidth(500);

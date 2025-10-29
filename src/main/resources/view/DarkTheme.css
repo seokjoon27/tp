@@ -153,7 +153,7 @@
 }
 
 .result-display .label {
-    -fx-text-fill: black !important;
+    -fx-text-fill: white;
 }
 
 .status-bar .label {
@@ -207,10 +207,6 @@
     -fx-padding: 2 10 2 10;
 }
 
-.menu:hover .label, .menu:showing .label {
-    -fx-text-fill: black;                 /* Black text when hovered */
-}
-
 .context-menu {
     -fx-background-color: black;          /* Dark dropdown background */
     -fx-background-radius: 0 0 10 10;
@@ -220,22 +216,18 @@
 }
 
 .context-menu .menu-item {
-    -fx-background-color: white;      /* Default: transparent */
     -fx-background-radius: 4px;             /* Slight rounding */
     -fx-padding: 4 10 4 10;                 /* Adjust padding */
 }
 
 .context-menu .menu-item .label {
+    -fx-text-fill: white;
     -fx-font-family: "Helvetica Neue";
     -fx-font-size: 12pt;
 }
 
 .context-menu .menu-item:hover {
     -fx-background-color: #ff9900; /* Hover background */
-}
-
-.context-menu .menu-item:hover .label {
-    -fx-text-fill: white;                 /* Black text when hovered */
 }
 
 .menu .left-container {
