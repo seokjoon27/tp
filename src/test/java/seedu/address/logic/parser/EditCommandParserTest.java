@@ -233,6 +233,7 @@ public class EditCommandParserTest {
     @Test
     public void parse_typeProvidedWithOtherFields_failure() {
         String userInput = "1" + TYPE_DESC_AMY + NAME_DESC_AMY + PHONE_DESC_BOB;
+
         assertParseFailure(parser, userInput, EditCommand.MESSAGE_EDIT_TYPE_FAILURE);
     }
 
