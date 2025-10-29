@@ -35,8 +35,6 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label name;
     @FXML
-    private Label type;
-    @FXML
     private Label id;
     @FXML
     private Label phone;
@@ -69,7 +67,6 @@ public class PersonCard extends UiPart<Region> {
         this.person = person;
         id.setText(displayedIndex + ". ");
         name.setText(person.getName().fullName);
-        type.setText(formatField("Type", person.getType().isStudent() ? "Student" : "Parent"));
         setRow(phone, "Phone", person.getPhone().value);
         setRow(address, "Address", person.getAddress().value);
         setRow(email, "Email", person.getEmail().value);
