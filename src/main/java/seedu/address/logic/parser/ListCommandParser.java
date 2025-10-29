@@ -30,7 +30,7 @@ public class ListCommandParser implements Parser<ListCommand> {
     public ListCommand parse(String args) throws ParseException {
         String trimmed = normalizeInput(args);
         if (trimmed.isEmpty()) {
-            return new ListCommand(Model.PREDICATE_SHOW_ALL_PERSONS, "Listed all persons");
+            return new ListCommand(Model.PREDICATE_SHOW_ALL_PERSONS, "Listed all persons.");
         }
 
         // Delegate specific logic for clarity
@@ -72,7 +72,7 @@ public class ListCommandParser implements Parser<ListCommand> {
                 p -> p instanceof Student
                         && ((Student) p).getSchedule() != null
                         && !((Student) p).getSchedule().isEmpty(),
-                "Listed students with a schedule"
+                "Listed students with a schedule."
         );
     }
 
@@ -120,7 +120,7 @@ public class ListCommandParser implements Parser<ListCommand> {
                 p -> p instanceof Student
                         && ((Student) p).getSchedule() != null
                         && day.equals(((Student) p).getSchedule().getDayOfWeek()),
-                "Listed students with schedule on " + capitalize(day.name())
+                "Listed students with schedule on " + capitalize(day.name()) + "."
         );
     }
 
@@ -129,7 +129,7 @@ public class ListCommandParser implements Parser<ListCommand> {
                 p -> p instanceof Student
                         && ((Student) p).getSchedule() != null
                         && date.equals(((Student) p).getSchedule().getDate()),
-                "Listed students with schedule on " + DATE_FORMAT.format(date)
+                "Listed students with schedule on " + DATE_FORMAT.format(date) + "."
         );
     }
 

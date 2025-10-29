@@ -27,7 +27,8 @@ public class UnlinkCommand extends Command {
     public static final String MESSAGE_UNLINK_SUCCESS = "Unlinked %2$s from %1$s.";
     public static final String MESSAGE_INVALID_INDEX = "Invalid student or parent index.";
     public static final String MESSAGE_WRONG_TYPE = "Please ensure one student and one parent are input respectively.";
-    public static final String MESSAGE_NOT_LINKED = "The student and parent are already not linked.";
+    public static final String MESSAGE_SAME_INDEX = "You cannot link a person to themselves.";
+    public static final String MESSAGE_NOT_LINKED = "These two persons are already not linked.";
 
     private final Index studentIndex;
     private final Index parentIndex;
@@ -39,6 +40,8 @@ public class UnlinkCommand extends Command {
      * @param parentIndex the {@link Index} of the parent to be unlinked
      */
     public UnlinkCommand(Index studentIndex, Index parentIndex) {
+        requireNonNull(studentIndex);
+        requireNonNull(parentIndex);
         this.studentIndex = studentIndex;
         this.parentIndex = parentIndex;
     }
@@ -52,6 +55,10 @@ public class UnlinkCommand extends Command {
         if (studentIndex.getZeroBased() >= lastShownList.size()
                 || parentIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(MESSAGE_INVALID_INDEX);
+        }
+
+        if (studentIndex.equals(parentIndex)) {
+            throw new CommandException(MESSAGE_SAME_INDEX);
         }
 
         Person studentPerson = lastShownList.get(studentIndex.getZeroBased());

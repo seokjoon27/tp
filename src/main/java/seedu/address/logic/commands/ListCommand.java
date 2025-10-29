@@ -32,7 +32,7 @@ public class ListCommand extends Command {
             + "  list <DATE>         — show schedules on a specific date (e.g., list 12-12-2025)";
 
     /** Default success message shown when listing all persons. */
-    public static final String MESSAGE_SUCCESS = "Listed all persons";
+    public static final String MESSAGE_SUCCESS = "Listed all persons.";
 
     private final Predicate<Person> predicate;
     private final String successMessage;
@@ -46,6 +46,13 @@ public class ListCommand extends Command {
     public ListCommand(Predicate<Person> predicate, String successMessage) {
         this.predicate = requireNonNull(predicate);
         this.successMessage = requireNonNull(successMessage);
+    }
+
+    /**
+     * Creates a {@code ListCommand} that lists all persons.
+     */
+    public ListCommand() {
+        this(person -> true, MESSAGE_SUCCESS);
     }
 
     /**

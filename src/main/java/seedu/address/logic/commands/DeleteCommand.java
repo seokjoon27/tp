@@ -31,6 +31,10 @@ public class DeleteCommand extends Command {
         this.targetIndex = targetIndex;
     }
 
+    public Index getTargetIndex() {
+        return targetIndex;
+    }
+
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
@@ -63,7 +67,7 @@ public class DeleteCommand extends Command {
     @Override
     public String toString() {
         return new ToStringBuilder(this)
-                .add("targetIndex", targetIndex)
+                .add("targetIndex", getTargetIndex())
                 .toString();
     }
 }
