@@ -12,7 +12,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TYPE;
 
 import seedu.address.commons.util.ToStringBuilder;
-import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Person;
@@ -53,15 +52,17 @@ public class AddCommand extends Command {
             + PREFIX_ADDRESS + "123, Clementi Road, #04-12 "
             + PREFIX_NOTE + "Mother of John";
 
-    public static final String MESSAGE_SUCCESS = "New person added: %1$s";
-    public static final String MESSAGE_SUCCESS_WITH_COST = "Successfully added cost per lesson information!\n"
-            + "New person added: %1$s";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
+    public static final String MESSAGE_SUCCESS =
+            "New person added: %1$s";
+    public static final String MESSAGE_SUCCESS_WITH_COST =
+            "New person with cost information added: %1$s";
+    public static final String MESSAGE_DUPLICATE_PERSON =
+            "This person already exists in the address book.";
 
     private final Person toAdd;
 
     /**
-     * Creates an AddCommand to add the specified {@code Person}
+     * Creates an AddCommand to add the specified {@code Person}.
      */
     public AddCommand(Person person) {
         requireNonNull(person);
@@ -77,23 +78,19 @@ public class AddCommand extends Command {
         }
 
         model.addPerson(toAdd);
-        String message = toAdd.getCost() != null ? MESSAGE_SUCCESS_WITH_COST : MESSAGE_SUCCESS;
-        return new CommandResult(String.format(message, Messages.format(toAdd)));
+
+        final String messageTemplate = (toAdd.getCost() != null)
+                ? MESSAGE_SUCCESS_WITH_COST
+                : MESSAGE_SUCCESS;
+
+        return new CommandResult(String.format(messageTemplate, toAdd.getName()));
     }
 
     @Override
     public boolean equals(Object other) {
-        if (other == this) {
-            return true;
-        }
-
-        // instanceof handles nulls
-        if (!(other instanceof AddCommand)) {
-            return false;
-        }
-
-        AddCommand otherAddCommand = (AddCommand) other;
-        return toAdd.equals(otherAddCommand.toAdd);
+        return other == this
+                || (other instanceof AddCommand
+                && toAdd.equals(((AddCommand) other).toAdd));
     }
 
     @Override
