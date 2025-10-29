@@ -182,6 +182,38 @@ public class EditCommandTest {
     }
 
     @Test
+    public void execute_editParentSchedule_failure() {
+        // Create a Parent directly for this test
+        seedu.address.model.person.Parent parent = new seedu.address.model.person.Parent(
+                new seedu.address.model.person.Name("Parent Example"),
+                new seedu.address.model.person.Phone("99999999"),
+                new seedu.address.model.person.Email("parent@example.com"),
+                new seedu.address.model.person.Address("Blk 12"),
+                new seedu.address.model.person.Note("Parent of student"),
+                new seedu.address.model.person.Cost("200"),
+                new seedu.address.model.person.PaymentStatus(false),
+                new java.util.HashSet<>()
+        );
+
+        // Put that Parent in a fresh model so it appears at index 0
+        Model freshModel = new ModelManager(new AddressBook(), new UserPrefs());
+        freshModel.addPerson(parent);
+
+        Index parentIndex = Index.fromZeroBased(0);
+
+        // Descriptor that (illegally) tries to edit the schedule of a Parent.
+        // Use a syntactically valid schedule string so Schedule.parse(...) doesn't throw.
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder()
+                .withSchedule("Monday 14:00-16:00")
+                .build();
+
+        EditCommand editCommand = new EditCommand(parentIndex, descriptor);
+
+        // Expect CommandException with the proper message
+        assertCommandFailure(editCommand, freshModel, EditCommand.MESSAGE_PARENT_SCHEDULE_ERROR);
+    }
+
+    @Test
     public void equals() {
         final EditCommand standardCommand = new EditCommand(INDEX_FIRST_PERSON, DESC_AMY);
 
