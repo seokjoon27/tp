@@ -36,7 +36,7 @@ public class NoteCommandParserTest {
                 INDEX_FIRST_PERSON, VALID_NOTE);
     }
 
-    //Defensive Coding: extra whitespace
+    //EP: extra whitespace
     @Test
     public void parse_validArgsWithExtraWhitespace_success() {
         String userInput = "   " + INDEX_FIRST_PERSON.getOneBased() + "   " + PREFIX_NOTE + "   " + VALID_NOTE + "   ";
@@ -50,7 +50,7 @@ public class NoteCommandParserTest {
         assertParseFailureForNote(userInput, expectedMessage);
     }
 
-    //Defensive Coding: empty note
+    //EP: empty note
     @Test
     public void parse_noParameters_failure() {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, NoteCommand.MESSAGE_USAGE);
@@ -64,14 +64,14 @@ public class NoteCommandParserTest {
         assertParseFailureForNote(userInput, expectedMessage);
     }
 
-    //Defensive Coding: 101 characters, exceeds boundary
+    //EP: 101 characters, exceeds boundary
     @Test
     public void parse_noteTooLong_failure() {
         String userInput = INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_NOTE + LONG_NOTE;
         assertParseFailureForNote(userInput, Note.MESSAGE_CONSTRAINTS);
     }
 
-    //Defensive Coding: 100 characters boundary
+    //EP: 100 characters boundary
     @Test
     public void parse_noteAtMaxLength_success() {
         String validBoundaryNote = "a".repeat(Note.MAX_LENGTH);
@@ -79,7 +79,7 @@ public class NoteCommandParserTest {
         assertParseSuccessForNote(userInput, INDEX_FIRST_PERSON, validBoundaryNote);
     }
 
-    //Defensive Coding: 99 characters
+    //EP: 99 characters
     @Test
     public void parse_noteAtSuitableLength_success() {
         String validBoundaryNote = "a".repeat(Note.MAX_LENGTH - 1);
