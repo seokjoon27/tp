@@ -127,7 +127,6 @@ public class EditCommandTest {
                 .build();
 
         EditCommand editCommand = new EditCommand(INDEX_FIRST_PERSON, descriptor);
-
         assertCommandFailure(editCommand, model, EditCommand.MESSAGE_EDIT_TYPE_FAILURE);
     }
 
