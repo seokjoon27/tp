@@ -26,8 +26,9 @@ public class ScheduleCommandParser implements Parser<ScheduleCommand> {
     @Override
     public ScheduleCommand parse(String args) throws ParseException {
         requireNonNull(args);
-        logger.fine("Parsing ScheduleCommand args: " + args);
-        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_SCHEDULE);
+        String normalizedArgs = args.replaceAll("(?i)SCHEDULE/", "schedule/");
+        logger.fine("Parsing ScheduleCommand args: " + normalizedArgs);
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(normalizedArgs, PREFIX_SCHEDULE);
 
         Index index;
         try {
