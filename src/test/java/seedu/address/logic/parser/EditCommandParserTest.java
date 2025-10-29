@@ -18,6 +18,7 @@ import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
+import static seedu.address.logic.commands.CommandTestUtil.TYPE_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_COST_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
@@ -223,4 +224,17 @@ public class EditCommandParserTest {
 
         assertParseSuccess(parser, userInput, expectedCommand);
     }
+
+    @Test
+    public void parse_typeProvidedOnly_failure() {
+        assertParseFailure(parser, "1" + TYPE_DESC_AMY, EditCommand.MESSAGE_EDIT_TYPE_FAILURE);
+    }
+
+    @Test
+    public void parse_typeProvidedWithOtherFields_failure() {
+        String userInput = "1" + TYPE_DESC_AMY + NAME_DESC_AMY + PHONE_DESC_BOB;
+
+        assertParseFailure(parser, userInput, EditCommand.MESSAGE_EDIT_TYPE_FAILURE);
+    }
+
 }

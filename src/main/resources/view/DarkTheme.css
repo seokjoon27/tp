@@ -406,3 +406,13 @@
     -fx-background-radius: 4;
     -fx-font-size: 11;
 }
+
+.paid-tag {
+    -fx-background-color: #FF9900;   /* Orange background */
+    -fx-text-fill: black;            /* Black checkmark / text */
+    -fx-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    -fx-font-size: 15pt;
+    -fx-border-radius: 4;            /* Rounded corners */
+    -fx-background-radius: 4;
+    -fx-padding: 2 6 2 6;            /* Padding inside the box */
+}

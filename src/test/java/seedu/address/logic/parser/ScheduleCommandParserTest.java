@@ -68,7 +68,7 @@ public class ScheduleCommandParserTest {
                 expectedMessage);
     }
 
-    //Defensive coding: Extra whitespace
+    //EP: Extra whitespace
     @Test
     public void parse_whitespaceTolerance_success() throws Exception {
         Index targetIndex = INDEX_FIRST_PERSON;

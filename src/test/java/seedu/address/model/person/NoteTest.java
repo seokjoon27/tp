@@ -32,16 +32,16 @@ public class NoteTest {
 
     @Test
     public void isValidNoteLength() {
-        // Defensive coding: empty note
+        // EP: empty note
         assertTrue(Note.isValidNoteLength(""));
 
-        // Defensive coding: at boundary
+        // EP: at boundary
         assertTrue(Note.isValidNoteLength("a".repeat(100)));
 
-        // Defensive coding: right below boundary
+        // EP: right below boundary
         assertTrue(Note.isValidNoteLength("a".repeat(99)));
 
-        // Defensive coding: above boundary
+        // EP: above boundary
         assertFalse(Note.isValidNoteLength("a".repeat(101)));
     }
 
