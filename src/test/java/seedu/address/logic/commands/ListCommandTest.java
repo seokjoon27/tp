@@ -103,4 +103,31 @@ public class ListCommandTest {
         expectedModel.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         assertCommandSuccess(command, model, ListCommand.MESSAGE_SUCCESS, expectedModel);
     }
+
+    @Test
+    public void execute_defaultConstructor_listsAllPersons() {
+        // This specifically covers the no-arg constructor: new ListCommand()
+        ListCommand command = new ListCommand();
+        expectedModel.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+
+        assertCommandSuccess(command, model, ListCommand.MESSAGE_SUCCESS, expectedModel);
+    }
+
+    @Test
+    public void equals_andHashCode() {
+        ListCommand listAllA = new ListCommand(PREDICATE_SHOW_ALL_PERSONS, ListCommand.MESSAGE_SUCCESS);
+        ListCommand listAllB = new ListCommand(PREDICATE_SHOW_ALL_PERSONS, ListCommand.MESSAGE_SUCCESS);
+
+        ListCommand listPaid = new ListCommand(
+                p -> p.getPaymentStatus() != null && p.getPaymentStatus().isPaid(),
+                "Listed persons with payment status: PAID");
+
+        org.junit.jupiter.api.Assertions.assertTrue(listAllA.equals(listAllA));
+        org.junit.jupiter.api.Assertions.assertTrue(listAllA.equals(listAllB));
+        org.junit.jupiter.api.Assertions.assertFalse(listAllA.equals(null));
+        org.junit.jupiter.api.Assertions.assertFalse(listAllA.equals("not a ListCommand"));
+        org.junit.jupiter.api.Assertions.assertFalse(listAllA.equals(listPaid));
+
+        org.junit.jupiter.api.Assertions.assertEquals(listAllA.hashCode(), listAllB.hashCode());
+    }
 }
