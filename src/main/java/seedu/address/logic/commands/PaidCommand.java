@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -76,14 +77,24 @@ public class PaidCommand extends Command {
         PaymentStatus updatedStatus = new PaymentStatus(newStatusIsPaid);
         if (personToMark.getType().isStudent()) {
             Student studentToMark = (Student) personToMark; // safe cast
-            markedPerson = new Student(studentToMark.getName(), studentToMark.getPhone(), studentToMark.getEmail(),
+            Student updatedStudent = new Student(studentToMark.getName(), studentToMark.getPhone(),
+                    studentToMark.getEmail(),
                     studentToMark.getAddress(), studentToMark.getNote(), studentToMark.getSchedule(),
                     studentToMark.getCost(), updatedStatus,
                     studentToMark.getTags());
-        } else {
-            markedPerson = new Parent(personToMark.getName(), personToMark.getPhone(), personToMark.getEmail(),
+            studentToMark.getParents().forEach(updatedStudent::addParent);
+            updatedStudent.setLinkedNames(new ArrayList<>(studentToMark.getLinkedNames()));
+            markedPerson = updatedStudent;
+        } else if (personToMark.getType().isParent()) {
+            Parent parentToMark = (Parent) personToMark;
+            Parent updatedParent = new Parent(parentToMark.getName(), parentToMark.getPhone(),
+                    parentToMark.getEmail(),
                     personToMark.getAddress(), personToMark.getNote(), personToMark.getCost(), updatedStatus,
                     personToMark.getTags());
+            parentToMark.getChildren().forEach(updatedParent::addChild);
+            markedPerson = updatedParent;
+        } else {
+            throw new IllegalStateException("Unsupported person type: " + personToMark.getType());
         }
 
         model.setPerson(personToMark, markedPerson);
