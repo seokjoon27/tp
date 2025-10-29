@@ -66,6 +66,7 @@ public class EditCommand extends Command {
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
+    public static final String MESSAGE_PARENT_SCHEDULE_ERROR = "Cannot edit schedule for a parent.";
 
     private final Index index;
     private final EditPersonDescriptor editPersonDescriptor;
@@ -100,7 +101,8 @@ public class EditCommand extends Command {
 
         model.setPerson(personToEdit, editedPerson);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson)));
+
+        return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedPerson.getName()));
     }
 
     /**
@@ -139,7 +141,7 @@ public class EditCommand extends Command {
         } else {
             // If the user tries to edit schedule of a Parent, it returns an error
             if (editPersonDescriptor.getSchedule().isPresent()) {
-                throw new CommandException("Cannot edit schedule for a parent.");
+                throw new CommandException(MESSAGE_PARENT_SCHEDULE_ERROR);
             }
 
             return new Parent(
