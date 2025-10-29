@@ -50,7 +50,6 @@ public class EditCommand extends Command {
             + "by the index number used in the displayed person list. "
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
-            + "[" + PREFIX_TYPE + "TYPE] "
             + "[" + PREFIX_NAME + "NAME] "
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
@@ -66,6 +65,8 @@ public class EditCommand extends Command {
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
+    public static final String MESSAGE_EDIT_TYPE_FAILURE =
+            "You cannot edit a person's type (Student/Parent). Delete and re-add with the desired type.";
 
     private final Index index;
     private final EditPersonDescriptor editPersonDescriptor;
@@ -92,6 +93,11 @@ public class EditCommand extends Command {
         }
 
         Person personToEdit = lastShownList.get(index.getZeroBased());
+
+        if (editPersonDescriptor.getType().isPresent()) {
+            throw new CommandException(MESSAGE_EDIT_TYPE_FAILURE);
+        }
+
         Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
 
         if (!personToEdit.isSamePerson(editedPerson) && model.hasPerson(editedPerson)) {
@@ -111,7 +117,6 @@ public class EditCommand extends Command {
             throws CommandException {
         assert personToEdit != null;
 
-        Type updatedType = editPersonDescriptor.getType().orElse(personToEdit.getType());
         Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Note updatedNote = editPersonDescriptor.getNote().orElse(personToEdit.getNote());
