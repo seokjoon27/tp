@@ -11,7 +11,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.index.Index;
-import seedu.address.logic.Messages;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -44,7 +43,7 @@ public class PaidCommandTest {
         expectedModel.setPerson(originalPerson, paidPerson);
 
         assertCommandSuccess(paidCommand, model,
-                String.format(PaidCommand.MESSAGE_MARK_PAID_SUCCESS, Messages.format(paidPerson)), expectedModel);
+                String.format(PaidCommand.MESSAGE_MARK_PAID_SUCCESS, paidPerson.getName()), expectedModel);
     }
 
     @Test
@@ -58,7 +57,7 @@ public class PaidCommandTest {
         expectedModel.setPerson(personToMark, paidPerson);
 
         assertCommandSuccess(paidCommand, model,
-                String.format(PaidCommand.MESSAGE_MARK_PAID_SUCCESS, Messages.format(paidPerson)), expectedModel);
+                String.format(PaidCommand.MESSAGE_MARK_PAID_SUCCESS, paidPerson.getName()), expectedModel);
     }
 
     @Test
@@ -73,7 +72,7 @@ public class PaidCommandTest {
         expectedModel.setPerson(paidAlice, unpaidAlice);
 
         assertCommandSuccess(paidCommand, model,
-                String.format(PaidCommand.MESSAGE_MARK_UNPAID_SUCCESS, Messages.format(unpaidAlice)), expectedModel);
+                String.format(PaidCommand.MESSAGE_MARK_UNPAID_SUCCESS, unpaidAlice.getName()), expectedModel);
     }
 
     @Test
@@ -88,7 +87,8 @@ public class PaidCommandTest {
         expectedModel.setPerson(paidAlice, unpaidAlice);
 
         assertCommandSuccess(paidCommand, model,
-                String.format(PaidCommand.MESSAGE_MARK_UNPAID_SUCCESS, Messages.format(unpaidAlice)), expectedModel);
+                String.format(PaidCommand.MESSAGE_MARK_UNPAID_SUCCESS, unpaidAlice.getName()), expectedModel);
+
     }
 
     @Test
