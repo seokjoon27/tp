@@ -19,6 +19,7 @@ import seedu.address.model.person.Student;
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
+    private static final double PAID_STATUS_WIDTH = 100.0;
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -77,6 +78,9 @@ public class PersonCard extends UiPart<Region> {
         setRow(cost, "Cost", person.getCost() == null ? null : person.getCost().toString());
 
         boolean isPaid = person.getPaymentStatus().isPaid();
+        paidStatus.setMinWidth(PAID_STATUS_WIDTH);
+        paidStatus.setPrefWidth(PAID_STATUS_WIDTH);
+        paidStatus.setMaxWidth(PAID_STATUS_WIDTH);
         paidStatus.setSelected(isPaid);
         paidStatus.setText(isPaid ? "[Paid]" : "[Unpaid]");
 
