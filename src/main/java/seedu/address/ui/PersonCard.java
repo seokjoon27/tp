@@ -19,6 +19,13 @@ import seedu.address.model.person.Student;
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
+    private static final double PAID_STATUS_WIDTH = 120.0;
+    private static final double PAID_STATUS_SCALE = 1.0;
+    private static final String PAID_CHECKBOX_STYLE =
+            "-fx-background-color: transparent; -fx-font-size: 24px; -fx-mark-color: #ff8f00;";
+    private static final String UNPAID_CHECKBOX_STYLE =
+            "-fx-background-color: transparent; -fx-font-size: 24px; -fx-mark-color: #1f1f1f;";
+    private static final String PAID_CAPTION_STYLE = "-fx-text-fill: #ffffff; -fx-font-weight: bold;";
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -57,6 +64,8 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private CheckBox paidStatus;
     @FXML
+    private Label paidCaption;
+    @FXML
     private VBox parentsContainer;
     @FXML
     private FlowPane parents;
@@ -76,9 +85,17 @@ public class PersonCard extends UiPart<Region> {
         setRow(note, "Note", person.getNote() == null ? null : person.getNote().value);
         setRow(cost, "Cost", person.getCost() == null ? null : person.getCost().toString());
 
+        paidCaption.setStyle(PAID_CAPTION_STYLE);
+
         boolean isPaid = person.getPaymentStatus().isPaid();
+        paidStatus.setMinWidth(PAID_STATUS_WIDTH);
+        paidStatus.setPrefWidth(PAID_STATUS_WIDTH);
+        paidStatus.setMaxWidth(PAID_STATUS_WIDTH);
+        paidStatus.setScaleX(PAID_STATUS_SCALE);
+        paidStatus.setScaleY(PAID_STATUS_SCALE);
         paidStatus.setSelected(isPaid);
-        paidStatus.setText(isPaid ? "[Paid]" : "[Unpaid]");
+        paidStatus.setText("");
+        paidStatus.setStyle(isPaid ? PAID_CHECKBOX_STYLE : UNPAID_CHECKBOX_STYLE);
 
         tags.getChildren().clear();
 

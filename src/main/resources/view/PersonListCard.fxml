@@ -45,5 +45,14 @@
 
     </VBox>
   </GridPane>
-  <CheckBox fx:id="paidStatus" disable="true" focusTraversable="false" />
+  <VBox alignment="TOP_RIGHT" spacing="6" fillWidth="true">
+    <padding>
+      <Insets top="18" right="0" bottom="12" left="0" />
+    </padding>
+    <HBox alignment="CENTER_RIGHT" spacing="8" maxWidth="Infinity">
+      <Region HBox.hgrow="ALWAYS" />
+      <Label fx:id="paidCaption" styleClass="cell_small_label" text="Paid :" />
+      <CheckBox fx:id="paidStatus" disable="true" focusTraversable="false" />
+    </HBox>
+  </VBox>
 </HBox>
