@@ -1,7 +1,78 @@
+/* Help message text */
 #helpMessage {
     -fx-text-fill: white;
+    -fx-font-size: 15px;
 }
 
+/* Container around help message */
 #helpMessageContainer {
     -fx-background-color: black;
 }
+
+/* Make ScrollPane itself transparent so container color shows */
+.scroll-pane {
+    -fx-background: transparent;
+    -fx-background-color: transparent;
+}
+
+.scroll-bar:vertical .thumb {
+    -fx-background-color: #ff9800;
+    -fx-background-radius: 3;
+}
+
+.scroll-bar:vertical .thumb:hover {
+    -fx-background-color: #ffa726;
+}
+
+.scroll-bar:vertical .track {
+    -fx-background-color: #3b3b3b;
+}
+
+.scroll-bar:horizontal {
+    -fx-background-color: black;
+}
+
+.scroll-bar:horizontal .thumb {
+    -fx-background-color: #ff9900;
+    -fx-background-radius: 3;
+}
+
+.scroll-bar:horizontal .thumb:hover {
+    -fx-background-color: #ffa726;
+}
+
+.scroll-bar:horizontal .track {
+    -fx-background-color: black;
+}
+
+.scroll-bar .increment-button,
+.scroll-bar .decrement-button {
+    -fx-padding: 0;
+    -fx-background-color: transparent;
+    -fx-shape: "";
+    -fx-opacity: 0;
+    -fx-min-width: 0;
+    -fx-pref-width: 0;
+    -fx-max-width: 0;
+    -fx-min-height: 0;
+    -fx-pref-height: 0;
+    -fx-max-height: 0;
+}
+
+#copyButton {
+    -fx-background-color: #ff9900;
+}
+
+#copyButton:hover {
+    -fx-background-color: #ffa726;
+}
+
+#copyButton:armed {
+    -fx-background-color: #c47704;
+}
+
+.help-url {
+    -fx-text-fill: #ff9900;
+    -fx-font-size: 15px;
+}
+

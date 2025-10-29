@@ -44,7 +44,10 @@ public class EditCommandTest {
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(editedPerson).build();
         EditCommand editCommand = new EditCommand(INDEX_FIRST_PERSON, descriptor);
 
-        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson));
+        String expectedMessage = String.format(
+                EditCommand.MESSAGE_EDIT_PERSON_SUCCESS,
+                editedPerson.getName()
+        );
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setPerson(firstPerson, editedPerson);
@@ -65,7 +68,10 @@ public class EditCommandTest {
                 .withPhone(VALID_PHONE_BOB).withTags(VALID_TAG_HUSBAND).withCost(VALID_COST_BOB).build();
         EditCommand editCommand = new EditCommand(indexLastPerson, descriptor);
 
-        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson));
+        String expectedMessage = String.format(
+                EditCommand.MESSAGE_EDIT_PERSON_SUCCESS,
+                editedPerson.getName()
+        );
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setPerson(lastPerson, editedPerson);
@@ -81,7 +87,11 @@ public class EditCommandTest {
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withCost(VALID_COST_BOB).build();
         EditCommand editCommand = new EditCommand(INDEX_FIRST_PERSON, descriptor);
 
-        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson));
+        String expectedMessage = String.format(
+                EditCommand.MESSAGE_EDIT_PERSON_SUCCESS,
+                editedPerson.getName()
+        );
+
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setPerson(firstPerson, editedPerson);
@@ -94,7 +104,10 @@ public class EditCommandTest {
         EditCommand editCommand = new EditCommand(INDEX_FIRST_PERSON, new EditPersonDescriptor());
         Person editedPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
 
-        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson));
+        String expectedMessage = String.format(
+                EditCommand.MESSAGE_EDIT_PERSON_SUCCESS,
+                editedPerson.getName()
+        );
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
 
@@ -110,12 +123,27 @@ public class EditCommandTest {
         EditCommand editCommand = new EditCommand(INDEX_FIRST_PERSON,
                 new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB).build());
 
-        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson));
+        String expectedMessage = String.format(
+                EditCommand.MESSAGE_EDIT_PERSON_SUCCESS,
+                editedPerson.getName()
+        );
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setPerson(model.getFilteredPersonList().get(0), editedPerson);
 
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_changeType_failure() {
+        Person target = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(target)
+                .withType("p")
+                .build();
+
+        EditCommand editCommand = new EditCommand(INDEX_FIRST_PERSON, descriptor);
+        assertCommandFailure(editCommand, model, EditCommand.MESSAGE_EDIT_TYPE_FAILURE);
     }
 
     @Test
@@ -166,21 +194,35 @@ public class EditCommandTest {
     }
 
     @Test
-    public void execute_editParentCost_throwsCommandException() {
-        Model localModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        Person parent = new PersonBuilder().withType("p")
-                .withName("Parent Example")
-                .withPhone("91234567")
-                .withEmail("parent@example.com")
-                .withAddress("1 Parent Street")
-                .withCost("0")
+    public void execute_editParentSchedule_failure() {
+        // Create a Parent directly for this test
+        seedu.address.model.person.Parent parent = new seedu.address.model.person.Parent(
+                new seedu.address.model.person.Name("Parent Example"),
+                new seedu.address.model.person.Phone("99999999"),
+                new seedu.address.model.person.Email("parent@example.com"),
+                new seedu.address.model.person.Address("Blk 12"),
+                new seedu.address.model.person.Note("Parent of student"),
+                new seedu.address.model.person.Cost("200"),
+                new seedu.address.model.person.PaymentStatus(false),
+                new java.util.HashSet<>()
+        );
+
+        // Put that Parent in a fresh model so it appears at index 0
+        Model freshModel = new ModelManager(new AddressBook(), new UserPrefs());
+        freshModel.addPerson(parent);
+
+        Index parentIndex = Index.fromZeroBased(0);
+
+        // Descriptor that (illegally) tries to edit the schedule of a Parent.
+        // Use a syntactically valid schedule string so Schedule.parse(...) doesn't throw.
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder()
+                .withSchedule("Monday 14:00-16:00")
                 .build();
-        localModel.addPerson(parent);
-        Index parentIndex = Index.fromOneBased(localModel.getFilteredPersonList().size());
-        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withCost(VALID_COST_BOB).build();
+
         EditCommand editCommand = new EditCommand(parentIndex, descriptor);
 
-        assertCommandFailure(editCommand, localModel, EditCommand.MESSAGE_PARENT_COST_IMMUTABLE);
+        // Expect CommandException with the proper message
+        assertCommandFailure(editCommand, freshModel, EditCommand.MESSAGE_PARENT_SCHEDULE_ERROR);
     }
 
     @Test

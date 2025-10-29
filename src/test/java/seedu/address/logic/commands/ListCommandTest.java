@@ -36,9 +36,9 @@ public class ListCommandTest {
 
     @Test
     public void execute_listAll_showsAllPersons() {
-        ListCommand command = new ListCommand(PREDICATE_SHOW_ALL_PERSONS, "Listed all persons");
+        ListCommand command = new ListCommand(PREDICATE_SHOW_ALL_PERSONS, ListCommand.MESSAGE_SUCCESS);
         expectedModel.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        assertCommandSuccess(command, model, "Listed all persons", expectedModel);
+        assertCommandSuccess(command, model, ListCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
     @Test
@@ -99,8 +99,35 @@ public class ListCommandTest {
     @Test
     public void execute_listAfterFilter_showsEverything() {
         showPersonAtIndex(model, INDEX_FIRST_PERSON);
-        ListCommand command = new ListCommand(PREDICATE_SHOW_ALL_PERSONS, "Listed all persons");
+        ListCommand command = new ListCommand(PREDICATE_SHOW_ALL_PERSONS, ListCommand.MESSAGE_SUCCESS);
         expectedModel.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        assertCommandSuccess(command, model, "Listed all persons", expectedModel);
+        assertCommandSuccess(command, model, ListCommand.MESSAGE_SUCCESS, expectedModel);
+    }
+
+    @Test
+    public void execute_defaultConstructor_listsAllPersons() {
+        // This specifically covers the no-arg constructor: new ListCommand()
+        ListCommand command = new ListCommand();
+        expectedModel.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+
+        assertCommandSuccess(command, model, ListCommand.MESSAGE_SUCCESS, expectedModel);
+    }
+
+    @Test
+    public void equals_andHashCode() {
+        ListCommand listAllA = new ListCommand(PREDICATE_SHOW_ALL_PERSONS, ListCommand.MESSAGE_SUCCESS);
+        ListCommand listAllB = new ListCommand(PREDICATE_SHOW_ALL_PERSONS, ListCommand.MESSAGE_SUCCESS);
+
+        ListCommand listPaid = new ListCommand(
+                p -> p.getPaymentStatus() != null && p.getPaymentStatus().isPaid(),
+                "Listed persons with payment status: PAID");
+
+        org.junit.jupiter.api.Assertions.assertTrue(listAllA.equals(listAllA));
+        org.junit.jupiter.api.Assertions.assertTrue(listAllA.equals(listAllB));
+        org.junit.jupiter.api.Assertions.assertFalse(listAllA.equals(null));
+        org.junit.jupiter.api.Assertions.assertFalse(listAllA.equals("not a ListCommand"));
+        org.junit.jupiter.api.Assertions.assertFalse(listAllA.equals(listPaid));
+
+        org.junit.jupiter.api.Assertions.assertEquals(listAllA.hashCode(), listAllB.hashCode());
     }
 }

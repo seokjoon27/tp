@@ -119,7 +119,7 @@ public class PaidCommand extends Command {
         String successMessage = newStatusIsPaid
                 ? MESSAGE_MARK_PAID_SUCCESS
                 : MESSAGE_MARK_UNPAID_SUCCESS;
-        return new CommandResult(String.format(successMessage, Messages.format(markedPerson)));
+        return new CommandResult(String.format(successMessage, markedPerson.getName()));
     }
 
     @Override

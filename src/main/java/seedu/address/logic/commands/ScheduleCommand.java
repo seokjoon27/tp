@@ -33,7 +33,7 @@ public class ScheduleCommand extends Command {
 
     public static final String MESSAGE_ADD_SCHEDULE_SUCCESS = "Updated schedule for Student: %1$s";
     public static final String MESSAGE_DELETE_SCHEDULE_SUCCESS = "Removed schedule from Student: %1$s";
-    public static final String MESSAGE_NOT_STUDENT = "This person is not a student, so a schedule cannot be added.";
+    public static final String MESSAGE_NOT_STUDENT = "Cannot add schedule for a parent.";
 
     private static final Logger logger = Logger.getLogger(ScheduleCommand.class.getName());
 
