@@ -25,7 +25,7 @@ public class PersonCard extends UiPart<Region> {
             "-fx-background-color: transparent; -fx-font-size: 24px; -fx-mark-color: #ff8f00;";
     private static final String UNPAID_CHECKBOX_STYLE =
             "-fx-background-color: transparent; -fx-font-size: 24px; -fx-mark-color: #1f1f1f;";
-    private static final String PAID_CAPTION_STYLE = "-fx-text-fill: #ffffff; -fx-font-weight: bold;";
+    private static final String PAID_CAPTION_STYLE = "-fx-text-fill: black; -fx-font-weight: bold;";
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
