@@ -69,4 +69,24 @@ public class ListCommand extends Command {
         System.out.println("Filtered list size: " + model.getFilteredPersonList().size());
         return new CommandResult(successMessage);
     }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        if (!(other instanceof ListCommand)) {
+            return false;
+        }
+
+        ListCommand otherCommand = (ListCommand) other;
+
+        return this.successMessage.equals(otherCommand.successMessage);
+    }
+
+    @Override
+    public int hashCode() {
+        return successMessage.hashCode();
+    }
 }

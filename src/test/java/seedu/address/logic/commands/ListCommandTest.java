@@ -36,9 +36,9 @@ public class ListCommandTest {
 
     @Test
     public void execute_listAll_showsAllPersons() {
-        ListCommand command = new ListCommand(PREDICATE_SHOW_ALL_PERSONS, "Listed all persons");
+        ListCommand command = new ListCommand(PREDICATE_SHOW_ALL_PERSONS, ListCommand.MESSAGE_SUCCESS);
         expectedModel.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        assertCommandSuccess(command, model, "Listed all persons", expectedModel);
+        assertCommandSuccess(command, model, ListCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
     @Test
@@ -99,8 +99,8 @@ public class ListCommandTest {
     @Test
     public void execute_listAfterFilter_showsEverything() {
         showPersonAtIndex(model, INDEX_FIRST_PERSON);
-        ListCommand command = new ListCommand(PREDICATE_SHOW_ALL_PERSONS, "Listed all persons");
+        ListCommand command = new ListCommand(PREDICATE_SHOW_ALL_PERSONS, ListCommand.MESSAGE_SUCCESS);
         expectedModel.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        assertCommandSuccess(command, model, "Listed all persons", expectedModel);
+        assertCommandSuccess(command, model, ListCommand.MESSAGE_SUCCESS, expectedModel);
     }
 }
