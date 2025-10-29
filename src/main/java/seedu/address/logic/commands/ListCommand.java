@@ -32,7 +32,7 @@ public class ListCommand extends Command {
             + "  list <DATE>         — show schedules on a specific date (e.g., list 12-12-2025)";
 
     /** Default success message shown when listing all persons. */
-    public static final String MESSAGE_SUCCESS = "Listed all persons";
+    public static final String MESSAGE_SUCCESS = "Listed all persons.";
 
     private final Predicate<Person> predicate;
     private final String successMessage;
@@ -49,6 +49,13 @@ public class ListCommand extends Command {
     }
 
     /**
+     * Creates a {@code ListCommand} that lists all persons.
+     */
+    public ListCommand() {
+        this(person -> true, MESSAGE_SUCCESS);
+    }
+
+    /**
      * Executes the command by updating the model’s filtered person list
      * according to the provided predicate.
      *
@@ -61,5 +68,25 @@ public class ListCommand extends Command {
         model.updateFilteredPersonList(predicate);
         System.out.println("Filtered list size: " + model.getFilteredPersonList().size());
         return new CommandResult(successMessage);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        if (!(other instanceof ListCommand)) {
+            return false;
+        }
+
+        ListCommand otherCommand = (ListCommand) other;
+
+        return this.successMessage.equals(otherCommand.successMessage);
+    }
+
+    @Override
+    public int hashCode() {
+        return successMessage.hashCode();
     }
 }

@@ -63,10 +63,9 @@ public class UnlinkCommandTest {
         Person parentPerson = model.getFilteredPersonList().get(INDEX_SECOND_PERSON.getZeroBased());
 
         if (!(studentPerson instanceof Student student) || !(parentPerson instanceof Parent parent)) {
-            return; // skip test if test data doesn’t fit
+            return;
         }
 
-        // Pre-link them before unlinking
         student.addParent(parent);
         parent.addChild(student);
         model.setPerson(studentPerson, student);
@@ -77,26 +76,40 @@ public class UnlinkCommandTest {
                 student.getName(), parent.getName());
 
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        Parent expectedParent = (Parent) expectedModel.getFilteredPersonList().get(INDEX_SECOND_PERSON.getZeroBased());
-        Student expectedStudent = (Student) expectedModel.getFilteredPersonList()
+        Person expectedStudentPerson = expectedModel.getFilteredPersonList()
                 .get(INDEX_FIRST_PERSON.getZeroBased());
+        Person expectedParentPerson = expectedModel.getFilteredPersonList()
+                .get(INDEX_SECOND_PERSON.getZeroBased());
 
+        Student expectedStudent = (Student) expectedStudentPerson;
+        Parent expectedParent = (Parent) expectedParentPerson;
         expectedParent.removeChild(expectedStudent);
         expectedStudent.removeParent(expectedParent);
-        expectedModel.setPerson(expectedStudent, expectedStudent);
-        expectedModel.setPerson(expectedParent, expectedParent);
+
+        expectedModel.setPerson(expectedStudentPerson, expectedStudent);
+        expectedModel.setPerson(expectedParentPerson, expectedParent);
+        expectedModel.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
 
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
     }
 
     /**
-     * EP2: Invalid index (out of bounds) → failure.
+     * EP2a: Invalid index (out of bounds) → failure.
      */
     @Test
     public void execute_invalidIndex_failure() {
         Index outOfBounds = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
         UnlinkCommand command = new UnlinkCommand(INDEX_FIRST_PERSON, outOfBounds);
         assertCommandFailure(command, model, UnlinkCommand.MESSAGE_INVALID_INDEX);
+    }
+
+    /**
+     * EP2b: Same index → failure.
+     */
+    @Test
+    public void execute_sameIndex_failure() {
+        UnlinkCommand command = new UnlinkCommand(INDEX_FIRST_PERSON, INDEX_FIRST_PERSON);
+        assertCommandFailure(command, model, UnlinkCommand.MESSAGE_SAME_INDEX);
     }
 
     /**
