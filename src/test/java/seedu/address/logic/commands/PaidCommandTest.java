@@ -13,7 +13,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.index.Index;
-import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
@@ -162,8 +161,8 @@ public class PaidCommandTest {
         assertTrue(childOneAfterFirstToggle.getPaymentStatus().isPaid());
         assertTrue(childTwoAfterFirstToggle.getPaymentStatus().isPaid());
         assertTrue(parentAfterFirstToggle.getPaymentStatus().isPaid());
-        assertEquals(String.format(PaidCommand.MESSAGE_MARK_PAID_SUCCESS,
-                Messages.format(parentAfterFirstToggle)), firstResult.getFeedbackToUser());
+        assertEquals("Marked as paid: " + parentAfterFirstToggle.getName().fullName,
+                firstResult.getFeedbackToUser());
 
         PaidCommand secondToggle = new PaidCommand(parentAfterFirstToggle.getName());
         CommandResult secondResult = secondToggle.execute(localModel);
@@ -172,8 +171,8 @@ public class PaidCommandTest {
         assertFalse(parentAfterSecondToggle.getPaymentStatus().isPaid());
         assertFalse(getStudent(localModel, "Child One").getPaymentStatus().isPaid());
         assertFalse(getStudent(localModel, "Child Two").getPaymentStatus().isPaid());
-        assertEquals(String.format(PaidCommand.MESSAGE_MARK_UNPAID_SUCCESS,
-                Messages.format(parentAfterSecondToggle)), secondResult.getFeedbackToUser());
+        assertEquals("Marked as unpaid: " + parentAfterSecondToggle.getName().fullName,
+                secondResult.getFeedbackToUser());
     }
 
     @Test
