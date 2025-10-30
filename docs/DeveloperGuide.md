@@ -269,15 +269,6 @@ Assigns weekly or date-specific lessons to a student.
 - Only Students have a schedule
 
 
-**Sequence Diagram (Conceptual)**
-```
-User -> LogicManager : "schedule 1 schedule/Monday 14:00-15:00"
-LogicManager -> ScheduleCommandParser : parse(command)
-ScheduleCommandParser -> ModelManager : updateStudentSchedule()
-ModelManager -> Storage : saveTutorhub()
-Storage -> File : write to tutorhub.json
-```
-
 **Design Considerations**
 
 | Option | Decision | Reason |
