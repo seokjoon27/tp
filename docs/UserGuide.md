@@ -54,9 +54,6 @@ With Tutorhub, you can:
 ## 🧭 GUI Overview
 
 
-![GUI Overview](images/GUI_Overview.png)
-
-
 | Component | Description |
   |------------|-------------|
 | **Menu Bar** | Access `Help` and other options |
