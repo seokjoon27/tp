@@ -47,14 +47,15 @@ public class EditCommandParser implements Parser<EditCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE), pe);
         }
 
-        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_TYPE, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
+        if (argMultimap.getValue(PREFIX_TYPE).isPresent()) {
+            throw new ParseException(EditCommand.MESSAGE_EDIT_TYPE_FAILURE);
+        }
+
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
                 PREFIX_ADDRESS, PREFIX_PAY, PREFIX_SCHEDULE, PREFIX_NOTE);
 
         EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
 
-        if (argMultimap.getValue(PREFIX_TYPE).isPresent()) {
-            throw new ParseException(EditCommand.MESSAGE_EDIT_TYPE_FAILURE);
-        }
 
         if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
             editPersonDescriptor.setName(ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get()));

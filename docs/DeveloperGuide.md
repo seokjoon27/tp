@@ -714,7 +714,7 @@ Use case ends.
 
 **Extensions:**
 * 2a. Input not numeric.
-    * 2a1. System shows error message: "Error, cost per lesson should be a numeric value. E.g pay/72.5"
+    * 2a1. System shows error message: "Error, cost per lesson should be a numeric value. E.g. pay/72.5"
       Use case resumes at step 1.
 * 2b. Cost already exists.
     * 2b1. System shows error message: "You already have the lesson cost information to this student. Please edit or check the existing price."
