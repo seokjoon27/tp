@@ -2,14 +2,14 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
 import java.util.function.Predicate;
 
 import org.junit.jupiter.api.Test;
@@ -21,7 +21,16 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyUserPrefs;
+import seedu.address.model.person.Address;
+import seedu.address.model.person.Cost;
+import seedu.address.model.person.Email;
+import seedu.address.model.person.Name;
+import seedu.address.model.person.Note;
+import seedu.address.model.person.Parent;
+import seedu.address.model.person.PaymentStatus;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Phone;
+import seedu.address.model.person.Student;
 import seedu.address.testutil.PersonBuilder;
 
 public class AddCommandTest {
@@ -40,7 +49,7 @@ public class AddCommandTest {
 
         assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, validPerson.getName()),
                 commandResult.getFeedbackToUser());
-        assertEquals(Arrays.asList(validPerson), modelStub.personsAdded);
+        assertEquals(List.of(validPerson), modelStub.personsAdded);
     }
 
     @Test
@@ -60,20 +69,20 @@ public class AddCommandTest {
         AddCommand addBobCommand = new AddCommand(bob);
 
         // same object -> returns true
-        assertTrue(addAliceCommand.equals(addAliceCommand));
+        assertEquals(addAliceCommand, addAliceCommand);
 
         // same values -> returns true
         AddCommand addAliceCommandCopy = new AddCommand(alice);
-        assertTrue(addAliceCommand.equals(addAliceCommandCopy));
+        assertEquals(addAliceCommand, addAliceCommandCopy);
 
         // different types -> returns false
-        assertFalse(addAliceCommand.equals(1));
+        assertNotEquals(1, addAliceCommand);
 
         // null -> returns false
-        assertFalse(addAliceCommand.equals(null));
+        assertNotEquals(null, addAliceCommand);
 
         // different person -> returns false
-        assertFalse(addAliceCommand.equals(addBobCommand));
+        assertNotEquals(addAliceCommand, addBobCommand);
     }
 
     @Test
@@ -200,4 +209,102 @@ public class AddCommandTest {
         }
     }
 
+    /**
+     * Helper to call the private capitalizeName in AddCommand via an instance.
+     */
+    private Name capitalize(String name) {
+        String capitalized = AddCommand.capitalizeName(name);
+        return new Name(capitalized);
+    }
+
+    // EP: Normal lowercase input
+    @Test
+    public void capitalize_normalLowerCase() {
+        Name input = new Name("john doe");
+        Name expected = new Name("John Doe");
+        assertEquals(expected, capitalize(input.fullName));
+    }
+
+    // EP: Mixed case input
+    @Test
+    public void capitalize_mixedCase() {
+        Name input = new Name("jOhN dOE");
+        Name expected = new Name("John Doe");
+        assertEquals(expected, capitalize(input.fullName));
+    }
+
+    // EP: Already properly capitalized input
+    @Test
+    public void capitalize_alreadyCapitalized() {
+        Name input = new Name("Alice Smith");
+        Name expected = new Name("Alice Smith");
+        assertEquals(expected, capitalize(input.fullName));
+    }
+
+    // EP: Single-letter words input
+    @Test
+    public void capitalize_singleLetterWords() {
+        Name input = new Name("a b c");
+        Name expected = new Name("A B C");
+        assertEquals(expected, capitalize(input.fullName));
+    }
+
+    // EP: Single-word input
+    @Test
+    public void capitalize_singleWord() {
+        Name input = new Name("bob");
+        Name expected = new Name("Bob");
+        assertEquals(expected, capitalize(input.fullName));
+    }
+
+    // Helper in AddCommandTest to call the private createCapitalizedCopy
+    private Person createCapitalizedCopy(Person original, String newName) {
+        String capitalizedName = AddCommand.capitalizeName(newName);
+        return original instanceof Student
+                ? new Student(new Name(capitalizedName),
+                original.getPhone(),
+                original.getEmail(),
+                original.getAddress(),
+                original.getNote(), ((Student) original).getSchedule(),
+                original.getCost(),
+                original.getPaymentStatus(),
+                original.getTags())
+                : new Parent(new Name(capitalizedName),
+                original.getPhone(),
+                original.getEmail(),
+                original.getAddress(),
+                original.getNote(),
+                original.getCost(),
+                original.getPaymentStatus(),
+                original.getTags());
+    }
+    @Test
+    public void createCapitalizedCopy_parentNameCapitalized() throws Exception {
+        Parent original = new Parent(
+                new Name("john doe"),
+                new Phone("92345678"),
+                new Email("parent@example.com"),
+                new Address("123 Main St"),
+                new Note("Test note"),
+                new Cost("100"),
+                new PaymentStatus(true),
+                Set.of()
+        );
+
+        String newName = "jane smith";
+        Parent copy = (Parent) createCapitalizedCopy(original, newName);
+
+        // Name is capitalized
+        assertEquals("Jane Smith", copy.getName().fullName);
+
+        // Other fields unchanged
+        assertEquals(original.getPhone(), copy.getPhone());
+        assertEquals(original.getEmail(), copy.getEmail());
+        assertEquals(original.getAddress(), copy.getAddress());
+        assertEquals(original.getNote(), copy.getNote());
+        assertEquals(original.getCost(), copy.getCost());
+        assertEquals(original.getPaymentStatus(), copy.getPaymentStatus());
+        assertEquals(original.getTags(), copy.getTags());
+    }
 }
+
