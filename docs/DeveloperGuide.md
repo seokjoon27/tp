@@ -3,7 +3,7 @@ layout: page
 title: Developer Guide
 ---
 * Table of Contents
-  {:toc}
+{:toc}
 
 
 --------------------------------------------------------------------------------------------------------------------
@@ -278,6 +278,7 @@ Assigns weekly or date-specific lessons to a student.
 | Support overnight lessons | ❌ No | Lessons assumed not to cross midnight |
 |Can be modified through `edit` command |✅ Yes| Provide flexibility for users and maintain consistency
 
+
 ---
 
 
@@ -375,11 +376,44 @@ Resets payment status of all contacts (Students and Parents) to unpaid with a si
 
 | Option | Decision | Reason |
 |--------|-----------|--------|
-| Allow flexible input | ❌ No | Maintain strict, predictable command format |
-| Reset only students | ❌ No | Tutors may collect from parents too |
-| Use model-wide update | ✅ Yes | Efficient and consistent with other batch updates |
+| Toggle parents independently from children | ❌ No | Would desynchronise parent/child statuses |
+| Propagate parent toggle to all children | ✅ Yes | Keeps household records consistent with a single action |
+| Allow toggling parents without children | ❌ No | Prevents ambiguous states when no data is available |
+| Recompute aggregates on every mutation | ✅ Yes | Ensures UI, storage, and business logic remain consistent |
 
+---
 
+### 3.3 `pay/` (Cost) Field
+
+**Purpose:**
+Captures the per-lesson fee for students and automatically aggregates the total cost for parents.
+
+**Key Classes:**
+- `Cost`
+- `AddCommand`
+- `EditCommand`
+- `ParserUtil`
+- `ModelManager`
+- `Student`
+- `Parent`
+
+**Behaviour:**
+- `pay/` accepts positive integers or decimal values (e.g. `pay/72.5`).
+- Students can have their cost set during `add` or updated via `edit`.
+- Parent costs are immutable from the UI—the value is always the sum of their linked children.
+- Model recalculations occur automatically after every add, edit, delete, link, or payment toggle.
+- Costs display with a leading `$` in the UI for readability.
+
+**Design Considerations**
+
+| Option | Decision | Reason |
+|--------|-----------|--------|
+| Store cost as raw string | ✅ Yes | Simplifies parsing and avoids floating-point drift |
+| Allow parents to set custom costs | ❌ No | Prevents mismatch between parent and child totals |
+| Auto-recalculate on relevant commands | ✅ Yes | Guarantees derived values stay correct without user action |
+| Permit zero or missing child costs | ✅ Yes | Some students may not yet have agreed rates |
+
+---
 --------------------------------------------------------------------------------------------------------------------
 
 
@@ -574,13 +608,13 @@ Use case ends.
 
 **Extensions:**
 * 2a. Student or parent does not exist.
-    * 2a1. System shows error message: "Error, parent or student name incorrect."
+    * 2a1. System shows error message: "Invalid student or parent index."
       Use case resumes at step 1.
 * 2b. Student and parent already linked.
-    * 2b1. System shows error message: "You have already linked the two…"
-      Use case ends.
+    * 2b1. System shows error message: "These two people are already linked."
+      Use case resumes at step 1.
 * 2c. Parent entered in student field or vice versa.
-    * 2c1. System shows appropriate error message.
+    * 2c1. System shows appropriate error message: "Please ensure one student and one parent are input respectively."
       Use case resumes at step 1.
 
 
@@ -591,7 +625,7 @@ Use case ends.
 
 
 **Main Success Scenario (MSS):**
-1. User enters the command: unlink student/<Student Name> parent/<Parent Name>.
+1. User enters the command: unlink student/INDEX parent/INDEX.
 2. System validates that both student and parent exist and are linked.
 3. System removes the bidirectional link.
 4. System displays success message: "Successfully removed the link between parent and student."
@@ -600,11 +634,14 @@ Use case ends.
 
 **Extensions:**
 * 2a. Student or parent does not exist.
-    * 2a1. System shows error message: "Error, parent or student name incorrect."
+    * 2a1. System shows error message: "Invalid student or parent index."
       Use case resumes at step 1.
 * 2b. Student and parent not linked.
-    * 2b1. System shows error message: "These two are not linked."
-      Use case ends.
+    * 2b1. System shows error message: "These two people are already not linked."
+      Use case resumes at step 1.
+* 2c. Parent entered in student field or vice versa.
+    * 2c1. System shows appropriate error message: "Please ensure one student and one parent are input respectively."
+      Use case resumes at step 1.
 
 
 ---
@@ -628,6 +665,8 @@ Use case ends.
 * 2b. Input format invalid.
     * 2b1. System shows error message.
       Use case resumes at step 1.
+* 2c. Editing of type disallowed.
+    * 2c1. System shows error message: "You cannot edit a person's type (Student/Parent). Delete and re-add with the desired type."
 
 
 ---
@@ -672,7 +711,7 @@ Use case ends.
 
 **Extensions:**
 * 2a. Input not numeric.
-    * 2a1. System shows error message: "Error, cost per lesson should be a numeric value. E.g pay/72.5"
+    * 2a1. System shows error message: "Error, cost per lesson should be a numeric value. E.g. pay/72.5"
       Use case resumes at step 1.
 * 2b. Cost already exists.
     * 2b1. System shows error message: "You already have the lesson cost information to this student. Please edit or check the existing price."
@@ -725,7 +764,7 @@ Use case ends.
 ---
 
 
-**Use Case: Reset All Payments**
+**Use Case: Reset all Payments**
 
 
 **Main Success Scenario (MSS):**
@@ -748,7 +787,7 @@ Use case ends.
 ---
 
 
-**Use Case: List Contacts**
+**Use Case: List All Contacts**
 
 
 **Main Success Scenario (MSS):**
@@ -765,6 +804,20 @@ Use case ends.
       Use case resumes at step 1.
 ---
 
+**Use Case: Filter contacts based on payment status/schedule**
+
+**Main Success Scenario (MSS):**
+1. User enters list paid/unpaid/<DAY>/<DATE> command.
+2. System validates the argument (if any)
+3. System retrieves contacts according to specified argument.
+4. System displays the list in the GUI with an appropriate message.
+   Use case ends.
+
+
+**Extensions:**
+* 2a. Invalid argument entered.
+    * 2a1. System shows error message based on respective list command
+      Use case resumes at step 1.
 
 
 

@@ -28,7 +28,7 @@ public class UnlinkCommand extends Command {
     public static final String MESSAGE_INVALID_INDEX = "Invalid student or parent index.";
     public static final String MESSAGE_WRONG_TYPE = "Please ensure one student and one parent are input respectively.";
     public static final String MESSAGE_SAME_INDEX = "You cannot unlink a person to themselves.";
-    public static final String MESSAGE_NOT_LINKED = "These two persons are already not linked.";
+    public static final String MESSAGE_NOT_LINKED = "These two people are already not linked.";
 
     private final Index studentIndex;
     private final Index parentIndex;
