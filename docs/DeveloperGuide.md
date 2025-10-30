@@ -165,7 +165,7 @@ How the parsing works:
 **API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
 
 
-<img src="images/ModelClassDiagram.png" width="600" />
+<img src="images/UpdatedModelClassDiagram.png" width="600" />
 
 
 
