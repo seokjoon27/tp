@@ -47,21 +47,23 @@ With Tutorhub, you can:
 
 
 1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar tutorhub.jar` command to run the application.<br>
-   A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
-   ![Ui](images/Ui.png)
+   A GUI similar to the one below should appear in a few seconds. Note how the app contains some sample data.<br>
+   
 
 
 ##  GUI Overview
 
+![Ui](images/Ui.png)
 
-| Component | Description |
-  |------------|-------------|
-| **Menu Bar** | Access `Help` and other options |
-| **Command Box** | Type commands here |
-| **Result Display** | Shows feedback after each command |
-| **List Panel** | Displays students and parents |
-| **Status Bar** | Shows file path and system status |
 
+| Component          | Description                                               |
+|--------------------|-----------------------------------------------------------|
+| **Menu Bar**       | Access `Help` and other options                           |
+| **Command Box**    | Type commands here                                        |
+| **Result Display** | Shows feedback after each command                         |
+| **List Card**      | Displays all recorded information on Students and Parents |
+| **Payment Status** | Shows whether student/parent have paid                    |
+| **Person Type**    | Shows whether person is student or parent                 |
 
 
 
@@ -162,13 +164,13 @@ With Tutorhub, you can:
 
 
 
-Shows a list of all commands accepted in Tutorhub.
+Shows a list of all commands accepted in Tutorhub, with the link to this user guide at the bottom.
 
 
 
 
 ![help message](images/helpMessage.png)
-
+![helpMessage2.png](images/helpMessage2.png)
 
 
 
@@ -198,10 +200,10 @@ Format: `add n/NAME type/TYPE p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG] [pay/COST
 
 <div markdown="span" class="alert alert-primary">
 :bulb: **Tip:**<br>
-A person can have any number of tags (including 0)
-Tags are allowed to have spacing
-Whitespace before and after tag names will be ignored
-Tag names must also be alphanumeric or an exception will be thrown
+A person can have any number of tags (including 0) <br>
+Tag names may contain spaces (e.g., t/needs review, t/very important). <br>
+Leading and trailing whitespace is ignored (e.g., t/ math → math). <br>
+Tag names must be alphanumeric and spaces only.  <br>
 </div>
 
 
@@ -289,7 +291,8 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 Examples:
 * `find John` returns `john` and `John Doe`
 * `find alex david` returns `Alex Yeoh`, `David Li`<br>
-  ![result for 'find alex david'](images/findAlexDavidResult.png)
+
+![result for 'find alex david'](images/findAlexDavidResult.png)
 
 
 
@@ -534,6 +537,11 @@ Examples:
 * `list 12-12-2025` — Displays students with a lesson scheduled on **12th December 2025**.
 * `LIST   PAID` — Works as well; command is **case-insensitive** and ignores extra spaces.
 
+![listPaid.png](images/listPaid.png)
+![listUnpaid.png](images/listUnpaid.png)
+![listSchedule.png](images/listSchedule.png)
+![listDate.png](images/listDate.png)
+
 
 <div markdown="span" class="alert alert-info">
 :information_source: **Note:**<br>
@@ -644,14 +652,14 @@ Furthermore, certain edits can cause the Tutorhub to behave in unexpected ways (
 **A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Tutorhub home folder.
 
 
-**Q**: Why does parents not have a schedule field?
+**Q**: Why does parents not have a schedule field?  
 **A**: Schedule field is meant to track classes for students and since parents could have multiple students linked to them, it would be better to only allow students to have a schedule.
 
 
-**Q**: Can I import or export data in CSV format?
+**Q**: Can I import or export data in CSV format?  
 **A**: Not in the current version. However, since data is stored as a JSON file, you can convert it manually to CSV using online tools if needed.
 
-**Q**: Can I change a student’s schedule or note using the `edit` command instead of `schedule` or `note`?
+**Q**: Can I change a student’s schedule or note using the `edit` command instead of `schedule` or `note`?  
 **A**: Yes! Both note and schedule fields can be updated using either their respective commands or the edit command.
 Using schedule or note directly may be faster if you only want to change those fields.
 

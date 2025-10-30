@@ -1,7 +1,9 @@
 package seedu.address.storage;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -59,14 +61,26 @@ class JsonSerializableAddressBook {
             modelPersons.add(person);
         }
 
-        for (Person p : modelPersons) {
-            if (p instanceof Student student) {
-                for (String parentName : student.getLinkedNames()) {
+        for (Person person : modelPersons) {
+            if (person instanceof Student student) {
+                Set<String> processedParentNames = new HashSet<>();
+                for (String parentNameRaw : student.getLinkedNames()) {
+                    if (parentNameRaw == null) {
+                        continue;
+                    }
+                    String parentName = parentNameRaw.trim();
+                    if (parentName.isEmpty() || !processedParentNames.add(parentName)) {
+                        continue; // skip empty or duplicate names from malformed data
+                    }
                     for (Person possibleParent : modelPersons) {
                         if (possibleParent instanceof Parent parent
                                 && parent.getName().fullName.equals(parentName)) {
-                            student.addParent(parent);
-                            parent.addChild(student);
+                            if (!student.getParents().contains(parent)) {
+                                student.addParent(parent);
+                            }
+                            if (!parent.getChildren().contains(student)) {
+                                parent.addChild(student);
+                            }
                         }
                     }
                 }

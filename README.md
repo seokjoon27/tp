@@ -1,7 +1,6 @@
 [![CI Status](https://github.com/AY2526S1-CS2103T-W10-1/tp/actions/workflows/gradle.yml/badge.svg)](https://github.com/AY2526S1-CS2103T-W10-1/tp/actions/workflows/gradle.yml)
 
-
-![Ui](docs/images/Ui.png)
+![readMeUi.png](docs/images/readMeUi.png)
 
 TutorHub is a desktop application for private tutors to manage their students, parents, schedules, and payments more efficiently.
 It is built on top of the AddressBook-Level3
