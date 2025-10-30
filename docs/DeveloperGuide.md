@@ -333,15 +333,19 @@ Creates and removes relationships between a `Parent` and one or more `Students`.
 **Key Classes:**
 - `LinkCommand`
 - `UnlinkCommand`
+- `LinkCommandParser`
+- `UnlinkCommandParser`
 - `ModelManager`
 - `Person`, `Parent`, `Student`
 
-
-**Design Notes:**
-- Relationships are **bi-directional** — both entities reference each other.
-- Validation ensures a parent cannot link to another parent.
-- Stored as JSON references within both entities.
-
+**Behaviour:**
+- `link` establishes a bidirectional relationship: both the parent and the student reference each other.
+- `unlink` removes the relationship from both entities simultaneously.
+- Only valid parent-student pairs are allowed; attempts to link two parents or two students are rejected.
+- Multiple parents can be linked to a single student, and vice versa.
+- Linking an already linked pair has no effect but gives a descriptive message.
+- Unlinking a non-existent relationship gives a descriptive error.
+- Changes are immediately reflected in the GUI and persisted in the JSON storage.
 
 **Design Considerations**
 
@@ -349,6 +353,9 @@ Creates and removes relationships between a `Parent` and one or more `Students`.
 |--------|-----------|--------|
 | One-way relationship | ❌ No | Retrieval would require redundant searches |
 | Store by index | ✅ Yes | Avoids heavy identifier management |
+| Allow multiple parents per student | ✅ Yes | Supports real-world family structures |
+| Allow multiple students per parent | ✅ Yes | Supports siblings sharing the same parent |
+| Validate link/unlink actions | ✅ Yes | Prevents invalid or redundant operations |
 
 
 ---
@@ -383,7 +390,7 @@ Resets payment status of all contacts (Students and Parents) to unpaid with a si
 
 ---
 
-### 3.3 `pay/` (Cost) Field
+### 3.5 `pay/` (Cost) Field
 
 **Purpose:**
 Captures the per-lesson fee for students and automatically aggregates the total cost for parents.
