@@ -3,13 +3,11 @@ layout: page
 title: User Guide
 ---
 
-
-# Tutorhub User Guide
-
-
 Tutorhub is a **typing-first contact manager for private tutors**.
 It helps tutors quickly manage **students, parents, lesson schedules, and payments** — all from one simple Command Line Interface (CLI) backed by a clear Graphical User Interface (GUI).
 
+* Table of Contents
+  {:toc}
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -23,16 +21,6 @@ With Tutorhub, you can:
 - Track payment statuses at a glance
 - Maintain weekly or one-time lesson schedules
 - Link parents to students for easy coordination
-
-
---------------------------------------------------------------------------------------------------------------------
-
-
-
-
-* Table of Contents
-  {:toc}
-
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -222,6 +210,7 @@ A person can have any number of tags (including 0)
 Examples:
 * `add n/John Doe type/p p/98765432 e/johnd@example.com a/John street, block 123, #01-01 `
 * `add n/Betsy Crowe type/s e/betsycrowe@example.com a/Yishun avenue p/99999999 t/Bad at Math schedule/Monday 14:00-15:00 `
+* `add n/Jeremiah type/p p/92345489 e/jerry@example.con a/Bowling drive t/Likes golf t/friend`
 
 
 <div markdown="block" class="alert alert-info">
@@ -264,7 +253,10 @@ Examples:
 
 <div markdown="span" class="alert alert-warning">
 :exclamation: **Caution:**<br>
-You are unable to edit a contact’s type. <br>
+
+
+You cannot edit a person's type. Delete and re-add with the desired type. <br>
+</div>
 
 
 
@@ -325,6 +317,7 @@ Format: `delete INDEX`
 
 
 Examples:
+* `delete 3` deletes the 3rd person in the current view of the address book
 * `list` followed by `delete 2` deletes the 2nd person in the address book.
 * `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
 
@@ -371,22 +364,18 @@ Format: `link student/INDEX parent/INDEX`
 
 Example:
 * `link student/1 parent/6`
+* `list paid` followed by `link parent/3 student/1` will link the student at the first index and the parent at the third index
 
 
 All parents linked to a student will appear under the student's profile in the GUI as such:
 ```
-  Parents: Alex Yeoh Mary Tan
+  Parents: Alex Yeoh, Mary Tan
 ```
 
 
 ### Unlinking Parents from Students: `unlink`
 
-
-
-
 In the event of an accidental linkage, this unlinking feature will allow users to undo that.
-
-
 
 
 Format: `unlink student/INDEX parent/INDEX`
@@ -398,7 +387,7 @@ Format: `unlink student/INDEX parent/INDEX`
 
 
 Example:
-* `unlink student/2 parent/5`
+* `unlink student/2 parent/5` will link the student at index 2 and parent at index 5
 
 
 ### Adding a personal note: `note`

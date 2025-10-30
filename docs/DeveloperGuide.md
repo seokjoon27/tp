@@ -611,11 +611,11 @@ Use case ends.
 
 **Extensions:**
 * 2a. Student or parent does not exist.
-    * 2a1. System shows error message: "Error, parent or student name incorrect."
+    * 2a1. System shows error message: "Invalid student or parent index."
       Use case resumes at step 1.
 * 2b. Student and parent already linked.
-    * 2b1. System shows error message: "You have already linked the two…"
-      Use case ends.
+    * 2b1. System shows error message: "These two people are already linked."
+      Use case resumes at step 1.
 * 2c. Parent entered in student field or vice versa.
     * 2c1. System shows appropriate error message.
 
@@ -668,7 +668,7 @@ Use case ends.
 
 
 **Main Success Scenario (MSS):**
-1. User enters the command: unlink student/<Student Name> parent/<Parent Name>.
+1. User enters the command: unlink student/INDEX parent/INDEX.
 2. System validates that both student and parent exist and are linked.
 3. System removes the bidirectional link.
 4. System displays success message: "Successfully removed the link between parent and student."
@@ -677,11 +677,14 @@ Use case ends.
 
 **Extensions:**
 * 2a. Student or parent does not exist.
-    * 2a1. System shows error message: "Error, parent or student name incorrect."
+    * 2a1. System shows error message: "Invalid student or parent index."
       Use case resumes at step 1.
 * 2b. Student and parent not linked.
-    * 2b1. System shows error message: "These two are not linked."
-      Use case ends.
+    * 2b1. System shows error message: "These two people are already not linked."
+      Use case resumes at step 1.
+* 2c. Parent entered in student field or vice versa.
+    * 2c1. System shows appropriate error message: "Please ensure one student and one parent are input respectively."
+      Use case resumes at step 1.
 
 
 ---
@@ -705,6 +708,8 @@ Use case ends.
 * 2b. Input format invalid.
     * 2b1. System shows error message.
       Use case resumes at step 1.
+* 2c. Editing of type disallowed.
+    * 2c1. System shows error message: "You cannot edit a person's type (Student/Parent). Delete and re-add with the desired type."
 
 
 ---
@@ -802,7 +807,7 @@ Use case ends.
 ---
 
 
-**Use Case: Reset All Payments**
+**Use Case: Reset all Payments**
 
 
 **Main Success Scenario (MSS):**
@@ -825,7 +830,7 @@ Use case ends.
 ---
 
 
-**Use Case: List Contacts**
+**Use Case: List All Contacts**
 
 
 **Main Success Scenario (MSS):**
@@ -842,6 +847,20 @@ Use case ends.
       Use case resumes at step 1.
 ---
 
+**Use Case: Filter contacts based on payment status/schedule**
+
+**Main Success Scenario (MSS):**
+1. User enters list paid/unpaid/<DAY>/<DATE> command.
+2. System validates the argument (if any)
+3. System retrieves contacts according to specified argument.
+4. System displays the list in the GUI with an appropriate message.
+   Use case ends.
+
+
+**Extensions:**
+* 2a. Invalid argument entered.
+    * 2a1. System shows error message based on respective list command
+      Use case resumes at step 1.
 
 
 
