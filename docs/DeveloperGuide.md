@@ -285,7 +285,7 @@ Storage -> File : write to tutorhub.json
 | Store schedule as text | ✅ Yes | Simpler to serialize and display |
 | Enforce unique schedule slots | ❌ No | Tutors may conduct concurrent classes |
 | Support overnight lessons | ❌ No | Lessons assumed not to cross midnight |
-
+|Can be modified through `edit` command |✅ Yes| Provide flexibility for users and maintain consistency
 
 ---
 

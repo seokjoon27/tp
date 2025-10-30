@@ -654,6 +654,9 @@ Furthermore, certain edits can cause the Tutorhub to behave in unexpected ways (
 **Q**: Can I import or export data in CSV format?
 **A**: Not in the current version. However, since data is stored as a JSON file, you can convert it manually to CSV using online tools if needed.
 
+**Q**: Can I change a student’s schedule or note using the `edit` command instead of `schedule` or `note`?  
+**A**: Yes! Both note and schedule fields can be updated using either their respective commands or the edit command.  
+Using schedule or note directly may be faster if you only want to change those fields.
 
 --------------------------------------------------------------------------------------------------------------------
 
