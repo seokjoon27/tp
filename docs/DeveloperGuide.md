@@ -970,77 +970,97 @@ Use case ends.
 --------------------------------------------------------------------------------------------------------------------
 
 
-## **6. Appendix: Instructions for manual testing**
+## **6. Appendix: Instructions for Manual Testing**
+
+The scenarios below chart one clean path through TutorHub’s tutor-focused features. They complement the User Guide by supplying ready-to-use commands and expected outputs. After each scenario, try extra variations (invalid formats, edge cases) to expand coverage.
+
+<div markdown="span" class="alert alert-info">:information_source: **Note:** Start from a known baseline (Section 6.2) before executing an independent scenario. Commands are case-insensitive unless stated.</div>
 
 
-Given below are instructions to test the app manually.
+### 6.1.1 Launching TutorHub
+
+1. From the project root run `./gradlew run`.
+2. Wait for the JavaFX window to load the bundled sample data.
+3. Close the window and relaunch with the same command to confirm size/position persistence (stored in `preferences.json`).
 
 
-<div markdown="span" class="alert alert-info">:information_source: **Note:** These instructions only provide a starting point for testers to work on;
-testers are expected to do more *exploratory* testing.
+### 6.1.2 Preparing a Deterministic Dataset
+
+Reset the sample data and add two students plus a parent. Paste these commands one at a time:
+
+```text
+clear
+add type/s n/Alex Tan p/91234567 e/alex.tan@example.com a/123 Clementi Road note/Likes geometry schedule/Monday 15:00-17:00 pay/80 t/sec3
+add type/s n/Betty Lim p/93456789 e/b.lim@example.com a/22 Bellflower Street schedule/10-20-2025 09:00-10:30 pay/120 t/p6
+add type/p n/Grace Lee p/95551234 e/grace.lee@example.com a/88 Sunset Avenue note/Primary contact
+list
+```
+
+Expected after `list`:
+- 1 — Alex Tan (Student) with cost `$80`.
+- 2 — Betty Lim (Student) with cost `$120`.
+- 3 — Grace Lee (Parent) with no cost yet and payment unchecked.
 
 
-</div>
+### 6.1.3 Linking and Unlinking Households
+
+1. `link student/1 parent/3` → Success banner “Linked Alex Tan to Grace Lee”. Grace now shows cost `$80`; Alex lists Grace as parent.
+2. `link student/2 parent/3` → Grace’s cost updates to `$200` and both students list Grace.
+3. `link student/2 parent/3` → Expect error “These two people are already linked.”
+4. `unlink student/2 parent/3` → Grace’s cost drops to `$80`. Re-link for later sections: `link student/2 parent/3`.
 
 
-### 6.1 Launch and shutdown
+### 6.1.4 Payment Tracking and Aggregation
+
+1. `paid 1` → Alex toggles to Paid; Grace remains Unpaid because Betty is unpaid.
+2. `paid 2` → Betty toggles to Paid; Grace automatically becomes Paid (all children paid).
+3. `paid 1` → Alex goes back to Unpaid; Grace automatically reverts to Unpaid.
+4. `paid n/Betty Lim` → Betty toggles via name lookup regardless of current ordering.
 
 
-1. Initial launch
+### 6.1.5 Editing While Preserving Links
+
+1. `edit 1 t/MathClub pay/90` → Alex keeps Grace as parent; Grace’s aggregated cost becomes `$210`.
+2. `edit 3 pay/300` → Expect error “Cannot edit cost for a parent. Parent cost is derived from their linked children.”
+3. `edit 2 e/betty.lim@sample.com` → Success message; Grace remains linked.
 
 
-1. Download the jar file and copy into an empty folder
+### 6.1.6 Managing Schedules
+
+1. `schedule 1 schedule/Friday 18:00-19:30` → Alex’s card shows normalised slot “Friday 18:00-19:30”.
+2. `schedule 2 schedule/` → Betty’s schedule is cleared and the row disappears.
+3. `schedule 3 schedule/Monday 10:00-11:30` → Expect error “Cannot edit schedule for a parent.”
 
 
-1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
+### 6.1.7 Notes for Students and Parents
+
+1. `note 3 note/Prefers evening calls.` → Grace gains a note; message “Added Note to Person: Grace Lee”.
+2. `note 3 note/` → Note removed with message “Removed Note from Person: Grace Lee”.
 
 
-1. Saving window preferences
+### 6.1.8 Listing and Filtering Views
+
+1. `list` → Resets any filters.
+2. Payment filters:  
+   - `list paid` → Shows only contacts whose checkbox is selected (Grace only when both students are paid).  
+   - `list unpaid` → Inverse set.
+3. Schedule filters (case/spacing insensitive):  
+   - `list schedule` → Students with a schedule (Alex only if Betty’s is empty).  
+   - `list friday` → Matches Alex’s weekday schedule.  
+   - `list 10-20-2025` → Matches Betty’s date-based schedule if previously set.
+4. Run `list` after each filter to restore the full view.
 
 
-1. Resize the window to an optimum size. Move the window to a different location. Close the window.
+### 6.1.9 Resetting a Billing Cycle
+
+1. Ensure at least one student is Paid (e.g., `paid 1`, `paid 2`).
+2. `reset all` (exact phrase) → All students and parents become Unpaid while parent cost totals stay intact.
 
 
-1. Re-launch the app by double-clicking the jar file.<br>
-   Expected: The most recent window size and location is retained.
-
-
-1. _{ more test cases …​ }_
-
-
-### 6.2 Deleting a person
-
-
-1. Deleting a person while all persons are being shown
-
-
-1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
-
-
-1. Test case: `delete 1`<br>
-   Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
-
-
-1. Test case: `delete 0`<br>
-   Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
-
-
-1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
-   Expected: Similar to previous.
-
-
-1. _{ more test cases …​ }_
-
-
-### 6.3 Saving data
-
-
-1. Dealing with missing/corrupted data files
-
-
-1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
-
-
+### 6.1.10 Persistence Checks
+1. Make observable edits (e.g., toggle payments, change schedules).
+2. Close TutorHub normally.
+3. Relaunch with `./gradlew run`, execute `list`, and confirm all changes persisted (data stored in `data/addressbook.json`).
 1. _{ more test cases …​ }_
 
 ### 6.2 Appendix: Effort
