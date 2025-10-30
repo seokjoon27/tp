@@ -1042,3 +1042,53 @@ testers are expected to do more *exploratory* testing.
 
 
 1. _{ more test cases …​ }_
+
+### 6.2 Appendix: Effort
+
+#### Overview
+TutorHub extends the original AddressBook3 (AB3) by managing two distinct entity types (Students and Parents), along with linked relationships, payment tracking, and lesson scheduling.  
+This introduced significantly higher data complexity, requiring new parsing, validation, and UI synchronization mechanisms.
+
+#### Challenges Faced
+1. Multi-entity Management:  
+   AB3 handled a single entity type (Person), but TutorHub needed dynamic type handling with different constraints and mutual relationships (Student ↔️ Parent).
+2. Schedule System:  
+   Designing validation for both weekly and date-based lessons, while rejecting invalid times (e.g., midnight-crossing), required precise regex and logic.
+3. UI Synchronization:  
+   Keeping the GUI reactive to edits in linked entities demanded careful Model–View–Controller coordination.
+4. Command Integration:  
+   Multiple new commands (e.g., note, schedule, paid/unpaid, list <DAY>/<DATE>, link/unlink) needed consistent command structure and undo-safe behavior.
+5. Data Persistence:  
+   JSON serialization was adapted to support nested structures for linked entities and schedules.
+
+#### Achievements
+- Unified architecture that allows case-insensitive command parsing and auto-formatting (e.g., capitalized day names).
+- Comprehensive manual testing coverage and consistent error-handling UX.
+- Refined User Guide and Developer Guide with use cases, UML diagrams, and clear testing flow.
+
+#### Reuse and Adaptation
+- Base Classes: Reused and extended Person, Command, and Parser classes from AB3.
+- Storage Layer: Reused AB3’s JSON framework, adapted for TutorHub entities.
+- UI Framework: Retained AB3’s JavaFX architecture but customized FXML components.
+
+Overall, TutorHub required ~1.5x the development effort of AB3 due to dual-entity management, UI linkage, and extended command coverage.
+
+
+### 6.3 Appendix: Planned Enhancements
+
+Team size: 5  
+(Maximum allowed: 10 enhancements)
+
+---
+
+#### 1. Support Overnight Lessons
+Current limitation: Schedule cannot cross midnight (e.g., 23:00–01:00).  
+Planned Enhancement: Allow lessons spanning midnight by splitting them into two logical segments internally.
+
+#### 2. Editable Person Type (Student ↔️ Parent)
+Currently disabled due to relational conflicts.  
+Planned Enhancement: Implement safe conversion flow with auto-unlinking and re-validation.
+
+#### 3. UI Display for Linked Entities
+Current linking is text-based.  
+Planned Enhancement: Add graphical indicators or tooltips showing parent–student relationships.
