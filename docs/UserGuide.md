@@ -6,6 +6,8 @@ title: User Guide
 Tutorhub is a **typing-first contact manager for private tutors**.
 It helps tutors quickly manage **students, parents, lesson schedules, and payments** — all from one simple Command Line Interface (CLI) backed by a clear Graphical User Interface (GUI).
 
+* Table of Contents
+  {:toc}
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -19,16 +21,6 @@ With Tutorhub, you can:
 - Track payment statuses at a glance
 - Maintain weekly or one-time lesson schedules
 - Link parents to students for easy coordination
-
-
---------------------------------------------------------------------------------------------------------------------
-
-
-
-
-* Table of Contents
-  {:toc}
-
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -372,18 +364,13 @@ Example:
 
 All parents linked to a student will appear under the student's profile in the GUI as such:
 ```
-  Parents: Alex Yeoh Mary Tan
+  Parents: Alex Yeoh, Mary Tan
 ```
 
 
 ### Unlinking Parents from Students: `unlink`
 
-
-
-
 In the event of an accidental linkage, this unlinking feature will allow users to undo that.
-
-
 
 
 Format: `unlink student/INDEX parent/INDEX`
