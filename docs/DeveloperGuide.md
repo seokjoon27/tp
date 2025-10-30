@@ -889,12 +889,12 @@ Use case ends.
 
 
 #### 💻 Performance & Scalability
-| Requirement | Description |
-|--------------|-------------|
-| **Response Time** | Commands should execute within **1 second** under normal load. |
-| **Memory Usage** | Should not exceed **512MB** during standard operations. |
+| Requirement       | Description                                                             |
+|-------------------|-------------------------------------------------------------------------|
+| **Response Time** | Commands should execute within **1 second** under normal load.          |
+| **Memory Usage**  | Should not exceed **512MB** during standard operations.                 |
 | **Data Capacity** | Supports at least **1000 contacts** and **2000 schedules** efficiently. |
-| **Startup Time** | Application should launch within **3 seconds** on standard hardware. |
+| **Startup Time**  | Application should launch within **3 seconds** on standard hardware.    |
 
 
 #### 🧩 Usability & Maintainability
@@ -905,10 +905,10 @@ Use case ends.
 
 
 #### 🚫 Constraints
-| Type | Constraint |
-|------|-------------|
-| **Business** | Lessons cannot cross midnight. |
-| **Technical** | Single-user, local-only application. |
+| Type           | Constraint                                           |
+|----------------|------------------------------------------------------|
+| **Business**   | Lessons cannot cross midnight.                       |
+| **Technical**  | Single-user, local-only application.                 |
 | **Deployment** | Internet connection not required except for updates. |
 
 
