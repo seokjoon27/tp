@@ -478,8 +478,7 @@ For more information on the parameters, click [here](#command-parameters).
 
 
 
-
-Assigns a cost to a contact when adding them as contact
+Assigns a cost to a contact when adding them as contact. This allows tutors to keep track of the tuition costs of each student. 
 
 
 * Assigns a specific cost of lesson to the student
@@ -500,6 +499,11 @@ The cost appears in the GUI under the student’s profile as:
 ```
 [Cost] $100
 ```
+
+<div markdown="span" class="alert alert-info">
+:information_source: **Note:**<br>
+Tutorhub automatically syncs the costs of both parents and child to each other. The cost of each parent is equivalent to the sum of the costs of the children. 
+</div>
 
 
 
@@ -562,16 +566,18 @@ For more information on the parameters, click [here](#command-parameters).
 
 
 
-
-Toggles payment status of specified contact between paid and unpaid.
-
-
+Toggles payment status of specified contact between paid and unpaid. This allows tutors to keep track of the payment status of individual students as well as the parents. 
 
 
 Examples:
 * `paid 1`-toggles payment status of contact at INDEX 1
 * `paid n/Alex yeoh`- toggles payment status of contact named Alex Yeoh
 
+
+<div markdown="span" class="alert alert-info">
+:information_source: **Note:**<br>
+Tutorhub automatically keeps track of students and parents payment status dynamically. If all of a given parent's linked students have paid, the parents payment status will also be paid and vice versa. 
+</div>
 
 <div markdown="span" class="alert alert-primary">
 :bulb: **Tip:**<br>
