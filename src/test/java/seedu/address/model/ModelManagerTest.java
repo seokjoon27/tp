@@ -16,7 +16,10 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.person.Parent;
+import seedu.address.model.person.Student;
 import seedu.address.testutil.AddressBookBuilder;
+import seedu.address.testutil.PersonBuilder;
 
 public class ModelManagerTest {
 
@@ -89,6 +92,50 @@ public class ModelManagerTest {
     }
 
     @Test
+    public void parentAggregations_updateCostAndPaymentStatus() {
+        ModelManager localModel = new ModelManager();
+
+        Student childOne = (Student) new PersonBuilder().withName("Student One")
+                .withPhone("81230000").withCost("60").withPaymentStatus(true).build();
+        Student childTwo = (Student) new PersonBuilder().withName("Student Two")
+                .withPhone("81230001").withCost("40").withPaymentStatus(false).build();
+        Parent parent = (Parent) new PersonBuilder().withType("p").withName("Parent Sample")
+                .withPhone("91230000").withCost("0").withPaymentStatus(false).build();
+
+        localModel.addPerson(childOne);
+        localModel.addPerson(childTwo);
+        localModel.addPerson(parent);
+
+        Student storedChildOne = getStudent(localModel, "Student One");
+        Parent parentForChildOne = getParent(localModel, "Parent Sample");
+        storedChildOne.addParent(parentForChildOne);
+        parentForChildOne.addChild(storedChildOne);
+        localModel.setPerson(storedChildOne, storedChildOne);
+
+        Student storedChildTwo = getStudent(localModel, "Student Two");
+        Parent parentForChildTwo = getParent(localModel, "Parent Sample");
+        storedChildTwo.addParent(parentForChildTwo);
+        parentForChildTwo.addChild(storedChildTwo);
+        localModel.setPerson(storedChildTwo, storedChildTwo);
+
+        Parent aggregatedParent = getParent(localModel, "Parent Sample");
+        assertEquals("100", aggregatedParent.getCost().value);
+        assertFalse(aggregatedParent.getPaymentStatus().isPaid());
+
+        Student latestChildTwo = getStudent(localModel, "Student Two");
+        Parent latestParent = getParent(localModel, "Parent Sample");
+        Student paidChildTwo = (Student) new PersonBuilder(latestChildTwo)
+                .withPaymentStatus(true).build();
+        paidChildTwo.addParent(latestParent);
+
+        localModel.setPerson(latestChildTwo, paidChildTwo);
+
+        Parent finalParent = getParent(localModel, "Parent Sample");
+        assertEquals("100", finalParent.getCost().value);
+        assertTrue(finalParent.getPaymentStatus().isPaid());
+    }
+
+    @Test
     public void getFilteredPersonList_modifyList_throwsUnsupportedOperationException() {
         assertThrows(UnsupportedOperationException.class, () -> modelManager.getFilteredPersonList().remove(0));
     }
@@ -128,5 +175,21 @@ public class ModelManagerTest {
         UserPrefs differentUserPrefs = new UserPrefs();
         differentUserPrefs.setAddressBookFilePath(Paths.get("differentFilePath"));
         assertFalse(modelManager.equals(new ModelManager(addressBook, differentUserPrefs)));
+    }
+
+    private Student getStudent(ModelManager model, String name) {
+        return (Student) model.getAddressBook().getPersonList().stream()
+                .filter(person -> person instanceof Student
+                        && person.getName().fullName.equals(name))
+                .findFirst()
+                .orElseThrow();
+    }
+
+    private Parent getParent(ModelManager model, String name) {
+        return (Parent) model.getAddressBook().getPersonList().stream()
+                .filter(person -> person instanceof Parent
+                        && person.getName().fullName.equals(name))
+                .findFirst()
+                .orElseThrow();
     }
 }
