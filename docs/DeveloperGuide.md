@@ -575,7 +575,7 @@ Use case ends.
 * 2a. The list is empty.
 
 
-Use case ends.
+  Use case ends.
 
 
 * 3a. The given index is invalid.
@@ -584,30 +584,36 @@ Use case ends.
 * 3a1. Tutorhub shows an error message.
 
 
-     Use case resumes at step 2.
+  Use case resumes at step 2.
 
 
 **Use Case: Add a New Student**
 
 
 **Main Success Scenario (MSS):**
-1. User enters the command to add a student.
-2. System validates the input format.
-3. System stores the new student in the address book.
+1. User enters the command to add a student
+2. System validates the input format
+3. System stores the new student in the address book
 4. System displays a success message
-Use case ends.
+
+   Use case ends.
 
 
 **Extensions:**
 * 2a. The type field is missing or invalid.
-    * 2a1. System shows error message
+    * 2a1. System shows error message.
+  
+      Use case resumes at step 1.
+  
 * 2b. Duplicate student detected.
-    * 2b1. System shows error message
+    * 2b1. System shows error message.
+
       Use case ends.
+  
 * 2c. Phone number invalid 
     * 2c1. System shows error message.
 
-  Use case resumes at step 1.
+      Use case resumes at step 1.
 
 
 ---
@@ -617,22 +623,28 @@ Use case ends.
 
 
 **Main Success Scenario (MSS):**
-1. User enters the command to add a parent.
-2. System validates the input format.
-3. System stores the new parent in the address book.
+1. User enters the command to add a parent
+2. System validates the input format
+3. System stores the new parent in the address book
 4. System displays a success message
+
    Use case ends.
 
 
 **Extensions:**
 * 2a. The type field is missing or invalid.
-    * 2a1. System shows error message
+    * 2a1. System shows error message.
+  
       Use case resumes at step 1.
+  
 * 2b. Duplicate parent detected.
-    * 2b1. System shows error message
+    * 2b1. System shows error message.
+  
       Use case ends.
+  
 * 2c. Phone number invalid.
     * 2c1. System shows error message.
+  
       Use case resumes at step 1.
 
 
@@ -644,38 +656,50 @@ Use case ends.
 
 **Main Success Scenario (MSS):**
 1. User enters the command
-2. System validates that both student and parent exist and have correct types.
-3. System creates a bidirectional link between student and parent.
+2. System validates that both student and parent exist and have correct types
+3. System creates a bidirectional link between student and parent
 4. System displays success message
+
    Use case ends.
 
 
 **Extensions:**
 * 2a. Student or parent does not exist.
-    * 2a1. System shows error message
-* 2b. Student and parent already linked.
-    * 2b1. System shows error message
+    * 2a1. System shows error message.
+
       Use case resumes at step 1.
+  
+* 2b. Student and parent already linked.
+    * 2b1. System shows error message.
+
+      Use case resumes at step 1.
+  
 * 2c. Parent entered in student field or vice versa.
     * 2c1. System shows appropriate error message.
+
+      Use case resumes at step 1
 
 ---
 
 **Use Case: Update Student Cost :**
 
 **Main Success Scenario (MSS):**
-1. User enters command to update a student’s per-lesson cost.
-2. System validates that the selected person is a student and that the cost format is numeric.
-3. System stores the updated cost.
+1. User enters command to update a student’s per-lesson cost
+2. System validates that the selected person is a student and that the cost format is numeric
+3. System stores the updated cost
 4. System displays success message
+
    Use case ends.
 
 **Extensions:**
-* 2a. `pay/` value is invalid
-  * 2a1. System shows error message
+* 2a. `pay/` value is invalid.
+  * 2a1. System shows error message.
+  
     Use case resumes at step 1.
+  
 * 2b. Target person is a parent.
   * 2b1. System shows error message
+  
     Use case resumes at step 1.
 
 ---
@@ -684,25 +708,26 @@ Use case ends.
 
 **Main Success Scenario (MSS):**
 1. User enters command
-2. System locates the person at the specified index and flips their payment status.
+2. System locates the person at the specified index and flips their payment status
 3. System displays success message
 
    Use case ends.
 
 **Extensions:**
 * 1a. Index is invalid.
-  * 1a1. System shows error message
+  * 1a1. System shows error message.
 
     Use case ends.
+  
 * 2a. Target is a parent with linked children.
   * 2a1. System toggles every linked child to the same paid/unpaid state before displaying success.
    
     Use case resumes at step 3.
+  
 * 2b. Target is a parent without linked children.
   * 2b1. System shows error message 
 
     Use case resumes at step 1.
-      Use case resumes at step 1.
 
 
 ---
@@ -713,21 +738,27 @@ Use case ends.
 
 **Main Success Scenario (MSS):**
 1. User enters the command
-2. System validates that both student and parent exist and are linked.
-3. System removes the bidirectional link.
+2. System validates that both student and parent exist and are linked
+3. System removes the bidirectional link
 4. System displays success message
+
    Use case ends.
 
 
 **Extensions:**
 * 2a. Student or parent does not exist.
     * 2a1. System shows error message
+      
       Use case resumes at step 1.
+  
 * 2b. Student and parent not linked.
     * 2b1. System shows error message
+      
       Use case resumes at step 1.
+  
 * 2c. Parent entered in student field or vice versa.
     * 2c1. System shows error message
+      
       Use case resumes at step 1.
 
 
@@ -738,22 +769,29 @@ Use case ends.
 
 
 **Main Success Scenario (MSS):**
-1. User enters the command to edit a student’s details.
-2. System validates the student exists and input format is correct.
-3. System updates the student’s details.
-4. System displays a success message: "Student <Student Name> details updated successfully."
+1. User enters the command to edit a student’s details
+2. System validates the student exists and input format is correct
+3. System updates the student’s details
+4. System displays a success message
+
    Use case ends.
 
 
 **Extensions:**
 * 2a. Student not found.
-    * 2a1. System shows error message: "Error, student not found."
+    * 2a1. System shows error message.
+  
       Use case resumes at step 1.
+  
 * 2b. Input format invalid.
     * 2b1. System shows error message.
+  
       Use case resumes at step 1.
+  
 * 2c. Editing of type disallowed.
-    * 2c1. System shows error message: "You cannot edit a person's type (Student/Parent). Delete and re-add with the desired type."
+    * 2c1. System shows error message.
+
+      Use case resumes at step 1.
 
 
 ---
@@ -764,8 +802,8 @@ Use case ends.
 
 **Main Success Scenario (MSS):**
 1. User chooses to schedule a lesson
-2. System validates student exists and schedule format is correct.
-3. System stores or replaces the student’s schedule.
+2. System validates student exists and schedule format is correct
+3. System stores or replaces the student’s schedule
 4. System displays success message
 
    Use case ends.
@@ -773,15 +811,17 @@ Use case ends.
 
 **Extensions:**
 * 2a. Student not found.
-    * 2a1. System shows error message
+    * 2a1. System shows error message.
 
       Use case resumes at step 1.
+  
 * 2b. Person is a parent.
-    * 2b1. System shows error message
+    * 2b1. System shows error message.
 
       Use case resumes at step 1.
+  
 * 2c. Schedule format invalid.
-    * 2c1. System shows error message
+    * 2c1. System shows error message.
 
       Use case resumes at step 1.
 
@@ -793,9 +833,9 @@ Use case ends.
 
 
 **Main Success Scenario (MSS):**
-1. User enters the command to add a note for a student.
-2. System validates student exists and note format is correct.
-3. System stores the note.
+1. User enters the command to add a note for a student
+2. System validates student exists and note format is correct
+3. System stores the note
 4. System displays success message
 
    Use case ends.
@@ -803,7 +843,7 @@ Use case ends.
 
 **Extensions:**
 * 2a. Note too long (>100 characters).
-    * 2a1. System shows error message
+    * 2a1. System shows error message.
 
       Use case resumes at step 1.
 
@@ -815,9 +855,9 @@ Use case ends.
 
 
 **Main Success Scenario (MSS):**
-1. User enters the command: reset all.
-2. System validates the format.
-3. System updates every contact’s payment status to unpaid.
+1. User enters the command: reset all
+2. System validates the format
+3. System updates every contact’s payment status to unpaid
 4. System displays success message
 
    Use case ends.
@@ -828,8 +868,9 @@ Use case ends.
     * 2a1. System shows error message
 
       Use case resumes at step 1.
+  
 * 3a. No contacts exist in the system.
-    * 3a1. System shows warning
+    * 3a1. System shows warning.
 
       Use case ends.
 
@@ -841,9 +882,9 @@ Use case ends.
 
 
 **Main Success Scenario (MSS):**
-1. User enters command.
+1. User enters command
 2. System validates the argument (if any)
-3. System retrieves contacts according to specified argument.
+3. System retrieves contacts according to specified argument
 4. System displays the list in the GUI with a success message
 
    Use case ends.
@@ -851,9 +892,10 @@ Use case ends.
 
 **Extensions:**
 * 2a. Invalid argument entered.
-    * 2a1. System shows error message
+    * 2a1. System shows error message.
 
       Use case resumes at step 1.
+  
 ---
 
 **Use Case: Filter contacts based on payment status/schedule**
@@ -861,14 +903,14 @@ Use case ends.
 **Main Success Scenario (MSS):**
 1. User enters command
 2. System validates the argument (if any)
-3. System retrieves contacts according to specified argument.
-4. System displays the list in the GUI with an appropriate message.
+3. System retrieves contacts according to specified argument
+4. System displays the list in the GUI with an appropriate message
    Use case ends.
 
 
 **Extensions:**
 * 2a. Invalid argument entered.
-    * 2a1. System shows error message 
+    * 2a1. System shows error message.
     
       Use case resumes at step 1.
 
