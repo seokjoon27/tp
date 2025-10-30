@@ -11,6 +11,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -118,7 +119,9 @@ public class EditCommand extends Command {
             throws CommandException {
         assert personToEdit != null;
 
-        Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
+        Name updatedName = editPersonDescriptor.getName()
+                .map(EditCommand::capitalizeName)
+                .orElse(personToEdit.getName());
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Note updatedNote = editPersonDescriptor.getNote().orElse(personToEdit.getNote());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
@@ -159,6 +162,20 @@ public class EditCommand extends Command {
                     updatedTags
             );
         }
+    }
+    /**
+     * Capitalizes the first letter of each word in the given name.
+     */
+    static Name capitalizeName(Name name) {
+        if (name == null || name.fullName == null || name.fullName.isBlank()) {
+            return name;
+        }
+        String original = name.fullName.trim();
+        String capitalized = Arrays.stream(original.split("\\s+"))
+                .map(word -> word.substring(0, 1).toUpperCase() + word.substring(1).toLowerCase())
+                .reduce((a, b) -> a + " " + b)
+                .orElse(original);
+        return new Name(capitalized);
     }
 
     @Override
