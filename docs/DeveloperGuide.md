@@ -3,7 +3,7 @@ layout: page
 title: Developer Guide
 ---
 * Table of Contents
-  {:toc}
+{:toc}
 
 
 --------------------------------------------------------------------------------------------------------------------
@@ -323,7 +323,46 @@ list <DATE>
 ---
 
 
-### 3.3 `link` / `unlink` Features
+
+### 3.3 `paid` Feature
+
+
+
+**Purpose:**
+Toggles the payment status of a student or parent, ensuring the UI and derived aggregates stay in sync.
+
+
+
+**Key Classes:**
+- `PaidCommand`
+- `PaidCommandParser`
+- `ModelManager`
+- `Student`
+- `Parent`
+- `PaymentStatus`
+
+**Behaviour:**
+- Supports toggling by index (e.g. `paid 1`) or by name (`paid n/Alex Yeoh`).
+- When a **student** is toggled, only that student’s payment status is flipped.
+- When a **parent** is toggled, every linked child is toggled to the same paid/unpaid state in a single command.
+- Parents without linked children are rejected with a descriptive error.
+- Success feedback is concise: `Marked as paid/unpaid: <Contact Name>`.
+- Parent payment status is always derived from the state of their linked students.
+
+**Design Considerations**
+
+| Option | Decision | Reason |
+|--------|-----------|--------|
+| Toggle parents independently from children | ❌ No | Would desynchronise parent/child statuses |
+| Propagate parent toggle to all children | ✅ Yes | Keeps household records consistent with a single action |
+| Allow toggling parents without children | ❌ No | Prevents ambiguous states when no data is available |
+| Recompute aggregates on every mutation | ✅ Yes | Ensures UI, storage, and business logic remain consistent |
+
+---
+
+### 3.4 `link` / `unlink` Features
+
+
 
 
 **Purpose:**
@@ -354,39 +393,34 @@ Creates and removes relationships between a `Parent` and one or more `Students`.
 ---
 
 
-### 3.2 `paid` Feature
+### 3.5 `reset all` Feature
 
 **Purpose:**
-Toggles the payment status of a student or parent, ensuring the UI and derived aggregates stay in sync.
+Resets payment status of all contacts (Students and Parents) to unpaid with a single command.
 
 **Key Classes:**
-- `PaidCommand`
-- `PaidCommandParser`
-- `ModelManager`
-- `Student`
-- `Parent`
-- `PaymentStatus`
+- `ResetAllCommand`
+- `ResetAllCommandParser`
+- `Model`
+- `Person`, `Student`, `Parent`
 
 **Behaviour:**
-- Supports toggling by index (e.g. `paid 1`) or by name (`paid n/Alex Yeoh`).
-- When a **student** is toggled, only that student’s payment status is flipped.
-- When a **parent** is toggled, every linked child is toggled to the same paid/unpaid state in a single command.
-- Parents without linked children are rejected with a descriptive error.
-- Success feedback is concise: `Marked as paid/unpaid: <Contact Name>`.
-- Parent payment status is always derived from the state of their linked students.
+- Accepts only the exact phrase `reset all`.
+- Rejects any other variants (e.g., `reset`, `reset payments`).
+- Iterates through all contacts and updates each payment to unpaid.
+- Works for both Students and Parents.
+- Shows message if no contacts exist.
+- 
+  **Design Considerations**
 
-**Design Considerations**
-
-| Option | Decision | Reason |
-|--------|-----------|--------|
-| Toggle parents independently from children | ❌ No | Would desynchronise parent/child statuses |
-| Propagate parent toggle to all children | ✅ Yes | Keeps household records consistent with a single action |
-| Allow toggling parents without children | ❌ No | Prevents ambiguous states when no data is available |
-| Recompute aggregates on every mutation | ✅ Yes | Ensures UI, storage, and business logic remain consistent |
+| Option                                   | Decision | Reason |
+|------------------------------------------|-----------|--------|
+| Case sensitivity (RESET ALL, Reset All)  | ✅ Case-insensitive | Improves UX without adding ambiguity since tokens are fixed. |
+| Accept variants (reset, reset payments, extra tokens)  | ❌ No | Keeps parser simple and prevents accidental mass updates; matches UG: exact phrase only. |
 
 ---
 
-### 3.3 `pay/` (Cost) Field
+### 3.6 `pay/` (Cost) Field
 
 **Purpose:**
 Captures the per-lesson fee for students and automatically aggregates the total cost for parents.
@@ -754,7 +788,7 @@ Use case ends.
 
 **Extensions:**
 * 2a. Input not numeric.
-    * 2a1. System shows error message: "Error, cost per lesson should be a numeric value. E.g pay/72.5"
+    * 2a1. System shows error message: "Error, cost per lesson should be a numeric value. E.g. pay/72.5"
       Use case resumes at step 1.
 * 2b. Cost already exists.
     * 2b1. System shows error message: "You already have the lesson cost information to this student. Please edit or check the existing price."
@@ -812,9 +846,9 @@ Use case ends.
 
 **Main Success Scenario (MSS):**
 1. User enters the command: reset all.
-2. System validates the command format.
-3. System sets all contacts’ payment status to unpaid.
-4. System displays message: "Payment status of all contacts has been reset to unpaid."
+2. System validates the format.
+3. System updates every contact’s payment status to unpaid.
+4. System displays success message: "Payment status of all contacts has been reset to unpaid."
    Use case ends.
 
 

@@ -7,7 +7,7 @@ Tutorhub is a **typing-first contact manager for private tutors**.
 It helps tutors quickly manage **students, parents, lesson schedules, and payments** — all from one simple Command Line Interface (CLI) backed by a clear Graphical User Interface (GUI).
 
 * Table of Contents
-  {:toc}
+{:toc}
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -360,6 +360,7 @@ Format: `link student/INDEX parent/INDEX`
 * Links the student to the parent at the specified `INDEX`s.
 * The index refers to the index number shown in the displayed person list.
 * The index **must be a positive integer** 1, 2, 3, …​
+* Each index must correspond to the correct type.
 
 
 Example:
@@ -384,6 +385,7 @@ Format: `unlink student/INDEX parent/INDEX`
 * Unlinks the student from the parent at the specified `INDEX`es.
 * The index refers to the index number shown in the displayed person list.
 * The index **must be a positive integer** 1, 2, 3, …​
+* Each index must correspond to the correct type.
 
 
 Example:
@@ -581,7 +583,7 @@ Resets the payment status of all contacts (both Students and Parents) to unpaid.
 Useful for starting a new billing cycle (e.g., weekly or monthly) when all payments need to be cleared.
 
 
-* Resets all contacts’ `PaymentStatus` to **unpaid (false)**.
+* Resets all contacts’ `PaymentStatus` to `unpaid`.
 * The command is **not case-sensitive** (e.g., `RESET ALL`, `Reset All` work).
 * Only accepts the exact phrase `reset all`. Any extra words or tokens are rejected.
 * Has no effect on contacts that are already unpaid.

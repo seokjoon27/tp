@@ -14,7 +14,10 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TYPE;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.person.Name;
+import seedu.address.model.person.Parent;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Student;
 
 /**
  * Adds a person to the address book.
@@ -77,7 +80,9 @@ public class AddCommand extends Command {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
 
-        model.addPerson(toAdd);
+        String capitalizedName = capitalizeName(toAdd.getName().fullName);
+        Person capitalizedPerson = createCapitalizedCopy(toAdd, capitalizedName);
+        model.addPerson(capitalizedPerson);
 
         final String messageTemplate = (toAdd.getCost() != null)
                 ? MESSAGE_SUCCESS_WITH_COST
@@ -99,4 +104,48 @@ public class AddCommand extends Command {
                 .add("toAdd", toAdd)
                 .toString();
     }
+
+    /**
+     * Capitalizes the first letter of each word in the given name.
+     */
+    static String capitalizeName(String name) {
+        if (name == null || name.isEmpty()) {
+            return name;
+        }
+        String[] words = name.trim().split("\\s+");
+        StringBuilder capitalized = new StringBuilder();
+
+        for (String word : words) {
+            if (word.length() > 1) {
+                capitalized.append(Character.toUpperCase(word.charAt(0)))
+                        .append(word.substring(1).toLowerCase());
+            } else {
+                capitalized.append(word.toUpperCase());
+            }
+            capitalized.append(" ");
+        }
+
+        return capitalized.toString().trim();
+    }
+
+    private Person createCapitalizedCopy(Person original, String newName) {
+        return original instanceof Student
+                ? new Student(new Name(newName),
+                original.getPhone(),
+                original.getEmail(),
+                original.getAddress(),
+                original.getNote(), ((Student) original).getSchedule(),
+                original.getCost(),
+                original.getPaymentStatus(),
+                original.getTags())
+                : new Parent(new Name(newName),
+                original.getPhone(),
+                original.getEmail(),
+                original.getAddress(),
+                original.getNote(),
+                original.getCost(),
+                original.getPaymentStatus(),
+                original.getTags());
+    }
+
 }
