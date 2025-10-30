@@ -147,7 +147,7 @@ public class PersonCard extends UiPart<Region> {
     /** Returns a comma-joined list of tags or null if empty (so the row is hidden). */
     private String joinTags(Person p) {
         if (p.getTags() == null || p.getTags().isEmpty()) {
-            return "none";
+            return "  ";
         }
         return p.getTags().stream()
                 .map(t -> t.tagName)
