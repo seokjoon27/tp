@@ -133,10 +133,11 @@ public class EditCommand extends Command {
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
         if (personToEdit instanceof Student) {
+            Student studentToEdit = (Student) personToEdit;
             Schedule updatedSchedule = editPersonDescriptor.getSchedule()
-                    .orElse(((Student) personToEdit).getSchedule());
+                    .orElse(studentToEdit.getSchedule());
 
-            return new Student(
+            Student updatedStudent = new Student(
                     updatedName,
                     updatedPhone,
                     updatedEmail,
@@ -147,6 +148,9 @@ public class EditCommand extends Command {
                     updatedPaymentStatus,
                     updatedTags
             );
+            studentToEdit.getParents().forEach(updatedStudent::addParent);
+            updatedStudent.setLinkedNames(new java.util.ArrayList<>(studentToEdit.getLinkedNames()));
+            return updatedStudent;
         } else {
             // If the user tries to edit schedule of a Parent, it returns an error
             if (editPersonDescriptor.getSchedule().isPresent()) {
@@ -156,7 +160,8 @@ public class EditCommand extends Command {
                 throw new CommandException(MESSAGE_PARENT_COST_IMMUTABLE);
             }
 
-            return new Parent(
+            Parent parentToEdit = (Parent) personToEdit;
+            Parent updatedParent = new Parent(
                     updatedName,
                     updatedPhone,
                     updatedEmail,
@@ -166,6 +171,8 @@ public class EditCommand extends Command {
                     updatedPaymentStatus,
                     updatedTags
             );
+            parentToEdit.getChildren().forEach(updatedParent::addChild);
+            return updatedParent;
         }
     }
     /**
