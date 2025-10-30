@@ -165,7 +165,7 @@ How the parsing works:
 **API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
 
 
-<img src="images/ModelClassDiagram.png" width="600" />
+<img src="images/UpdatedModelClassDiagram.png" width="600" />
 
 
 
@@ -323,7 +323,46 @@ list <DATE>
 ---
 
 
-### 3.3 `link` / `unlink` Features
+
+### 3.3 `paid` Feature
+
+
+
+**Purpose:**
+Toggles the payment status of a student or parent, ensuring the UI and derived aggregates stay in sync.
+
+
+
+**Key Classes:**
+- `PaidCommand`
+- `PaidCommandParser`
+- `ModelManager`
+- `Student`
+- `Parent`
+- `PaymentStatus`
+
+**Behaviour:**
+- Supports toggling by index (e.g. `paid 1`) or by name (`paid n/Alex Yeoh`).
+- When a **student** is toggled, only that student’s payment status is flipped.
+- When a **parent** is toggled, every linked child is toggled to the same paid/unpaid state in a single command.
+- Parents without linked children are rejected with a descriptive error.
+- Success feedback is concise: `Marked as paid/unpaid: <Contact Name>`.
+- Parent payment status is always derived from the state of their linked students.
+
+**Design Considerations**
+
+| Option | Decision | Reason |
+|--------|-----------|--------|
+| Toggle parents independently from children | ❌ No | Would desynchronise parent/child statuses |
+| Propagate parent toggle to all children | ✅ Yes | Keeps household records consistent with a single action |
+| Allow toggling parents without children | ❌ No | Prevents ambiguous states when no data is available |
+| Recompute aggregates on every mutation | ✅ Yes | Ensures UI, storage, and business logic remain consistent |
+
+---
+
+### 3.4 `link` / `unlink` Features
+
+
 
 
 **Purpose:**
@@ -361,7 +400,7 @@ Creates and removes relationships between a `Parent` and one or more `Students`.
 ---
 
 
-### 3.4 `reset all` Feature
+### 3.5 `reset all` Feature
 
 **Purpose:**
 Resets payment status of all contacts (Students and Parents) to unpaid with a single command.
@@ -378,19 +417,17 @@ Resets payment status of all contacts (Students and Parents) to unpaid with a si
 - Iterates through all contacts and updates each payment to unpaid.
 - Works for both Students and Parents.
 - Shows message if no contacts exist.
+- 
+  **Design Considerations**
 
-**Design Considerations**
-
-| Option | Decision | Reason |
-|--------|-----------|--------|
-| Toggle parents independently from children | ❌ No | Would desynchronise parent/child statuses |
-| Propagate parent toggle to all children | ✅ Yes | Keeps household records consistent with a single action |
-| Allow toggling parents without children | ❌ No | Prevents ambiguous states when no data is available |
-| Recompute aggregates on every mutation | ✅ Yes | Ensures UI, storage, and business logic remain consistent |
+| Option                                   | Decision | Reason |
+|------------------------------------------|-----------|--------|
+| Case sensitivity (RESET ALL, Reset All)  | ✅ Case-insensitive | Improves UX without adding ambiguity since tokens are fixed. |
+| Accept variants (reset, reset payments, extra tokens)  | ❌ No | Keeps parser simple and prevents accidental mass updates; matches UG: exact phrase only. |
 
 ---
 
-### 3.5 `pay/` (Cost) Field
+### 3.6 `pay/` (Cost) Field
 
 **Purpose:**
 Captures the per-lesson fee for students and automatically aggregates the total cost for parents.
@@ -621,7 +658,47 @@ Use case ends.
     * 2b1. System shows error message: "These two people are already linked."
       Use case resumes at step 1.
 * 2c. Parent entered in student field or vice versa.
-    * 2c1. System shows appropriate error message: "Please ensure one student and one parent are input respectively."
+    * 2c1. System shows appropriate error message.
+
+---
+
+**Use Case: Update Student Cost :**
+
+**Main Success Scenario (MSS):**
+1. User executes `edit INDEX pay/<amount>` to update a student’s per-lesson cost.
+2. System validates that the selected person is a student and that the cost format is numeric.
+3. System stores the updated cost.
+4. System displays success message: "Edited Person: <Student Name>."
+   Use case ends.
+
+**Extensions:**
+* 2a. `pay/` value is missing or non-numeric.
+  * 2a1. System shows: "Cost per lesson should be a numeric value. E.g pay/72.5."
+    Use case resumes at step 1.
+* 2b. Target person is a parent.
+  * 2b1. System shows: "Cannot edit cost for a parent. Parent cost is derived from their linked children."
+    Use case resumes at step 1.
+
+---
+
+**Use Case: Toggle Payment Status :**
+
+**Main Success Scenario (MSS):**
+1. User runs `paid INDEX`.
+2. System locates the person at the specified index and flips their payment status.
+3. System displays "Marked as paid: <Name>" or "Marked as unpaid: <Name>."
+   Use case ends.
+
+**Extensions:**
+* 1a. Index is invalid.
+  * 1a1. System shows: "The person index provided is invalid."
+    Use case ends.
+* 2a. Target is a parent with linked children.
+  * 2a1. System toggles every linked child to the same paid/unpaid state before displaying success.
+    Use case resumes at step 3.
+* 2b. Target is a parent without linked children.
+  * 2b1. System shows: "This parent has no linked children. Link at least one student before toggling payment."
+    Use case resumes at step 1.
       Use case resumes at step 1.
 
 
@@ -705,29 +782,6 @@ Use case ends.
 ---
 
 
-**Use Case: Add Cost per Lesson**
-
-
-**Main Success Scenario (MSS):**
-1. User enters the command to add cost per lesson for a student.
-2. System validates student exists and input is numeric.
-3. System stores the cost information.
-4. System displays success message: "Successfully added cost per lesson information!"
-   Use case ends.
-
-
-**Extensions:**
-* 2a. Input not numeric.
-    * 2a1. System shows error message: "Error, cost per lesson should be a numeric value. E.g. pay/72.5"
-      Use case resumes at step 1.
-* 2b. Cost already exists.
-    * 2b1. System shows error message: "You already have the lesson cost information to this student. Please edit or check the existing price."
-      Use case ends.
-
-
----
-
-
 **Use Case: Add Personal Notes**
 
 
@@ -743,29 +797,6 @@ Use case ends.
 * 2a. Note too long (>100 characters).
     * 2a1. System shows error message: "Notes should not exceed 100 characters"
       Use case resumes at step 1.
-
-
----
-
-
-**Use Case: Mark Payment as Paid/Unpaid**
-
-
-**Main Success Scenario (MSS):**
-1. User enters the command to mark payment for a student.
-2. System validates student exists.
-3. System updates the payment status.
-4. System displays success message: "<Student Name>’s payment has been changed to paid/unpaid."
-   Use case ends.
-
-
-**Extensions:**
-* 2a. Student not found.
-    * 2a1. System shows error message: "Error: contact not found."
-      Use case resumes at step 1.
-* 2b. Payment already set to requested status.
-    * 2b1. System shows error message: "Payment status is already <paid/unpaid>."
-      Use case ends.
 
 
 ---
