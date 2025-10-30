@@ -251,7 +251,7 @@ This section describes some noteworthy details on how certain features are imple
 ### 3.1 `schedule` Feature
 
 
-**Purpose:**  
+**Purpose:**
 Assigns weekly or date-specific lessons to a student.
 
 
@@ -284,7 +284,7 @@ Assigns weekly or date-specific lessons to a student.
 ### 3.2 `list` Feature
 
 
-**Purpose:**  
+**Purpose:**
 Displays contacts filtered by payment or schedule.
 
 
@@ -325,7 +325,7 @@ list <DATE>
 ### 3.3 `link` / `unlink` Features
 
 
-**Purpose:**  
+**Purpose:**
 Creates and removes relationships between a `Parent` and one or more `Students`.
 
 
