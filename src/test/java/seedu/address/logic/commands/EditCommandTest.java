@@ -25,6 +25,7 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
@@ -223,6 +224,52 @@ public class EditCommandTest {
 
         // Expect CommandException with the proper message
         assertCommandFailure(editCommand, freshModel, EditCommand.MESSAGE_PARENT_SCHEDULE_ERROR);
+    }
+    /**
+     * Helper method to simulate EditCommand capitalization.
+     */
+    private Name capitalize(String name) {
+        return EditCommand.capitalizeName(new Name(name));
+    }
+
+    // EP: Normal lowercase input
+    @Test
+    public void capitalize_normalLowerCase() {
+        Name input = new Name("john doe");
+        Name expected = new Name("John Doe");
+        assertEquals(expected, capitalize(input.fullName));
+    }
+
+    // EP: Mixed case input
+    @Test
+    public void capitalize_mixedCase() {
+        Name input = new Name("jOhN dOE");
+        Name expected = new Name("John Doe");
+        assertEquals(expected, capitalize(input.fullName));
+    }
+
+    // EP: Already capitalized input
+    @Test
+    public void capitalize_alreadyCapitalized() {
+        Name input = new Name("Alice Smith");
+        Name expected = new Name("Alice Smith");
+        assertEquals(expected, capitalize(input.fullName));
+    }
+
+    // EP: Single-letter words
+    @Test
+    public void capitalize_singleLetterWords() {
+        Name input = new Name("a b c");
+        Name expected = new Name("A B C");
+        assertEquals(expected, capitalize(input.fullName));
+    }
+
+    // EP: Single word input
+    @Test
+    public void capitalize_singleWord() {
+        Name input = new Name("bob");
+        Name expected = new Name("Bob");
+        assertEquals(expected, capitalize(input.fullName));
     }
 
     @Test
