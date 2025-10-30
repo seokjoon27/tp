@@ -547,13 +547,13 @@ Use case ends.
 
 **Extensions:**
 * 2a. Student or parent does not exist.
-    * 2a1. System shows error message: "Error, parent or student name incorrect."
+    * 2a1. System shows error message: "Invalid student or parent index."
       Use case resumes at step 1.
 * 2b. Student and parent already linked.
-    * 2b1. System shows error message: "You have already linked the two…"
-      Use case ends.
+    * 2b1. System shows error message: "These two people are already linked."
+      Use case resumes at step 1.
 * 2c. Parent entered in student field or vice versa.
-    * 2c1. System shows appropriate error message.
+    * 2c1. System shows appropriate error message: "Please ensure one student and one parent are input respectively."
       Use case resumes at step 1.
 
 
@@ -564,7 +564,7 @@ Use case ends.
 
 
 **Main Success Scenario (MSS):**
-1. User enters the command: unlink student/<Student Name> parent/<Parent Name>.
+1. User enters the command: unlink student/INDEX parent/INDEX.
 2. System validates that both student and parent exist and are linked.
 3. System removes the bidirectional link.
 4. System displays success message: "Successfully removed the link between parent and student."
@@ -573,11 +573,14 @@ Use case ends.
 
 **Extensions:**
 * 2a. Student or parent does not exist.
-    * 2a1. System shows error message: "Error, parent or student name incorrect."
+    * 2a1. System shows error message: "Invalid student or parent index."
       Use case resumes at step 1.
 * 2b. Student and parent not linked.
-    * 2b1. System shows error message: "These two are not linked."
-      Use case ends.
+    * 2b1. System shows error message: "These two people are already not linked."
+      Use case resumes at step 1.
+* 2c. Parent entered in student field or vice versa.
+    * 2c1. System shows appropriate error message: "Please ensure one student and one parent are input respectively."
+      Use case resumes at step 1.
 
 
 ---
