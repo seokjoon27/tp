@@ -904,6 +904,7 @@ Use case ends.
 
 
 #### 💻 Performance & Scalability
+
 | Requirement       | Description                                                             |
 |-------------------|-------------------------------------------------------------------------|
 | **Response Time** | Commands should execute within **1 second** under normal load.          |
@@ -920,6 +921,7 @@ Use case ends.
 
 
 #### 🚫 Constraints
+
 | Type           | Constraint                                           |
 |----------------|------------------------------------------------------|
 | **Business**   | Lessons cannot cross midnight.                       |
