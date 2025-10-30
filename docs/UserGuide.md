@@ -165,13 +165,13 @@ With Tutorhub, you can:
 
 
 
-Shows a list of all commands accepted in Tutorhub.
+Shows a list of all commands accepted in Tutorhub, with the link to this user guide at the bottom.
 
 
 
 
 ![help message](images/helpMessage.png)
-
+![helpMessage2.png](images/helpMessage2.png)
 
 
 
