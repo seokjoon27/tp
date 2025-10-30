@@ -651,7 +651,47 @@ Use case ends.
     * 2b1. System shows error message: "These two people are already linked."
       Use case resumes at step 1.
 * 2c. Parent entered in student field or vice versa.
-    * 2c1. System shows appropriate error message: "Please ensure one student and one parent are input respectively."
+    * 2c1. System shows appropriate error message.
+
+---
+
+**Use Case: Update Student Cost :**
+
+**Main Success Scenario (MSS):**
+1. User executes `edit INDEX pay/<amount>` to update a student’s per-lesson cost.
+2. System validates that the selected person is a student and that the cost format is numeric.
+3. System stores the updated cost.
+4. System displays success message: "Edited Person: <Student Name>."
+   Use case ends.
+
+**Extensions:**
+* 2a. `pay/` value is missing or non-numeric.
+  * 2a1. System shows: "Cost per lesson should be a numeric value. E.g pay/72.5."
+    Use case resumes at step 1.
+* 2b. Target person is a parent.
+  * 2b1. System shows: "Cannot edit cost for a parent. Parent cost is derived from their linked children."
+    Use case resumes at step 1.
+
+---
+
+**Use Case: Toggle Payment Status :**
+
+**Main Success Scenario (MSS):**
+1. User runs `paid INDEX`.
+2. System locates the person at the specified index and flips their payment status.
+3. System displays "Marked as paid: <Name>" or "Marked as unpaid: <Name>."
+   Use case ends.
+
+**Extensions:**
+* 1a. Index is invalid.
+  * 1a1. System shows: "The person index provided is invalid."
+    Use case ends.
+* 2a. Target is a parent with linked children.
+  * 2a1. System toggles every linked child to the same paid/unpaid state before displaying success.
+    Use case resumes at step 3.
+* 2b. Target is a parent without linked children.
+  * 2b1. System shows: "This parent has no linked children. Link at least one student before toggling payment."
+    Use case resumes at step 1.
       Use case resumes at step 1.
 
 
@@ -735,29 +775,6 @@ Use case ends.
 ---
 
 
-**Use Case: Add Cost per Lesson**
-
-
-**Main Success Scenario (MSS):**
-1. User enters the command to add cost per lesson for a student.
-2. System validates student exists and input is numeric.
-3. System stores the cost information.
-4. System displays success message: "Successfully added cost per lesson information!"
-   Use case ends.
-
-
-**Extensions:**
-* 2a. Input not numeric.
-    * 2a1. System shows error message: "Error, cost per lesson should be a numeric value. E.g. pay/72.5"
-      Use case resumes at step 1.
-* 2b. Cost already exists.
-    * 2b1. System shows error message: "You already have the lesson cost information to this student. Please edit or check the existing price."
-      Use case ends.
-
-
----
-
-
 **Use Case: Add Personal Notes**
 
 
@@ -773,29 +790,6 @@ Use case ends.
 * 2a. Note too long (>100 characters).
     * 2a1. System shows error message: "Notes should not exceed 100 characters"
       Use case resumes at step 1.
-
-
----
-
-
-**Use Case: Mark Payment as Paid/Unpaid**
-
-
-**Main Success Scenario (MSS):**
-1. User enters the command to mark payment for a student.
-2. System validates student exists.
-3. System updates the payment status.
-4. System displays success message: "<Student Name>’s payment has been changed to paid/unpaid."
-   Use case ends.
-
-
-**Extensions:**
-* 2a. Student not found.
-    * 2a1. System shows error message: "Error: contact not found."
-      Use case resumes at step 1.
-* 2b. Payment already set to requested status.
-    * 2b1. System shows error message: "Payment status is already <paid/unpaid>."
-      Use case ends.
 
 
 ---

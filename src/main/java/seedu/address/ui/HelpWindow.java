@@ -109,6 +109,10 @@ public class HelpWindow extends UiPart<Stage> {
         stage.setResizable(false);
         stage.setFullScreen(false);
         stage.setMaximized(false);
+        stage.setMinWidth(600);
+        stage.setMinHeight(450);
+        stage.setWidth(720);
+        stage.setHeight(560);
 
         stage.centerOnScreen();
         stage.show();

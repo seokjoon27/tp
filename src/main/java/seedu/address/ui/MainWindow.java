@@ -2,6 +2,7 @@ package seedu.address.ui;
 
 import java.util.logging.Logger;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
@@ -66,6 +67,8 @@ public class MainWindow extends UiPart<Stage> {
         setAccelerators();
 
         helpWindow = new HelpWindow();
+        helpWindow.getRoot().initOwner(primaryStage);
+        helpWindow.getRoot().setOnCloseRequest(event -> helpWindow.hide());
     }
 
     public Stage getPrimaryStage() {
@@ -160,7 +163,9 @@ public class MainWindow extends UiPart<Stage> {
                 (int) primaryStage.getX(), (int) primaryStage.getY());
         logic.setGuiSettings(guiSettings);
         helpWindow.hide();
+        primaryStage.setIconified(false);
         primaryStage.close();
+        Platform.exit();
     }
 
     public PersonListPanel getPersonListPanel() {
