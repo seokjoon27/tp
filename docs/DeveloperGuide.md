@@ -354,26 +354,23 @@ Creates and removes relationships between a `Parent` and one or more `Students`.
 ---
 
 
-### 3.2 `paid` Feature
+### 3.4 `reset all` Feature
 
 **Purpose:**
-Toggles the payment status of a student or parent, ensuring the UI and derived aggregates stay in sync.
+Resets payment status of all contacts (Students and Parents) to unpaid with a single command.
 
 **Key Classes:**
-- `PaidCommand`
-- `PaidCommandParser`
-- `ModelManager`
-- `Student`
-- `Parent`
-- `PaymentStatus`
+- `ResetAllCommand`
+- `ResetAllCommandParser`
+- `Model`
+- `Person`, `Student`, `Parent`
 
 **Behaviour:**
-- Supports toggling by index (e.g. `paid 1`) or by name (`paid n/Alex Yeoh`).
-- When a **student** is toggled, only that student’s payment status is flipped.
-- When a **parent** is toggled, every linked child is toggled to the same paid/unpaid state in a single command.
-- Parents without linked children are rejected with a descriptive error.
-- Success feedback is concise: `Marked as paid/unpaid: <Contact Name>`.
-- Parent payment status is always derived from the state of their linked students.
+- Accepts only the exact phrase `reset all`.
+- Rejects any other variants (e.g., `reset`, `reset payments`).
+- Iterates through all contacts and updates each payment to unpaid.
+- Works for both Students and Parents.
+- Shows message if no contacts exist.
 
 **Design Considerations**
 
@@ -772,9 +769,9 @@ Use case ends.
 
 **Main Success Scenario (MSS):**
 1. User enters the command: reset all.
-2. System validates the command format.
-3. System sets all contacts’ payment status to unpaid.
-4. System displays message: "Payment status of all contacts has been reset to unpaid."
+2. System validates the format.
+3. System updates every contact’s payment status to unpaid.
+4. System displays success message: "Payment status of all contacts has been reset to unpaid."
    Use case ends.
 
 
