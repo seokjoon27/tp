@@ -278,6 +278,7 @@ Assigns weekly or date-specific lessons to a student.
 | Support overnight lessons | ❌ No | Lessons assumed not to cross midnight |
 |Can be modified through `edit` command |✅ Yes| Provide flexibility for users and maintain consistency
 
+
 ---
 
 
@@ -353,6 +354,69 @@ Creates and removes relationships between a `Parent` and one or more `Students`.
 ---
 
 
+### 3.2 `paid` Feature
+
+**Purpose:**
+Toggles the payment status of a student or parent, ensuring the UI and derived aggregates stay in sync.
+
+**Key Classes:**
+- `PaidCommand`
+- `PaidCommandParser`
+- `ModelManager`
+- `Student`
+- `Parent`
+- `PaymentStatus`
+
+**Behaviour:**
+- Supports toggling by index (e.g. `paid 1`) or by name (`paid n/Alex Yeoh`).
+- When a **student** is toggled, only that student’s payment status is flipped.
+- When a **parent** is toggled, every linked child is toggled to the same paid/unpaid state in a single command.
+- Parents without linked children are rejected with a descriptive error.
+- Success feedback is concise: `Marked as paid/unpaid: <Contact Name>`.
+- Parent payment status is always derived from the state of their linked students.
+
+**Design Considerations**
+
+| Option | Decision | Reason |
+|--------|-----------|--------|
+| Toggle parents independently from children | ❌ No | Would desynchronise parent/child statuses |
+| Propagate parent toggle to all children | ✅ Yes | Keeps household records consistent with a single action |
+| Allow toggling parents without children | ❌ No | Prevents ambiguous states when no data is available |
+| Recompute aggregates on every mutation | ✅ Yes | Ensures UI, storage, and business logic remain consistent |
+
+---
+
+### 3.3 `pay/` (Cost) Field
+
+**Purpose:**
+Captures the per-lesson fee for students and automatically aggregates the total cost for parents.
+
+**Key Classes:**
+- `Cost`
+- `AddCommand`
+- `EditCommand`
+- `ParserUtil`
+- `ModelManager`
+- `Student`
+- `Parent`
+
+**Behaviour:**
+- `pay/` accepts positive integers or decimal values (e.g. `pay/72.5`).
+- Students can have their cost set during `add` or updated via `edit`.
+- Parent costs are immutable from the UI—the value is always the sum of their linked children.
+- Model recalculations occur automatically after every add, edit, delete, link, or payment toggle.
+- Costs display with a leading `$` in the UI for readability.
+
+**Design Considerations**
+
+| Option | Decision | Reason |
+|--------|-----------|--------|
+| Store cost as raw string | ✅ Yes | Simplifies parsing and avoids floating-point drift |
+| Allow parents to set custom costs | ❌ No | Prevents mismatch between parent and child totals |
+| Auto-recalculate on relevant commands | ✅ Yes | Guarantees derived values stay correct without user action |
+| Permit zero or missing child costs | ✅ Yes | Some students may not yet have agreed rates |
+
+---
 --------------------------------------------------------------------------------------------------------------------
 
 
