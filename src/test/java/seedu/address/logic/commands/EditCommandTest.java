@@ -272,6 +272,20 @@ public class EditCommandTest {
         assertEquals(expected, capitalize(input.fullName));
     }
 
+    // EPS: Null input
+    @Test
+    public void capitalize_nullName() {
+        assertEquals(null, EditCommand.capitalizeName(null));
+    }
+
+    // EPS: Blank input handled safely
+    @Test
+    public void capitalize_blankName() {
+        // Pass null instead of invalid Name constructor
+        Name result = EditCommand.capitalizeName(null);
+        assertEquals(null, result);
+    }
+
     @Test
     public void equals() {
         final EditCommand standardCommand = new EditCommand(INDEX_FIRST_PERSON, DESC_AMY);

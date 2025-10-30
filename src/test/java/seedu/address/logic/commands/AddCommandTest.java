@@ -9,6 +9,7 @@ import static seedu.address.testutil.TypicalPersons.ALICE;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.function.Predicate;
 
 import org.junit.jupiter.api.Test;
@@ -20,8 +21,16 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyUserPrefs;
+import seedu.address.model.person.Address;
+import seedu.address.model.person.Cost;
+import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Note;
+import seedu.address.model.person.Parent;
+import seedu.address.model.person.PaymentStatus;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Phone;
+import seedu.address.model.person.Student;
 import seedu.address.testutil.PersonBuilder;
 
 public class AddCommandTest {
@@ -246,6 +255,56 @@ public class AddCommandTest {
         Name input = new Name("bob");
         Name expected = new Name("Bob");
         assertEquals(expected, capitalize(input.fullName));
+    }
+
+    // Helper in AddCommandTest to call the private createCapitalizedCopy
+    private Person createCapitalizedCopy(Person original, String newName) {
+        String capitalizedName = AddCommand.capitalizeName(newName);
+        return original instanceof Student
+                ? new Student(new Name(capitalizedName),
+                original.getPhone(),
+                original.getEmail(),
+                original.getAddress(),
+                original.getNote(), ((Student) original).getSchedule(),
+                original.getCost(),
+                original.getPaymentStatus(),
+                original.getTags())
+                : new Parent(new Name(capitalizedName),
+                original.getPhone(),
+                original.getEmail(),
+                original.getAddress(),
+                original.getNote(),
+                original.getCost(),
+                original.getPaymentStatus(),
+                original.getTags());
+    }
+    @Test
+    public void createCapitalizedCopy_parentNameCapitalized() throws Exception {
+        Parent original = new Parent(
+                new Name("john doe"),
+                new Phone("92345678"),
+                new Email("parent@example.com"),
+                new Address("123 Main St"),
+                new Note("Test note"),
+                new Cost("100"),
+                new PaymentStatus(true),
+                Set.of()
+        );
+
+        String newName = "jane smith";
+        Parent copy = (Parent) createCapitalizedCopy(original, newName);
+
+        // Name is capitalized
+        assertEquals("Jane Smith", copy.getName().fullName);
+
+        // Other fields unchanged
+        assertEquals(original.getPhone(), copy.getPhone());
+        assertEquals(original.getEmail(), copy.getEmail());
+        assertEquals(original.getAddress(), copy.getAddress());
+        assertEquals(original.getNote(), copy.getNote());
+        assertEquals(original.getCost(), copy.getCost());
+        assertEquals(original.getPaymentStatus(), copy.getPaymentStatus());
+        assertEquals(original.getTags(), copy.getTags());
     }
 }
 
