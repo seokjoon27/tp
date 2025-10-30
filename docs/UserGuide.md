@@ -7,7 +7,7 @@ title: User Guide
 # Tutorhub User Guide
 
 
-Tutorhub is a **typing-first contact manager for private tutors**.  
+Tutorhub is a **typing-first contact manager for private tutors**.
 It helps tutors quickly manage **students, parents, lesson schedules, and payments** — all from one simple Command Line Interface (CLI) backed by a clear Graphical User Interface (GUI).
 
 
@@ -17,7 +17,7 @@ It helps tutors quickly manage **students, parents, lesson schedules, and paymen
 ## 👥 Target Users
 
 
-Tutorhub is designed for **private tutors and small tuition centers** who manage multiple students and parents.  
+Tutorhub is designed for **private tutors and small tuition centers** who manage multiple students and parents.
 With Tutorhub, you can:
 - Add or edit student and parent details instantly
 - Track payment statuses at a glance
@@ -160,7 +160,7 @@ With Tutorhub, you can:
 
 
 
-* Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit` and `clear`) will be ignored.<br>
+* Extraneous parameters for commands that do not take in parameters (such as `help`, `exit` and `clear`) will be ignored.<br>
   e.g. if the command specifies `help 123`, it will be interpreted as `help`.
 
 
@@ -226,7 +226,7 @@ Examples:
 
 <div markdown="block" class="alert alert-info">
 **:information_source: Important:**<br>
-Only Students can add a schedule. Parents can not add a schedule.
+Only Students can add a schedule.
 </div>
 
 
@@ -257,16 +257,14 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG] [pay/COST] 
   specifying any tags after it.
 
 
-<div markdown="span" class="alert alert-warning">
-:exclamation: **Caution:**<br>
-You are unable to edit a contact’s type. This is to prevent swapping between a parent and student <br>
-
-
-
 
 Examples:
 *  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 *  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+
+<div markdown="span" class="alert alert-warning">
+:exclamation: **Caution:**<br>
+You are unable to edit a contact’s type. <br>
 
 
 
@@ -406,48 +404,41 @@ Example:
 ### Adding a personal note: `note`
 
 
-Adds a personal note under a student’s profile.
+Adds a personal note under a student or parent profile.
 
 
 Format:
 `note INDEX note/NOTE`
 
 
-* Adds a note to the student at the specified `INDEX`.
+* Adds a note to the person at the specified `INDEX`.
 * Duplicate notes are **allowed**.
 * Notes longer than **100 characters** are not allowed.
-* To delete the existing note(s) under a student, simply type `note INDEX` without adding a note value.
-
+* To delete the existing note(s) under a person, simply type `note INDEX` without adding a note value.
 
 
 
 Examples:
-* `note 1 note/Class president` — Adds a note under the first student.
-* `note 2 note/Needs extra help in math` — Adds a note under the second student.
-* `note 1` — Deletes the note(s) under the first student.
+* `note 1 note/Good at Science` — Adds a note under the first person.
+* `note 1` — Deletes the note(s) under the first person.
 
 
 <div markdown="span" class="alert alert-primary">
 :bulb: **Tip:**<br>
-Use the `note` command to record useful or must-know information about a student that isn’t already captured by other fields.
+Use the `note` command to record useful or must-know information about a person that isn’t already captured by other fields.
 </div>
 
-
+For more information on the parameters, click [here](#command-parameters).
 
 
 ### Assigning a lesson schedule: `schedule`
 
 
-
-
 The `schedule` command assigns a **fixed weekly day and time** or a **specific date and time** to an existing student. This allows tutors to keep track of each student’s class timing directly from the application.
 
 
-
-
 Format:
-* `schedule INDEX schedule/DAY STARTTIME-ENDTIME`
-* `schedule INDEX schedule/DATE STARTTIME-ENDTIME`
+`schedule INDEX schedule/DAY STARTTIME-ENDTIME`, `schedule INDEX schedule/DATE STARTTIME-ENDTIME`
 
 
 * Assigns a weekly or date-based lesson schedule to the student at the specified `INDEX`.
@@ -459,35 +450,24 @@ Format:
 * To delete the existing schedule, simply type `schedule INDEX` without specifying any day or time.
 
 
-
-
 Examples:
 * `schedule 1 schedule/Monday 16:00-18:00` — Assigns a Monday schedule to the first student.
 * `schedule 2 schedule/12-10-2025 09:00-10:30` — Assigns a fixed date schedule to the second student.
 * `schedule 1` — Deletes the existing schedule under the first student.
 
-
-
-
-The schedule appears in the GUI under the student’s profile as:
-```
-[Schedule] Monday 08:00-10:30
-```
-
-
 <div markdown="span" class="alert alert-info">
-:information_source: **Note:**  
-Tutorhub automatically formats the day and time for readability.  
+:information_source: **Note:**<br>
+Tutorhub automatically formats the day and time for readability. 
 Typing variations such as extra spaces, lowercase letters, or uppercase day names will still be processed correctly.
 </div>
 
 
 <div markdown="span" class="alert alert-warning">
 :exclamation: **Caution:**<br>
-Schedule can only be added to a student, not a parent. 
+Schedule can only be added to a student, not a parent.
 </div>
 
-
+For more information on the parameters, click [here](#command-parameters).
 
 
 
@@ -507,7 +487,7 @@ Assigns a cost to a contact when adding them as contact
 * To edit the COST of a specific student, simply type `edit INDEX ... pay/COST`
 
 
-Format:                        
+Format:
 `add type/s ... pay/COST`
 
 
@@ -524,10 +504,10 @@ The cost appears in the GUI under the student’s profile as:
 
 
 
-### Listing Contacts by Payment or Schedule: `list`
+### Listing Contacts by Payment status or Schedule: `list`
 
 
-The `list` command displays **contacts filtered by their payment status or lesson schedule**.  
+The `list` command displays **contacts filtered by their payment status or lesson schedule**.
 It allows tutors to quickly check which students have paid, who hasn’t, and when lessons are scheduled — all within the main contact list view.
 
 
@@ -561,20 +541,20 @@ Examples:
 
 
 <div markdown="span" class="alert alert-info">
-:information_source: **Note:**  
-Tutorhub automatically formats and displays only valid contacts based on the chosen filter.  
+:information_source: **Note:**<br>
+Tutorhub automatically formats and displays only valid contacts based on the chosen filter.
 Typing variations in spacing, capitalisation, or argument order will still be recognised.
 </div>
 
 
 <div markdown="span" class="alert alert-warning">
 :exclamation: **Caution:**<br>
-Ensure that dates entered follow the exact `MM-DD-YYYY` format.  
+Ensure that dates entered follow the exact `MM-DD-YYYY` format.
 Invalid inputs such as `list 2025-12-12` or `list abc` will produce an error message.
 </div>
 
 
-
+For more information on the parameters, click [here](#command-parameters).
 
 
 
@@ -612,7 +592,7 @@ Useful for starting a new billing cycle (e.g., weekly or monthly) when all payme
 * Has no effect on contacts that are already unpaid.
 
 
-Format:    
+Format:
 `reset all`
 
 
@@ -634,37 +614,22 @@ Use the `reset all` command at the start of each billing cycle to quickly clear 
 
 ### Exiting the program : `exit`
 
-
-
-
 Exits the program.
-
-
 
 
 Format: `exit`
 
 
-
-
 ### Saving the data
-
-
 
 
 Tutorhub data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
 
 
-
-
 ### Editing the data file
 
 
-
-
 Tutorhub data are saved automatically as a JSON file `[JAR file location]/data/tutorhub.json`. Advanced users are welcome to update data directly by editing that data file.
-
-
 
 
 <div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
@@ -674,18 +639,9 @@ Furthermore, certain edits can cause the Tutorhub to behave in unexpected ways (
 
 
 
-
-
-
 --------------------------------------------------------------------------------------------------------------------
 
-
-
-
 ## FAQ
-
-
-
 
 **Q**: How do I transfer my data to another Computer?<br>
 **A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Tutorhub home folder.
@@ -698,6 +654,9 @@ Furthermore, certain edits can cause the Tutorhub to behave in unexpected ways (
 **Q**: Can I import or export data in CSV format?
 **A**: Not in the current version. However, since data is stored as a JSON file, you can convert it manually to CSV using online tools if needed.
 
+**Q**: Can I change a student’s schedule or note using the `edit` command instead of `schedule` or `note`?
+**A**: Yes! Both note and schedule fields can be updated using either their respective commands or the edit command.
+Using schedule or note directly may be faster if you only want to change those fields.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -709,30 +668,34 @@ Furthermore, certain edits can cause the Tutorhub to behave in unexpected ways (
 
 
 
-1. **When using multiple screens**, if you move the application to a secondary screen and later switch back to a single (primary) screen, the GUI may reopen off-screen.  
+1. **When using multiple screens**, if you move the application to a secondary screen and later switch back to a single (primary) screen, the GUI may reopen off-screen.
    **Remedy:** Delete the `preferences.json` file created by the application before running it again.
 
 
-2. **If you minimize the Help Window** and then run the `help` command (or use the `Help` menu or `F1` shortcut) again, the original Help Window remains minimized and no new window appears.  
+2. **If you minimize the Help Window** and then run the `help` command (or use the `Help` menu or `F1` shortcut) again, the original Help Window remains minimized and no new window appears.
    **Remedy:** Manually restore the minimized Help Window.
 
 
-3. **Changing a person's type is one-directional.**  
-   You are unable to change a contact’s type from **Parent → Student** using the `edit` command, although changing from **Student → Parent** is possible.  
+3. **Changing a person's type is one-directional.**
+   You are unable to change a contact’s type from **Parent → Student** using the `edit` command, although changing from **Student → Parent** is possible.
    **Remedy:** This limitation will be resolved in a future update by restricting type changes entirely.
 
 
-4. **Schedules cannot cross midnight.**  
-   The `schedule` command does not allow time ranges that pass through midnight (e.g., `23:00-01:00`).  
-   **Reason:** The system assumes lessons do not continue past midnight and currently enforces a same-day time window.  
+4. **Schedules cannot cross midnight.**
+   The `schedule` command does not allow time ranges that pass through midnight (e.g., `23:00-01:00`).
+   **Reason:** The system assumes lessons do not continue past midnight and currently enforces a same-day time window.
    **Remedy:** None required; this is an intended safeguard.
 
 
-5. **Multiple students can share the same time slot.**  
-   Tutorhub allows two or more students to have overlapping schedules (e.g., both `Monday 16:00-18:00`).  
-   **Reason:** This accommodates group or concurrent lessons rather than enforcing one-to-one tutoring exclusivity.  
+5. **Multiple students can share the same time slot.**
+   Tutorhub allows two or more students to have overlapping schedules (e.g., both `Monday 16:00-18:00`).
+   **Reason:** This accommodates group or concurrent lessons rather than enforcing one-to-one tutoring exclusivity.
    **Remedy:** None required; this behaviour is intended.
 
+6. **Filters reset after any new command**
+    Performing another command (e.g., `add`, `edit`, `paid`) immediately after a filtered `list` command (such as `list paid` or `list monday`) resets the filter and displays the **entire contact list** again.
+    **Reason:** The `list` filter is designed as a temporary view rather than a persistent mode.
+    **Remedy:** Re-enter the desired `list` filter command after completing any action to restore the filtered view.
 
 
 
@@ -770,13 +733,13 @@ Action | Format, Examples
 
 
 ## Command Parameters
-This section lists every parameter and prefix used in Tutorhub commands.  
+This section lists every parameter and prefix used in Tutorhub commands.
 Each prefix represents a specific input field, and constraints define what values are accepted.
 
 
 <div markdown="block" class="alert alert-info">
-:information_source: **Note:**  
-If a command specifies that a prefix is optional (e.g., `n/NAME [t/TAG]`),  
+:information_source: **Note:**
+If a command specifies that a prefix is optional (e.g., `n/NAME [t/TAG]`),
 leaving it blank (e.g., `n/NAME t/`) is treated as if it was omitted.
 </div>
 

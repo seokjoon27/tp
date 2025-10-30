@@ -1,0 +1,43 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+
+Actor User as user USER_COLOR
+Participant ":UI" as ui UI_COLOR
+Participant ":Logic" as logic LOGIC_COLOR
+Participant ":Model" as model MODEL_COLOR
+Participant ":Storage" as storage STORAGE_COLOR
+
+user -[USER_COLOR]> ui : "schedule 1 schedule/Monday 14:00-15:00"
+activate ui UI_COLOR
+
+ui -[UI_COLOR]> logic : execute("schedule 1 schedule/Monday 14:00-15:00")
+activate logic LOGIC_COLOR
+
+
+logic -[LOGIC_COLOR]> model : updateStudentSchedule(index, day, startTime, endTime)
+activate model MODEL_COLOR
+
+model -[MODEL_COLOR]> model : setSchedule(student, "Monday 14:00-15:00")
+
+model -[MODEL_COLOR]-> logic
+deactivate model
+
+logic -[LOGIC_COLOR]> storage : saveTutorhub(data)
+activate storage STORAGE_COLOR
+
+storage -[STORAGE_COLOR]> storage : write to tutorhub.json
+activate storage STORAGE_COLOR_T1
+storage --[STORAGE_COLOR]> storage
+deactivate storage
+
+storage --[STORAGE_COLOR]> logic
+deactivate storage
+
+logic --[LOGIC_COLOR]> ui : CommandResult(\n"Updated schedule for student: <NAME>"\n)
+deactivate logic
+
+ui --[UI_COLOR]> user : shows\n[Schedule] Monday 14:00-15:00
+deactivate ui
+
+@enduml
