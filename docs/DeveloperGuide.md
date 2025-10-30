@@ -417,13 +417,13 @@ Resets payment status of all contacts (Students and Parents) to unpaid with a si
 - Iterates through all contacts and updates each payment to unpaid.
 - Works for both Students and Parents.
 - Shows message if no contacts exist.
-- 
-  **Design Considerations**
 
-| Option                                   | Decision | Reason |
-|------------------------------------------|-----------|--------|
-| Case sensitivity (RESET ALL, Reset All)  | ✅ Case-insensitive | Improves UX without adding ambiguity since tokens are fixed. |
-| Accept variants (reset, reset payments, extra tokens)  | ❌ No | Keeps parser simple and prevents accidental mass updates; matches UG: exact phrase only. |
+**Design Considerations**
+
+| Option                                           | Decision | Reason                                                      |
+|--------------------------------------------------|-----------|-------------------------------------------------------------|
+| Allow partial reset (e.g., only unpaid students) | ❌ No | Ensures predictable behaviour with clarity.                       |
+| Accept variants or extra tokens                  | ❌ No | Prevents accidental mass resets and stays consistent |
 
 ---
 
