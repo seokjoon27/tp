@@ -79,8 +79,9 @@ public class LinkCommand extends Command {
         student.addParent(parent);
         parent.addChild(student);
 
-        model.setPerson(student, student);
+        // Update parent first so aggregate recalculations don't replace the reference
         model.setPerson(parent, parent);
+        model.setPerson(student, student);
 
         String result = String.format(MESSAGE_LINK_SUCCESS, student.getName(), parent.getName());
         return new CommandResult(result);

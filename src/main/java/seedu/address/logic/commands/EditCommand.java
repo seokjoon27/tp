@@ -66,6 +66,8 @@ public class EditCommand extends Command {
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
     public static final String MESSAGE_PARENT_SCHEDULE_ERROR = "Cannot edit schedule for a parent.";
+    public static final String MESSAGE_PARENT_COST_IMMUTABLE =
+            "Cannot edit cost for a parent. Parent cost is derived from their linked children.";
     public static final String MESSAGE_EDIT_TYPE_FAILURE =
             "You cannot edit a person's type (Student/Parent). Delete and re-add with the desired type.";
 
@@ -131,10 +133,11 @@ public class EditCommand extends Command {
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
         if (personToEdit instanceof Student) {
+            Student studentToEdit = (Student) personToEdit;
             Schedule updatedSchedule = editPersonDescriptor.getSchedule()
-                    .orElse(((Student) personToEdit).getSchedule());
+                    .orElse(studentToEdit.getSchedule());
 
-            return new Student(
+            Student updatedStudent = new Student(
                     updatedName,
                     updatedPhone,
                     updatedEmail,
@@ -145,13 +148,20 @@ public class EditCommand extends Command {
                     updatedPaymentStatus,
                     updatedTags
             );
+            studentToEdit.getParents().forEach(updatedStudent::addParent);
+            updatedStudent.setLinkedNames(new java.util.ArrayList<>(studentToEdit.getLinkedNames()));
+            return updatedStudent;
         } else {
             // If the user tries to edit schedule of a Parent, it returns an error
             if (editPersonDescriptor.getSchedule().isPresent()) {
                 throw new CommandException(MESSAGE_PARENT_SCHEDULE_ERROR);
             }
+            if (editPersonDescriptor.getCost().isPresent()) {
+                throw new CommandException(MESSAGE_PARENT_COST_IMMUTABLE);
+            }
 
-            return new Parent(
+            Parent parentToEdit = (Parent) personToEdit;
+            Parent updatedParent = new Parent(
                     updatedName,
                     updatedPhone,
                     updatedEmail,
@@ -161,6 +171,8 @@ public class EditCommand extends Command {
                     updatedPaymentStatus,
                     updatedTags
             );
+            parentToEdit.getChildren().forEach(updatedParent::addChild);
+            return updatedParent;
         }
     }
     /**

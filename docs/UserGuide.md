@@ -54,9 +54,6 @@ With Tutorhub, you can:
 ## 🧭 GUI Overview
 
 
-![GUI Overview](images/GUI_Overview.png)
-
-
 | Component | Description |
   |------------|-------------|
 | **Menu Bar** | Access `Help` and other options |
@@ -212,8 +209,7 @@ Tag names must also be alphanumeric or an exception will be thrown
 
 Examples:
 * `add n/John Doe type/p p/98765432 e/johnd@example.com a/John street, block 123, #01-01 `
-* `add n/Betsy Crowe type/s e/betsycrowe@example.com a/Yishun avenue p/99999999 t/Bad at Math schedule/Monday 14:00-15:00 `
-* `add n/Jeremiah type/p p/92345489 e/jerry@example.con a/Bowling drive t/Likes golf t/friend`
+* `add n/Betsy Crowe type/s e/betsycrowe@example.com a/Yishun avenue p/99999999 note/Bad at Math schedule/Monday 14:00-15:00 `
 
 
 <div markdown="block" class="alert alert-info">
@@ -314,8 +310,6 @@ Format: `delete INDEX`
 
 * Deletes the person at the specified `INDEX`.
 * The index refers to the index number shown in the displayed person list.
-* The index **must be a positive integer** 1, 2, 3, …​
-
 
 
 
@@ -324,6 +318,10 @@ Examples:
 * `list` followed by `delete 2` deletes the 2nd person in the address book.
 * `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
 
+<div markdown="span" class="alert alert-warning">
+:exclamation: **Caution:**<br>
+This action cannot be undone! <br>
+</div>
 
 
 
@@ -350,20 +348,14 @@ Format: `clear`
 Tutors often need to know which parents belong to which students and vice versa. This feature allows maintaining a clear relationship map.
 
 
-
-
-* Students can have multiple Parents (e.g., mother and father).
-* Parents can be linked to multiple Students (e.g., siblings).
-* The linkage is bidirectional: once linked, both profiles are updated
-
-
 Format: `link student/INDEX parent/INDEX`
 
 
 * Links the student to the parent at the specified `INDEX`s.
-* The index refers to the index number shown in the displayed person list.
-* The index **must be a positive integer** 1, 2, 3, …​
 * Each index must correspond to the correct type.
+* Students can have multiple Parents (e.g., mother and father).
+* Parents can be linked to multiple Students (e.g., siblings).
+* The linkage is bidirectional: once linked, both profiles are updated
 
 
 Example:
@@ -371,10 +363,7 @@ Example:
 * `list paid` followed by `link parent/3 student/1` will link the student at the first index and the parent at the third index
 
 
-All parents linked to a student will appear under the student's profile in the GUI as such:
-```
-  Parents: Alex Yeoh, Mary Tan
-```
+For more information on the parameters, click [here](#command-parameters).
 
 
 ### Unlinking Parents from Students: `unlink`
@@ -386,13 +375,12 @@ Format: `unlink student/INDEX parent/INDEX`
 
 
 * Unlinks the student from the parent at the specified `INDEX`es.
-* The index refers to the index number shown in the displayed person list.
-* The index **must be a positive integer** 1, 2, 3, …​
 * Each index must correspond to the correct type.
-
 
 Example:
 * `unlink student/2 parent/5` will link the student at index 2 and parent at index 5
+
+For more information on the parameters, click [here](#command-parameters).
 
 
 ### Adding a personal note: `note`
@@ -406,7 +394,6 @@ Format:
 
 
 * Adds a note to the person at the specified `INDEX`.
-* Duplicate notes are **allowed**.
 * Notes longer than **100 characters** are not allowed.
 * To delete the existing note(s) under a person, simply type `note INDEX` without adding a note value.
 
@@ -464,44 +451,6 @@ Schedule can only be added to a student, not a parent.
 For more information on the parameters, click [here](#command-parameters).
 
 
-
-
-
-
-### Adding cost per lesson for each Student : `pay/`
-
-
-
-Assigns a cost to a contact when adding them as contact. This allows tutors to keep track of the tuition costs of each student. 
-
-
-* Assigns a specific cost of lesson to the student
-* COST must be a numeric value, e.g. 72.5
-* To edit the COST of a specific student, simply type `edit INDEX ... pay/COST`
-
-
-Format:
-`add type/s ... pay/COST`
-
-
-Examples:
-* `add n/malcolm type/s ... pay/100` - Adds a student named malcolm whose cost per lesson is $100
-* `edit 1 pay/100` - edits contact at INDEX 1 to have cost be $100
-
-
-The cost appears in the GUI under the student’s profile as:
-```
-[Cost] $100
-```
-
-<div markdown="span" class="alert alert-info">
-:information_source: **Note:**<br>
-Tutorhub automatically syncs the costs of both parents and child to each other. The cost of each parent is equivalent to the sum of the costs of the children. 
-</div>
-
-
-
-
 ### Listing Contacts by Payment status or Schedule: `list`
 
 
@@ -535,8 +484,6 @@ Examples:
 * `list schedule` — Displays all contacts with **an existing schedule**.
 * `list Monday` — Displays students whose schedules fall on **Monday**.
 * `list 12-12-2025` — Displays students with a lesson scheduled on **12th December 2025**.
-* `LIST   PAID` — Works as well; command is **case-insensitive** and ignores extra spaces.
-
 
 <div markdown="span" class="alert alert-info">
 :information_source: **Note:**<br>
@@ -544,28 +491,24 @@ Tutorhub automatically formats and displays only valid contacts based on the cho
 Typing variations in spacing, capitalisation, or argument order will still be recognised.
 </div>
 
-
 <div markdown="span" class="alert alert-warning">
 :exclamation: **Caution:**<br>
 Ensure that dates entered follow the exact `MM-DD-YYYY` format.
 Invalid inputs such as `list 2025-12-12` or `list abc` will produce an error message.
 </div>
 
-
 For more information on the parameters, click [here](#command-parameters).
 
 
-
 ### Tracking payment status of each Student : `paid`
-
 
 
 Toggles payment status of specified contact between paid and unpaid. This allows tutors to keep track of the payment status of individual students as well as the parents. 
 
 
 Examples:
-* `paid 1`-toggles payment status of contact at INDEX 1
-* `paid n/Alex yeoh`- toggles payment status of contact named Alex Yeoh
+* `paid 1` - toggles payment status of contact at INDEX 1
+* `paid n/Alex yeoh` - toggles payment status of contact named Alex Yeoh
 
 
 <div markdown="span" class="alert alert-info">
@@ -575,7 +518,7 @@ Tutorhub automatically keeps track of students and parents payment status dynami
 
 <div markdown="span" class="alert alert-primary">
 :bulb: **Tip:**<br>
-Use the `paid` command to track whether a student has paid you for a lesson. The payment status will be displayed in the GUI using a checkbox in the top right corner.
+Use the `paid` command to track whether a student has paid for a lesson. 
 </div>
 
 
@@ -583,33 +526,20 @@ Use the `paid` command to track whether a student has paid you for a lesson. The
 
 ### Resetting payment status for every Student : `reset all`
 Resets the payment status of all contacts (both Students and Parents) to unpaid.
-Useful for starting a new billing cycle (e.g., weekly or monthly) when all payments need to be cleared.
+Useful for starting a new billing cycle when all payments need to be cleared.
 
 
 * Resets all contacts’ `PaymentStatus` to `unpaid`.
-* The command is **not case-sensitive** (e.g., `RESET ALL`, `Reset All` work).
+* The command is **case-insensitive** (e.g., `RESET ALL`, `Reset All` work).
 * Only accepts the exact phrase `reset all`. Any extra words or tokens are rejected.
-* Has no effect on contacts that are already unpaid.
 
 
 Format:
 `reset all`
 
-
 Examples:
 * `reset all` — Resets all contacts to unpaid.
 * `RESET ALL` — Works the same (case-insensitive).
-* `reset all now` — Invalid. Shows: *Error: invalid format. Use "reset all" only.*
-
-
-<div markdown="span" class="alert alert-primary">
-:bulb: **Tip:**<br>
-Use the `reset all` command at the start of each billing cycle to quickly clear all previous payment records.
-</div>
-
-
-
-
 
 
 ### Exiting the program : `exit`
@@ -647,14 +577,14 @@ Furthermore, certain edits can cause the Tutorhub to behave in unexpected ways (
 **A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Tutorhub home folder.
 
 
-**Q**: Why does parents not have a schedule field?
+**Q**: Why does parents not have a schedule field?<br>
 **A**: Schedule field is meant to track classes for students and since parents could have multiple students linked to them, it would be better to only allow students to have a schedule.
 
 
-**Q**: Can I import or export data in CSV format?
+**Q**: Can I import or export data in CSV format?<br>
 **A**: Not in the current version. However, since data is stored as a JSON file, you can convert it manually to CSV using online tools if needed.
 
-**Q**: Can I change a student’s schedule or note using the `edit` command instead of `schedule` or `note`?
+**Q**: Can I change a student’s schedule or note using the `edit` command instead of `schedule` or `note`?<br>
 **A**: Yes! Both note and schedule fields can be updated using either their respective commands or the edit command.
 Using schedule or note directly may be faster if you only want to change those fields.
 
@@ -755,7 +685,7 @@ leaving it blank (e.g., `n/NAME t/`) is treated as if it was omitted.
 | **Payment per Lesson** | `pay/` | Sets the cost of a student’s lesson. | Must be a positive numeric value (e.g., `pay/80`). |
 | **Schedule** | `schedule/` | Sets the student’s weekly or date-specific class timing. | Accepts either a **day** (`Monday`–`Sunday`) or **date** (`MM-DD-YYYY`), followed by `STARTTIME-ENDTIME` in 24-hour format. Does **not** support time ranges that cross midnight. |
 | **Note** | `note/` | Adds a note to a student’s profile. | Any text up to 100 characters. Typing `note INDEX` removes existing notes. |
-| **Status (Payment)** | `paid` / `unpaid` | Indicates whether a student has paid for their lesson. | Used only in `list` filters or toggled via the `paid` command. |
+| **Status (Payment)** | `paid`  | Indicates whether a student has paid for their lesson. | Used only in `list` filters or toggled via the `paid` command. |
 | **Day / Date** | `<DAY>` / `<DATE>` | Used in filtering or scheduling commands. | `<DAY>` accepts weekdays (case-insensitive). `<DATE>` follows `MM-DD-YYYY` format. |
 | **Index** | (no prefix) | Identifies a contact’s position in the displayed list. | Must be a positive integer (e.g., `1`, `2`, `3`, …). |
 | **Relationship (Link)** | `student/` / `parent/` | Used in `link` and `unlink` commands to connect students with parents. | Both must be valid indices from the current list. |
@@ -771,5 +701,4 @@ leaving it blank (e.g., `n/NAME t/`) is treated as if it was omitted.
 | **CLI** | Command Line Interface: where you type commands |
 | **GUI** | Graphical User Interface: the visual screen Tutorhub displays |
 | **JSON** | Data format used to store Tutorhub information |
-| **Index** | The number shown beside each contact in the list panel |
 | **Parent / Student** | Contact roles used to manage tutoring relationships |
