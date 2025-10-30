@@ -668,6 +668,8 @@ Use case ends.
 * 2b. Input format invalid.
     * 2b1. System shows error message.
       Use case resumes at step 1.
+* 2c. Editing of type disallowed.
+    * 2c1. System shows error message: "You cannot edit a person's type (Student/Parent). Delete and re-add with the desired type."
 
 
 ---
@@ -765,7 +767,7 @@ Use case ends.
 ---
 
 
-**Use Case: Reset All Payments**
+**Use Case: Reset all Payments**
 
 
 **Main Success Scenario (MSS):**
@@ -788,7 +790,7 @@ Use case ends.
 ---
 
 
-**Use Case: List Contacts**
+**Use Case: List All Contacts**
 
 
 **Main Success Scenario (MSS):**
@@ -805,6 +807,20 @@ Use case ends.
       Use case resumes at step 1.
 ---
 
+**Use Case: Filter contacts based on payment status/schedule**
+
+**Main Success Scenario (MSS):**
+1. User enters list paid/unpaid/<DAY>/<DATE> command.
+2. System validates the argument (if any)
+3. System retrieves contacts according to specified argument.
+4. System displays the list in the GUI with an appropriate message.
+   Use case ends.
+
+
+**Extensions:**
+* 2a. Invalid argument entered.
+    * 2a1. System shows error message based on respective list command
+      Use case resumes at step 1.
 
 
 
