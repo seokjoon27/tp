@@ -12,7 +12,7 @@ It helps tutors quickly manage **students, parents, lesson schedules, and paymen
 --------------------------------------------------------------------------------------------------------------------
 
 
-## 👥 Target Users
+## Target Users
 
 
 Tutorhub is designed for **private tutors and small tuition centers** who manage multiple students and parents.
@@ -51,7 +51,7 @@ With Tutorhub, you can:
    ![Ui](images/Ui.png)
 
 
-## 🧭 GUI Overview
+##  GUI Overview
 
 
 | Component | Description |

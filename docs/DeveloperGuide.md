@@ -851,33 +851,33 @@ Use case ends.
 ### 5.4 Non-Functional Requirements
 
 
-#### 🧭 Business Rules
+#### Business Rules
 - Usable by **private tutors with moderate computer skills**.
 - Command syntax must be intuitive and forgiving (case- and space-insensitive).
 - Error messages should be clear, descriptive, and guide users toward correction.
 
 
-#### ♿ User Accessibility
+#### User Accessibility
 - Fully operable via **Command Line Interface (CLI)**.
 - Commands should be **case-insensitive** and **whitespace-tolerant**.
 - Simple GUI layout with readable font and clear separation between students and parents.
 
 
-#### 💾 Data Integrity & Management
+#### Data Integrity & Management
 - Data autosaves after each successful command.
 - Prevent deletion of linked contacts without unlinking first.
 - JSON data must remain human-readable and recoverable.
 - Reject invalid or overlapping schedule inputs.
 
 
-#### ⚙️ Technical Requirements
+#### Technical Requirements
 - Implemented in **Java 17** using **JavaFX**.
 - Must function **offline** for all core features.
 - Distributed as a **single JAR file** compatible with Windows, macOS, and Linux.
 - Data stored locally in `tutorhub.json`.
 
 
-#### 💻 Performance & Scalability
+#### Performance & Scalability
 
 | Requirement       | Description                                                             |
 |-------------------|-------------------------------------------------------------------------|
@@ -887,14 +887,14 @@ Use case ends.
 | **Startup Time**  | Application should launch within **3 seconds** on standard hardware.    |
 
 
-#### 🧩 Usability & Maintainability
+#### Usability & Maintainability
 - CLI commands follow a **consistent prefix/value pattern**.
 - Code follows **SE-EDU Java coding standards**.
 - Unit test coverage of **≥80%** for core logic and parsers.
 - New features must include updated documentation and tests.
 
 
-#### 🚫 Constraints
+#### Constraints
 
 | Type           | Constraint                                           |
 |----------------|------------------------------------------------------|
