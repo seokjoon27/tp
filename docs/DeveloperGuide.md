@@ -544,7 +544,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 ### 5.3 Use cases
 
 
-(For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
+(For all use cases below, the **System** is the `Tutorhub` and the **Actor** is the `user`, unless specified otherwise)
 
 
 **Use case: Delete a person**
@@ -554,9 +554,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 
 1.  User requests to list persons
-2.  AddressBook shows a list of persons
+2.  Tutorhub shows a list of persons
 3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+4.  Tutorhub deletes the person
 
 
 Use case ends.
@@ -574,7 +574,7 @@ Use case ends.
 * 3a. The given index is invalid.
 
 
-* 3a1. AddressBook shows an error message.
+* 3a1. Tutorhub shows an error message.
 
 
      Use case resumes at step 2.
@@ -587,20 +587,20 @@ Use case ends.
 1. User enters the command to add a student.
 2. System validates the input format.
 3. System stores the new student in the address book.
-4. System displays a success message: "You’ve added a new student: <Student Name>."
-   Use case ends.
+4. System displays a success message
+Use case ends.
 
 
 **Extensions:**
 * 2a. The type field is missing or invalid.
-    * 2a1. System shows error message: "Error, contact must have a type. E.g add type/<type> n/<name> p/<phone> e/<email> a/<address>, type can be s (student) or p (parent)."
-      Use case resumes at step 1.
+    * 2a1. System shows error message
 * 2b. Duplicate student detected.
-    * 2b1. System shows error message: "Bruh you might’ve already added this person before, please check again."
+    * 2b1. System shows error message
       Use case ends.
-* 2c. Phone number invalid (not 8 digits or contains spaces/dashes).
+* 2c. Phone number invalid 
     * 2c1. System shows error message.
-      Use case resumes at step 1.
+
+  Use case resumes at step 1.
 
 
 ---
@@ -613,16 +613,16 @@ Use case ends.
 1. User enters the command to add a parent.
 2. System validates the input format.
 3. System stores the new parent in the address book.
-4. System displays a success message: "You’ve added a new Parent: <Parent Name>."
+4. System displays a success message
    Use case ends.
 
 
 **Extensions:**
 * 2a. The type field is missing or invalid.
-    * 2a1. System shows error message: "Error, contact must have a type. E.g add t/<type> n/<name> p/<phone> e/<email> a/<address>, type can be s (student) or p (parent)."
+    * 2a1. System shows error message
       Use case resumes at step 1.
 * 2b. Duplicate parent detected.
-    * 2b1. System shows error message: "Bruh you might’ve already added this person before, please check again."
+    * 2b1. System shows error message
       Use case ends.
 * 2c. Phone number invalid.
     * 2c1. System shows error message.
@@ -636,19 +636,18 @@ Use case ends.
 
 
 **Main Success Scenario (MSS):**
-1. User enters the command: link student/<Student Name> parent/<Parent Name>.
+1. User enters the command
 2. System validates that both student and parent exist and have correct types.
 3. System creates a bidirectional link between student and parent.
-4. System displays success message: "Successfully reunited parent and child. Congrats!"
+4. System displays success message
    Use case ends.
 
 
 **Extensions:**
 * 2a. Student or parent does not exist.
-    * 2a1. System shows error message: "Invalid student or parent index."
-      Use case resumes at step 1.
+    * 2a1. System shows error message
 * 2b. Student and parent already linked.
-    * 2b1. System shows error message: "These two people are already linked."
+    * 2b1. System shows error message
       Use case resumes at step 1.
 * 2c. Parent entered in student field or vice versa.
     * 2c1. System shows appropriate error message.
@@ -658,18 +657,18 @@ Use case ends.
 **Use Case: Update Student Cost :**
 
 **Main Success Scenario (MSS):**
-1. User executes `edit INDEX pay/<amount>` to update a student’s per-lesson cost.
+1. User enters command to update a student’s per-lesson cost.
 2. System validates that the selected person is a student and that the cost format is numeric.
 3. System stores the updated cost.
-4. System displays success message: "Edited Person: <Student Name>."
+4. System displays success message
    Use case ends.
 
 **Extensions:**
-* 2a. `pay/` value is missing or non-numeric.
-  * 2a1. System shows: "Cost per lesson should be a numeric value. E.g pay/72.5."
+* 2a. `pay/` value is invalid
+  * 2a1. System shows error message
     Use case resumes at step 1.
 * 2b. Target person is a parent.
-  * 2b1. System shows: "Cannot edit cost for a parent. Parent cost is derived from their linked children."
+  * 2b1. System shows error message
     Use case resumes at step 1.
 
 ---
@@ -677,20 +676,24 @@ Use case ends.
 **Use Case: Toggle Payment Status :**
 
 **Main Success Scenario (MSS):**
-1. User runs `paid INDEX`.
+1. User enters command
 2. System locates the person at the specified index and flips their payment status.
-3. System displays "Marked as paid: <Name>" or "Marked as unpaid: <Name>."
+3. System displays success message
+
    Use case ends.
 
 **Extensions:**
 * 1a. Index is invalid.
-  * 1a1. System shows: "The person index provided is invalid."
+  * 1a1. System shows error message
+
     Use case ends.
 * 2a. Target is a parent with linked children.
   * 2a1. System toggles every linked child to the same paid/unpaid state before displaying success.
+   
     Use case resumes at step 3.
 * 2b. Target is a parent without linked children.
-  * 2b1. System shows: "This parent has no linked children. Link at least one student before toggling payment."
+  * 2b1. System shows error message 
+
     Use case resumes at step 1.
       Use case resumes at step 1.
 
@@ -702,22 +705,22 @@ Use case ends.
 
 
 **Main Success Scenario (MSS):**
-1. User enters the command: unlink student/INDEX parent/INDEX.
+1. User enters the command
 2. System validates that both student and parent exist and are linked.
 3. System removes the bidirectional link.
-4. System displays success message: "Successfully removed the link between parent and student."
+4. System displays success message
    Use case ends.
 
 
 **Extensions:**
 * 2a. Student or parent does not exist.
-    * 2a1. System shows error message: "Invalid student or parent index."
+    * 2a1. System shows error message
       Use case resumes at step 1.
 * 2b. Student and parent not linked.
-    * 2b1. System shows error message: "These two people are already not linked."
+    * 2b1. System shows error message
       Use case resumes at step 1.
 * 2c. Parent entered in student field or vice versa.
-    * 2c1. System shows appropriate error message: "Please ensure one student and one parent are input respectively."
+    * 2c1. System shows error message
       Use case resumes at step 1.
 
 
@@ -756,19 +759,23 @@ Use case ends.
 1. User chooses to schedule a lesson
 2. System validates student exists and schedule format is correct.
 3. System stores or replaces the student’s schedule.
-4. System displays success message: "Updated schedule for student: <NAME>"
+4. System displays success message
+
    Use case ends.
 
 
 **Extensions:**
 * 2a. Student not found.
-    * 2a1. System shows error message: "The person index provided is invalid"
+    * 2a1. System shows error message
+
       Use case resumes at step 1.
 * 2b. Person is a parent.
-    * 2b1. System shows error message: "Cannot add schedule for a parent"
+    * 2b1. System shows error message
+
       Use case resumes at step 1.
 * 2c. Schedule format invalid.
-    * 2c1. System shows error message: “Invalid schedule format”.
+    * 2c1. System shows error message
+
       Use case resumes at step 1.
 
 
@@ -782,13 +789,15 @@ Use case ends.
 1. User enters the command to add a note for a student.
 2. System validates student exists and note format is correct.
 3. System stores the note.
-4. System displays success message: "Successfully added note under <Student Name>!"
+4. System displays success message
+
    Use case ends.
 
 
 **Extensions:**
 * 2a. Note too long (>100 characters).
-    * 2a1. System shows error message: "Notes should not exceed 100 characters"
+    * 2a1. System shows error message
+
       Use case resumes at step 1.
 
 
@@ -802,16 +811,19 @@ Use case ends.
 1. User enters the command: reset all.
 2. System validates the format.
 3. System updates every contact’s payment status to unpaid.
-4. System displays success message: "Payment status of all contacts has been reset to unpaid."
+4. System displays success message
+
    Use case ends.
 
 
 **Extensions:**
 * 2a. Extra tokens present in the command.
-    * 2a1. System shows error message: "Invalid format. Use 'reset all' only."
+    * 2a1. System shows error message
+
       Use case resumes at step 1.
 * 3a. No contacts exist in the system.
-    * 3a1. System shows warning: "No contacts in the address book."
+    * 3a1. System shows warning
+
       Use case ends.
 
 
@@ -822,23 +834,25 @@ Use case ends.
 
 
 **Main Success Scenario (MSS):**
-1. User enters list command.
+1. User enters command.
 2. System validates the argument (if any)
 3. System retrieves contacts according to specified argument.
-4. System displays the list in the GUI with an appropriate message.
+4. System displays the list in the GUI with a success message
+
    Use case ends.
 
 
 **Extensions:**
 * 2a. Invalid argument entered.
-    * 2a1. System shows error message: "Invalid list argument: "
+    * 2a1. System shows error message
+
       Use case resumes at step 1.
 ---
 
 **Use Case: Filter contacts based on payment status/schedule**
 
 **Main Success Scenario (MSS):**
-1. User enters list paid/unpaid/<DAY>/<DATE> command.
+1. User enters command
 2. System validates the argument (if any)
 3. System retrieves contacts according to specified argument.
 4. System displays the list in the GUI with an appropriate message.
@@ -847,7 +861,8 @@ Use case ends.
 
 **Extensions:**
 * 2a. Invalid argument entered.
-    * 2a1. System shows error message based on respective list command
+    * 2a1. System shows error message 
+    
       Use case resumes at step 1.
 
 
