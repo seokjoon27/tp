@@ -7,7 +7,7 @@ Tutorhub is a **typing-first contact manager for private tutors**.
 It helps tutors quickly manage **students, parents, lesson schedules, and payments** — all from one simple Command Line Interface (CLI) backed by a clear Graphical User Interface (GUI).
 
 * Table of Contents
-  {:toc}
+{:toc}
 
 --------------------------------------------------------------------------------------------------------------------
 
