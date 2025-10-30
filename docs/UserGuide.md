@@ -3,10 +3,6 @@ layout: page
 title: User Guide
 ---
 
-
-# Tutorhub User Guide
-
-
 Tutorhub is a **typing-first contact manager for private tutors**.
 It helps tutors quickly manage **students, parents, lesson schedules, and payments** — all from one simple Command Line Interface (CLI) backed by a clear Graphical User Interface (GUI).
 
@@ -265,6 +261,7 @@ Examples:
 <div markdown="span" class="alert alert-warning">
 :exclamation: **Caution:**<br>
 You are unable to edit a contact’s type. <br>
+</div>
 
 
 
