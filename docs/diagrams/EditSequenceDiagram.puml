@@ -1,0 +1,6 @@
+@startuml
+actor User
+User -> LogicManager : "edit 1 n/Amy"
+LogicManager -> EditCommand : execute(model)
+EditCommand -> Model : setPerson(...)
+@enduml

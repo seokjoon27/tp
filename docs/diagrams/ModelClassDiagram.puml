@@ -51,14 +51,14 @@ Person *--> Phone
 Person *--> Email
 Person *--> Address
 Person *--> "*" Tag
-Person *--> Note
-Person *--> PaymentStatus
-Person *--> Cost
+Person *--> "*" Note
+Person *--> "*" PaymentStatus
+Person *--> "*" Cost
 
 Student --|> Person
 Parent --|> Person
 
-Student *--> Schedule
+Student *--> "*" Schedule
 
 Person -[hidden]up--> I
 UniquePersonList -[hidden]right-> I
