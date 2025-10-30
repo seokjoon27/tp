@@ -44,7 +44,7 @@
 
               <!-- URL and copy button side by side -->
               <HBox spacing="10" alignment="CENTER_LEFT">
-                <Label fx:id="helpUrl" text="https://ay2526s1-cs2103t-w10-2.github.io/tp/UserGuide.html"
+                <Label fx:id="helpUrl" text="https://ay2526s1-cs2103t-w10-1.github.io/tp/UserGuide.html"
                        styleClass="help-url" wrapText="true"/>
                 <Button fx:id="copyButton" text="Copy" onAction="#copyUrl"/>
               </HBox>

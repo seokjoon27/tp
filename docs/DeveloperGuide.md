@@ -372,15 +372,19 @@ Creates and removes relationships between a `Parent` and one or more `Students`.
 **Key Classes:**
 - `LinkCommand`
 - `UnlinkCommand`
+- `LinkCommandParser`
+- `UnlinkCommandParser`
 - `ModelManager`
 - `Person`, `Parent`, `Student`
 
-
-**Design Notes:**
-- Relationships are **bi-directional** — both entities reference each other.
-- Validation ensures a parent cannot link to another parent.
-- Stored as JSON references within both entities.
-
+**Behaviour:**
+- `link` establishes a bidirectional relationship: both the parent and the student reference each other.
+- `unlink` removes the relationship from both entities simultaneously.
+- Only valid parent-student pairs are allowed; attempts to link two parents or two students are rejected.
+- Multiple parents can be linked to a single student, and vice versa.
+- Linking an already linked pair has no effect but gives a descriptive message.
+- Unlinking a non-existent relationship gives a descriptive error.
+- Changes are immediately reflected in the GUI and persisted in the JSON storage.
 
 **Design Considerations**
 
@@ -388,6 +392,9 @@ Creates and removes relationships between a `Parent` and one or more `Students`.
 |--------|-----------|--------|
 | One-way relationship | ❌ No | Retrieval would require redundant searches |
 | Store by index | ✅ Yes | Avoids heavy identifier management |
+| Allow multiple parents per student | ✅ Yes | Supports real-world family structures |
+| Allow multiple students per parent | ✅ Yes | Supports siblings sharing the same parent |
+| Validate link/unlink actions | ✅ Yes | Prevents invalid or redundant operations |
 
 
 ---
@@ -882,12 +889,12 @@ Use case ends.
 
 
 #### 💻 Performance & Scalability
-| Requirement | Description |
-|--------------|-------------|
-| **Response Time** | Commands should execute within **1 second** under normal load. |
-| **Memory Usage** | Should not exceed **512MB** during standard operations. |
+| Requirement       | Description                                                             |
+|-------------------|-------------------------------------------------------------------------|
+| **Response Time** | Commands should execute within **1 second** under normal load.          |
+| **Memory Usage**  | Should not exceed **512MB** during standard operations.                 |
 | **Data Capacity** | Supports at least **1000 contacts** and **2000 schedules** efficiently. |
-| **Startup Time** | Application should launch within **3 seconds** on standard hardware. |
+| **Startup Time**  | Application should launch within **3 seconds** on standard hardware.    |
 
 
 #### 🧩 Usability & Maintainability
@@ -898,10 +905,10 @@ Use case ends.
 
 
 #### 🚫 Constraints
-| Type | Constraint |
-|------|-------------|
-| **Business** | Lessons cannot cross midnight. |
-| **Technical** | Single-user, local-only application. |
+| Type           | Constraint                                           |
+|----------------|------------------------------------------------------|
+| **Business**   | Lessons cannot cross midnight.                       |
+| **Technical**  | Single-user, local-only application.                 |
 | **Deployment** | Internet connection not required except for updates. |
 
 
