@@ -278,11 +278,39 @@ Assigns weekly or date-specific lessons to a student.
 | Support overnight lessons | ❌ No | Lessons assumed not to cross midnight |
 |Can be modified through `edit` command |✅ Yes| Provide flexibility for users and maintain consistency
 
+---
+
+### 3.2 note Feature
+
+Purpose:  
+Allows tutors to record short remarks or progress notes for each student or parent.
+
+Key Classes:  
+- NoteCommand  
+- NoteCommandParser  
+- Person / Student / Parent  
+- Note
+
+Behaviour:  
+- Adds or replaces a note for the specified person (student or parent).  
+- Accepts text input of up to 100 characters.  
+- Supports removal by typing note INDEX without any content.  
+- Case and whitespace-insensitive for the command word and prefix.  
+- The same note field can also be edited using the edit command.  
+
+Design Considerations
+
+| Option | Decision | Reason |
+|--------|-----------|--------|
+| Store note as plain text | ✅ Yes | Easy to serialize and display. |
+| Restrict to students only | ❌ No | Tutors may wish to add notes for parents too. |
+| Restrict to 100 characters | ✅ Yes | Note should be short and simple | 
+| Allow clearing existing notes | ✅ Yes | Gives users control to remove old notes easily. |
+| Can be modified through edit command | ✅ Yes | Ensures flexibility and consistent data handling. |
 
 ---
 
-
-### 3.2 `list` Feature
+### 3.3 `list` Feature
 
 
 **Purpose:**
@@ -319,12 +347,9 @@ list <DATE>
 | Persist filtered list | ❌ No | Filters should reset for predictability |
 | Strict argument validation | ✅ Yes | Prevent invalid filters like `list abc` |
 
-
 ---
 
-
-
-### 3.3 `paid` Feature
+### 3.4 `paid` Feature
 
 
 
@@ -360,7 +385,7 @@ Toggles the payment status of a student or parent, ensuring the UI and derived a
 
 ---
 
-### 3.4 `link` / `unlink` Features
+### 3.5 `link` / `unlink` Features
 
 
 
@@ -400,7 +425,7 @@ Creates and removes relationships between a `Parent` and one or more `Students`.
 ---
 
 
-### 3.5 `reset all` Feature
+### 3.6 `reset all` Feature
 
 **Purpose:**
 Resets payment status of all contacts (Students and Parents) to unpaid with a single command.
@@ -425,39 +450,7 @@ Resets payment status of all contacts (Students and Parents) to unpaid with a si
 | Allow partial reset (e.g., only unpaid students) | ❌ No | Ensures predictable behaviour with clarity.                       |
 | Accept variants or extra tokens                  | ❌ No | Prevents accidental mass resets and stays consistent |
 
----
 
-### 3.6 `pay/` (Cost) Field
-
-**Purpose:**
-Captures the per-lesson fee for students and automatically aggregates the total cost for parents.
-
-**Key Classes:**
-- `Cost`
-- `AddCommand`
-- `EditCommand`
-- `ParserUtil`
-- `ModelManager`
-- `Student`
-- `Parent`
-
-**Behaviour:**
-- `pay/` accepts positive integers or decimal values (e.g. `pay/72.5`).
-- Students can have their cost set during `add` or updated via `edit`.
-- Parent costs are immutable from the UI—the value is always the sum of their linked children.
-- Model recalculations occur automatically after every add, edit, delete, link, or payment toggle.
-- Costs display with a leading `$` in the UI for readability.
-
-**Design Considerations**
-
-| Option | Decision | Reason |
-|--------|-----------|--------|
-| Store cost as raw string | ✅ Yes | Simplifies parsing and avoids floating-point drift |
-| Allow parents to set custom costs | ❌ No | Prevents mismatch between parent and child totals |
-| Auto-recalculate on relevant commands | ✅ Yes | Guarantees derived values stay correct without user action |
-| Permit zero or missing child costs | ✅ Yes | Some students may not yet have agreed rates |
-
----
 --------------------------------------------------------------------------------------------------------------------
 
 
@@ -554,7 +547,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 (For all use cases below, the **System** is the `Tutorhub` and the **Actor** is the `user`, unless specified otherwise)
 
 
-**Use case: Delete a person**
+**Use case: UC1 - Delete a person**
 
 
 **MSS**
@@ -587,7 +580,7 @@ Use case ends.
   Use case resumes at step 2.
 
 
-**Use Case: Add a New Student**
+**Use Case: UC2 - Add a New Student**
 
 
 **Main Success Scenario (MSS):**
@@ -619,7 +612,7 @@ Use case ends.
 ---
 
 
-**Use Case: Add a New Parent**
+**Use Case: UC3 - Add a New Parent**
 
 
 **Main Success Scenario (MSS):**
@@ -651,7 +644,7 @@ Use case ends.
 ---
 
 
-**Use Case: Link Parent to Student**
+**Use Case: UC4 - Link Parent to Student**
 
 
 **Main Success Scenario (MSS):**
@@ -681,30 +674,7 @@ Use case ends.
 
 ---
 
-**Use Case: Update Student Cost :**
-
-**Main Success Scenario (MSS):**
-1. User enters command to update a student’s per-lesson cost
-2. System validates that the selected person is a student and that the cost format is numeric
-3. System stores the updated cost
-4. System displays success message
-
-   Use case ends.
-
-**Extensions:**
-* 2a. `pay/` value is invalid.
-  * 2a1. System shows error message.
-  
-    Use case resumes at step 1.
-  
-* 2b. Target person is a parent.
-  * 2b1. System shows error message
-  
-    Use case resumes at step 1.
-
----
-
-**Use Case: Toggle Payment Status :**
+**Use Case: UC5 - Toggle Payment Status :**
 
 **Main Success Scenario (MSS):**
 1. User enters command
@@ -733,7 +703,7 @@ Use case ends.
 ---
 
 
-**Use Case: Unlink Parent from Student**
+**Use Case: UC6 - Unlink Parent from Student**
 
 
 **Main Success Scenario (MSS):**
@@ -765,7 +735,7 @@ Use case ends.
 ---
 
 
-**Use Case: Edit Student Details**
+**Use Case: UC7 - Edit Student Details**
 
 
 **Main Success Scenario (MSS):**
@@ -797,7 +767,7 @@ Use case ends.
 ---
 
 
-**Use Case: Add Schedule to Student**
+**Use Case: UC8 - Add Schedule to Student**
 
 
 **Main Success Scenario (MSS):**
@@ -829,7 +799,7 @@ Use case ends.
 ---
 
 
-**Use Case: Add Personal Notes**
+**Use Case: UC9 - Add Personal Notes**
 
 
 **Main Success Scenario (MSS):**
@@ -851,7 +821,7 @@ Use case ends.
 ---
 
 
-**Use Case: Reset all Payments**
+**Use Case: UC10 - Reset all Payments**
 
 
 **Main Success Scenario (MSS):**
@@ -878,7 +848,7 @@ Use case ends.
 ---
 
 
-**Use Case: List All Contacts**
+**Use Case: UC11 - List All Contacts**
 
 
 **Main Success Scenario (MSS):**
@@ -898,7 +868,7 @@ Use case ends.
   
 ---
 
-**Use Case: Filter contacts based on payment status/schedule**
+**Use Case: UC12 - Filter contacts based on payment status/schedule**
 
 **Main Success Scenario (MSS):**
 1. User enters command
@@ -919,33 +889,33 @@ Use case ends.
 ### 5.4 Non-Functional Requirements
 
 
-#### 🧭 Business Rules
+#### Business Rules
 - Usable by **private tutors with moderate computer skills**.
 - Command syntax must be intuitive and forgiving (case- and space-insensitive).
 - Error messages should be clear, descriptive, and guide users toward correction.
 
 
-#### ♿ User Accessibility
+#### User Accessibility
 - Fully operable via **Command Line Interface (CLI)**.
 - Commands should be **case-insensitive** and **whitespace-tolerant**.
 - Simple GUI layout with readable font and clear separation between students and parents.
 
 
-#### 💾 Data Integrity & Management
+#### Data Integrity & Management
 - Data autosaves after each successful command.
 - Prevent deletion of linked contacts without unlinking first.
 - JSON data must remain human-readable and recoverable.
 - Reject invalid or overlapping schedule inputs.
 
 
-#### ⚙️ Technical Requirements
+#### Technical Requirements
 - Implemented in **Java 17** using **JavaFX**.
 - Must function **offline** for all core features.
 - Distributed as a **single JAR file** compatible with Windows, macOS, and Linux.
 - Data stored locally in `tutorhub.json`.
 
 
-#### 💻 Performance & Scalability
+#### Performance & Scalability
 
 | Requirement       | Description                                                             |
 |-------------------|-------------------------------------------------------------------------|
@@ -955,14 +925,14 @@ Use case ends.
 | **Startup Time**  | Application should launch within **3 seconds** on standard hardware.    |
 
 
-#### 🧩 Usability & Maintainability
+#### Usability & Maintainability
 - CLI commands follow a **consistent prefix/value pattern**.
 - Code follows **SE-EDU Java coding standards**.
 - Unit test coverage of **≥80%** for core logic and parsers.
 - New features must include updated documentation and tests.
 
 
-#### 🚫 Constraints
+#### Constraints
 
 | Type           | Constraint                                           |
 |----------------|------------------------------------------------------|
