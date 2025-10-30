@@ -353,6 +353,33 @@ Creates and removes relationships between a `Parent` and one or more `Students`.
 ---
 
 
+### 3.4 `reset all` Feature
+
+**Purpose:**
+Resets payment status of all contacts (Students and Parents) to unpaid with a single command.
+
+**Key Classes:**
+- `ResetAllCommand`
+- `ResetAllCommandParser`
+- `Model`
+- `Person`, `Student`, `Parent`
+
+**Behaviour:**
+- Accepts only the exact phrase `reset all`.
+- Rejects any other variants (e.g., `reset`, `reset payments`).
+- Iterates through all contacts and updates each payment to unpaid.
+- Works for both Students and Parents.
+- Shows message if no contacts exist.
+
+**Design Considerations**
+
+| Option | Decision | Reason |
+|--------|-----------|--------|
+| Allow flexible input | ❌ No | Maintain strict, predictable command format |
+| Reset only students | ❌ No | Tutors may collect from parents too |
+| Use model-wide update | ✅ Yes | Efficient and consistent with other batch updates |
+
+
 --------------------------------------------------------------------------------------------------------------------
 
 
@@ -703,9 +730,9 @@ Use case ends.
 
 **Main Success Scenario (MSS):**
 1. User enters the command: reset all.
-2. System validates the command format.
-3. System sets all contacts’ payment status to unpaid.
-4. System displays message: "Payment status of all contacts has been reset to unpaid."
+2. System validates the format.
+3. System updates every contact’s payment status to unpaid.
+4. System displays success message: "Payment status of all contacts has been reset to unpaid."
    Use case ends.
 
 
