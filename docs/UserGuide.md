@@ -48,7 +48,7 @@ With Tutorhub, you can:
 
 1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar tutorhub.jar` command to run the application.<br>
    A GUI similar to the one below should appear in a few seconds. Note how the app contains some sample data.<br>
-   
+
 
 
 ##  GUI Overview
@@ -451,7 +451,7 @@ Examples:
 
 <div markdown="span" class="alert alert-info">
 :information_source: **Note:**<br>
-Tutorhub automatically formats the day and time for readability. 
+Tutorhub automatically formats the day and time for readability.
 Typing variations such as extra spaces, lowercase letters, or uppercase day names will still be processed correctly.
 </div>
 
@@ -459,7 +459,7 @@ Typing variations such as extra spaces, lowercase letters, or uppercase day name
 <div markdown="span" class="alert alert-warning">
 :exclamation: **Caution:**<br>
 Schedule can only be added to a student, not a parent.
- Schedules cannot cross midnight. 
+ Schedules cannot cross midnight.
 </div>
 
 For more information on the parameters, click [here](#command-parameters).
@@ -473,7 +473,7 @@ For more information on the parameters, click [here](#command-parameters).
 
 
 
-Assigns a cost to a contact when adding them as contact. This allows tutors to keep track of the tuition costs of each student. 
+Assigns a cost to a contact when adding them as contact. This allows tutors to keep track of the tuition costs of each student.
 
 
 * Assigns a specific cost of lesson to the student
@@ -497,7 +497,7 @@ The cost appears in the GUI under the student’s profile as:
 
 <div markdown="span" class="alert alert-info">
 :information_source: **Note:**<br>
-Tutorhub automatically syncs the costs of both parents and child to each other. The cost of each parent is equivalent to the sum of the costs of the children. 
+Tutorhub automatically syncs the costs of both parents and child to each other. The cost of each parent is equivalent to the sum of the costs of the children.
 </div>
 
 
@@ -566,7 +566,7 @@ For more information on the parameters, click [here](#command-parameters).
 
 
 
-Toggles payment status of specified contact between paid and unpaid. This allows tutors to keep track of the payment status of individual students as well as the parents. 
+Toggles payment status of specified contact between paid and unpaid. This allows tutors to keep track of the payment status of individual students as well as the parents.
 
 
 Examples:
@@ -576,7 +576,7 @@ Examples:
 
 <div markdown="span" class="alert alert-info">
 :information_source: **Note:**<br>
-Tutorhub automatically keeps track of students and parents payment status dynamically. If all of a given parent's linked students have paid, the parents payment status will also be paid and vice versa. 
+Tutorhub automatically keeps track of students and parents payment status dynamically. If all of a given parent's linked students have paid, the parents payment status will also be paid and vice versa.
 </div>
 
 <div markdown="span" class="alert alert-primary">
@@ -653,14 +653,14 @@ Furthermore, certain edits can cause the Tutorhub to behave in unexpected ways (
 **A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Tutorhub home folder.
 
 
-**Q**: Why do parents not have a schedule field?  
+**Q**: Why do parents not have a schedule field?<br>
 **A**: Schedule field is meant to track classes for students and since parents could have multiple students linked to them, it would be better to only allow students to have a schedule.
 
 
-**Q**: Can I import or export data in CSV format?  
+**Q**: Can I import or export data in CSV format?<br>
 **A**: Not in the current version. However, since data is stored as a JSON file, you can convert it manually to CSV using online tools if needed.
 
-**Q**: Can I change a student’s schedule or note using the `edit` command instead of `schedule` or `note`?  
+**Q**: Can I change a student’s schedule or note using the `edit` command instead of `schedule` or `note`?<br>
 **A**: Yes! Both note and schedule fields can be updated using either their respective commands or the edit command.
 Using schedule or note directly may be faster if you only want to change those fields.
 

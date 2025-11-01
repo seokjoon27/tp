@@ -181,10 +181,11 @@ public class ParserUtil {
     public static Schedule parseSchedule(String schedule) throws ParseException {
         requireNonNull(schedule);
         String trimmedSchedule = schedule.trim();
-        if (!Schedule.isValidSchedule(trimmedSchedule)) {
-            throw new ParseException(Schedule.MESSAGE_CONSTRAINTS);
+        try {
+            return new Schedule(trimmedSchedule);
+        } catch (IllegalArgumentException e) {
+            throw new ParseException(e.getMessage());
         }
-        return new Schedule(trimmedSchedule);
     }
 
 }
