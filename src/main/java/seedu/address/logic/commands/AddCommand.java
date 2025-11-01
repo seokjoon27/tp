@@ -61,6 +61,8 @@ public class AddCommand extends Command {
             "New person with cost information added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON =
             "This person already exists in the address book.";
+    public static final String MESSAGE_PARENT_COST_IMMUTABLE =
+            "Cannot add cost for a parent. Parent cost is derived from their linked children.";
 
     private final Person toAdd;
 

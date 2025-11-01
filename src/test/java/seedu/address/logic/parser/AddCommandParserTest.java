@@ -221,6 +221,15 @@ public class AddCommandParserTest {
                 + ADDRESS_DESC_BOB
                 + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, Email.MESSAGE_CONSTRAINTS);
 
+        // cost supplied for parent
+        String parentWithCost = " " + PREFIX_TYPE + "p"
+                + " " + PREFIX_NAME + "Grace Lee"
+                + " " + PREFIX_PHONE + "95551234"
+                + " " + PREFIX_EMAIL + "grace.lee@example.com"
+                + " " + PREFIX_ADDRESS + "88 Sunset Avenue"
+                + PAY_DESC_AMY;
+        assertParseFailure(parser, parentWithCost, AddCommand.MESSAGE_PARENT_COST_IMMUTABLE);
+
         // invalid address
         assertParseFailure(parser, TYPE_DESC_BOB + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
                 + INVALID_ADDRESS_DESC
