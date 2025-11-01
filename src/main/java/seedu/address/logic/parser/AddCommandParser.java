@@ -91,6 +91,9 @@ public class AddCommandParser implements Parser<AddCommand> {
         } else if (type.isParent() && argMultimap.getValue(PREFIX_SCHEDULE).isPresent()) {
             throw new ParseException("Parents cannot have a schedule.");
         }
+        if (type.isParent() && argMultimap.getValue(PREFIX_PAY).isPresent()) {
+            throw new ParseException(AddCommand.MESSAGE_PARENT_COST_IMMUTABLE);
+        }
         Cost cost = argMultimap.getValue(PREFIX_PAY).isPresent()
                 ? ParserUtil.parseCost(argMultimap.getValue(PREFIX_PAY).get())
                 : null;
