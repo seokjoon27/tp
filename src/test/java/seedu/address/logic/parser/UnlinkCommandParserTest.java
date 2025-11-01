@@ -2,6 +2,7 @@ package seedu.address.logic.parser;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PARENT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STUDENT;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
@@ -28,13 +29,15 @@ public class UnlinkCommandParserTest {
     @Test
     public void parse_missingParentPrefix_throwsParseException() {
         String userInput = " " + PREFIX_STUDENT + "1";
-        assertParseFailure(parser, userInput, "Missing parent index. Example: unlink student/1 parent/2");
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnlinkCommand.MESSAGE_USAGE);
+        assertParseFailure(parser, userInput, expectedMessage);
     }
 
     @Test
     public void parse_missingStudentPrefix_throwsParseException() {
         String userInput = " " + PREFIX_PARENT + "2";
-        assertParseFailure(parser, userInput, "Missing student index. Example: unlink student/1 parent/2");
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnlinkCommand.MESSAGE_USAGE);
+        assertParseFailure(parser, userInput, expectedMessage);
     }
 
     @Test

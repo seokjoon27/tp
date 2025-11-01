@@ -1,5 +1,6 @@
 package seedu.address.logic.parser;
 
+import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
@@ -25,21 +26,24 @@ public class LinkCommandParserTest {
     public void parse_missingParentPrefix_throwsParseException() {
         // Missing parent prefix
         String userInput = " student/1";
-        assertParseFailure(parser, userInput, "Missing parent index. Example: link student/1 parent/2");
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, LinkCommand.MESSAGE_USAGE);
+        assertParseFailure(parser, userInput, expectedMessage);
     }
 
     @Test
     public void parse_missingStudentPrefix_throwsParseException() {
         // Missing student prefix
         String userInput = " parent/2";
-        assertParseFailure(parser, userInput, "Missing student index. Example: link student/1 parent/2");
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, LinkCommand.MESSAGE_USAGE);
+        assertParseFailure(parser, userInput, expectedMessage);
     }
 
     @Test
     public void parse_invalidIndex_throwsParseException() {
         // Invalid index (non-numeric)
         String userInput = " student/one parent/2";
-        assertParseFailure(parser, userInput, ParserUtil.MESSAGE_INVALID_INDEX);
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, LinkCommand.MESSAGE_USAGE);
+        assertParseFailure(parser, userInput, expectedMessage);
     }
 
     @Test

@@ -1,5 +1,6 @@
 package seedu.address.logic.parser;
 
+import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PARENT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STUDENT;
 
@@ -11,11 +12,6 @@ import seedu.address.logic.parser.exceptions.ParseException;
  * Parses input arguments and creates a new LinkCommand object
  */
 public class LinkCommandParser implements Parser<LinkCommand> {
-    private static final String MESSAGE_MISSING_PARENT_INDEX =
-            "Missing parent index. Example: link student/1 parent/2";
-    private static final String MESSAGE_MISSING_STUDENT_INDEX =
-            "Missing student index. Example: link student/1 parent/2";
-
     /**
      * Parses the given {@code String} of arguments in the context of a {@code LinkCommand}
      * and returns a {@code LinkCommand} object for execution.
@@ -25,14 +21,31 @@ public class LinkCommandParser implements Parser<LinkCommand> {
      * @throws ParseException if the input string is missing required prefixes or contains invalid indexes
      */
     public LinkCommand parse(String args) throws ParseException {
+        String trimmedArgs = args.trim();
+
+        if (trimmedArgs.isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, LinkCommand.MESSAGE_USAGE));
+        }
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_PARENT, PREFIX_STUDENT);
+        if (!argMultimap.getValue(PREFIX_PARENT).isPresent() || !argMultimap.getValue(PREFIX_STUDENT).isPresent()
+                || !argMultimap.getPreamble().isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, LinkCommand.MESSAGE_USAGE));
+        }
 
-        Index parentIndex = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_PARENT)
-                .orElseThrow(() -> new ParseException(MESSAGE_MISSING_PARENT_INDEX)));
-        Index studentIndex = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_STUDENT)
-                .orElseThrow(() -> new ParseException(MESSAGE_MISSING_STUDENT_INDEX)));
+        String parentValue = argMultimap.getValue(PREFIX_PARENT).get().trim();
+        String studentValue = argMultimap.getValue(PREFIX_STUDENT).get().trim();
 
-        return new LinkCommand(studentIndex, parentIndex);
+        if (parentValue.isEmpty() || studentValue.isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, LinkCommand.MESSAGE_USAGE));
+        }
+
+        try {
+            Index parentIndex = ParserUtil.parseIndex(parentValue);
+            Index studentIndex = ParserUtil.parseIndex(studentValue);
+            return new LinkCommand(studentIndex, parentIndex);
+        } catch (ParseException e) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, LinkCommand.MESSAGE_USAGE));
+        }
     }
 }
