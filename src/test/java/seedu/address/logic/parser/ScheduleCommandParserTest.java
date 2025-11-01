@@ -55,8 +55,8 @@ public class ScheduleCommandParserTest {
                 + " " + PREFIX_SCHEDULE + INVALID_SCHEDULE, message);
         assertParseFailureForSchedule(targetIndex.getOneBased()
                 + " " + PREFIX_SCHEDULE + "Monday 16:00-14:00",
-                "Invalid time format. End time must be after start time and " +
-                        "cannot cross midnight (e.g., 14:00-16:00).");
+                "Invalid time format. End time must be after start time and "
+                        + "cannot cross midnight (e.g., 14:00-16:00).");
         assertParseFailureForSchedule(targetIndex.getOneBased()
                 + " " + PREFIX_SCHEDULE + "Monday 14-16",
                 "Invalid time format. Time must be in HH:mm (24-hour) format.");
