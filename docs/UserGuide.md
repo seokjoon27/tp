@@ -354,7 +354,7 @@ Tutors often need to know which parents belong to which students and vice versa.
 
 * Students can have multiple Parents (e.g., mother and father).
 * Parents can be linked to multiple Students (e.g., siblings).
-* The linkage is bidirectional: once linked, both profiles are updated
+* The linkage is bidirectional: once linked, both profiles are updated.
 
 
 Format: `link student/INDEX parent/INDEX`
@@ -362,7 +362,7 @@ Format: `link student/INDEX parent/INDEX`
 
 * Links the student to the parent at the specified `INDEX`s.
 * The index refers to the index number shown in the displayed person list.
-* The index **must be a positive integer** 1, 2, 3, …​
+* The index **must be a positive integer** 1, 2, 3, …​.
 * Each index must correspond to the correct type.
 
 
@@ -372,9 +372,7 @@ Example:
 
 
 All parents linked to a student will appear under the student's profile in the GUI as such:
-```
-  Parents: Alex Yeoh, Mary Tan
-```
+![linkResult.png](images/linkResult.png)
 
 
 ### Unlinking Parents from Students: `unlink`
@@ -387,12 +385,12 @@ Format: `unlink student/INDEX parent/INDEX`
 
 * Unlinks the student from the parent at the specified `INDEX`es.
 * The index refers to the index number shown in the displayed person list.
-* The index **must be a positive integer** 1, 2, 3, …​
+* The index **must be a positive integer** 1, 2, 3, …​.
 * Each index must correspond to the correct type.
 
 
 Example:
-* `unlink student/2 parent/5` will link the student at index 2 and parent at index 5
+* `unlink student/2 parent/5` will unlink the student at index 2 and parent at index 5
 
 
 ### Adding a personal note: `note`
