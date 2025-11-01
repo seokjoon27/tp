@@ -49,14 +49,17 @@ public class ScheduleCommandParserTest {
         Index targetIndex = INDEX_FIRST_PERSON;
         String message = "Invalid schedule format. Use either: "
                 + "DAY HH:mm-HH:mm or MM-DD-YYYY HH:mm-HH:mm Example: 'Monday 14:00-16:00', "
-                + "'12-10-2025 14:00-16:00' End time must be after start time.";
+                + "'12-10-2025 14:00-16:00' End time must be after start time and cannot cross midnight.";
 
         assertParseFailureForSchedule(targetIndex.getOneBased()
                 + " " + PREFIX_SCHEDULE + INVALID_SCHEDULE, message);
         assertParseFailureForSchedule(targetIndex.getOneBased()
-                + " " + PREFIX_SCHEDULE + "Monday 16:00-14:00", message);
+                + " " + PREFIX_SCHEDULE + "Monday 16:00-14:00",
+                "Invalid time format. End time must be after start time and "
+                        + "cannot cross midnight (e.g., 14:00-16:00).");
         assertParseFailureForSchedule(targetIndex.getOneBased()
-                + " " + PREFIX_SCHEDULE + "Monday 14-16", message);
+                + " " + PREFIX_SCHEDULE + "Monday 14-16",
+                "Invalid time format. Time must be in HH:mm (24-hour) format.");
     }
 
     @Test

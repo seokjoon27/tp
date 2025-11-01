@@ -15,7 +15,7 @@ It helps tutors quickly manage **students, parents, lesson schedules, and paymen
 ## Target Users
 
 
-Tutorhub is designed for **private tutors and small tuition centers** who manage multiple students and parents.
+Tutorhub is designed for **private tutors** who manage multiple students and parents.
 With Tutorhub, you can:
 - Add or edit student and parent details instantly
 - Track payment statuses at a glance
@@ -30,7 +30,7 @@ With Tutorhub, you can:
 
 
 
-1. Ensure you have Java `17` or above installed in your Computer.<br>
+1. Ensure you have Java `17` or above installed in your computer.<br>
    **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 
 
@@ -48,7 +48,7 @@ With Tutorhub, you can:
 
 1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar tutorhub.jar` command to run the application.<br>
    A GUI similar to the one below should appear in a few seconds. Note how the app contains some sample data.<br>
-   
+
 
 
 ##  GUI Overview
@@ -451,7 +451,7 @@ Examples:
 
 <div markdown="span" class="alert alert-info">
 :information_source: **Note:**<br>
-Tutorhub automatically formats the day and time for readability. 
+Tutorhub automatically formats the day and time for readability.
 Typing variations such as extra spaces, lowercase letters, or uppercase day names will still be processed correctly.
 </div>
 
@@ -459,6 +459,7 @@ Typing variations such as extra spaces, lowercase letters, or uppercase day name
 <div markdown="span" class="alert alert-warning">
 :exclamation: **Caution:**<br>
 Schedule can only be added to a student, not a parent.
+ Schedules cannot cross midnight.
 </div>
 
 For more information on the parameters, click [here](#command-parameters).
@@ -472,7 +473,7 @@ For more information on the parameters, click [here](#command-parameters).
 
 
 
-Assigns a cost to a contact when adding them as contact. This allows tutors to keep track of the tuition costs of each student. 
+Assigns a cost to a contact when adding them as contact. This allows tutors to keep track of the tuition costs of each student.
 
 
 * Assigns a specific cost of lesson to the student
@@ -496,7 +497,7 @@ The cost appears in the GUI under the student’s profile as:
 
 <div markdown="span" class="alert alert-info">
 :information_source: **Note:**<br>
-Tutorhub automatically syncs the costs of both parents and child to each other. The cost of each parent is equivalent to the sum of the costs of the children. 
+Tutorhub automatically syncs the costs of both parents and child to each other. The cost of each parent is equivalent to the sum of the costs of the children.
 </div>
 
 
@@ -565,7 +566,7 @@ For more information on the parameters, click [here](#command-parameters).
 
 
 
-Toggles payment status of specified contact between paid and unpaid. This allows tutors to keep track of the payment status of individual students as well as the parents. 
+Toggles payment status of specified contact between paid and unpaid. This allows tutors to keep track of the payment status of individual students as well as the parents.
 
 
 Examples:
@@ -575,7 +576,7 @@ Examples:
 
 <div markdown="span" class="alert alert-info">
 :information_source: **Note:**<br>
-Tutorhub automatically keeps track of students and parents payment status dynamically. If all of a given parent's linked students have paid, the parents payment status will also be paid and vice versa. 
+Tutorhub automatically keeps track of students and parents payment status dynamically. If all of a given parent's linked students have paid, the parents payment status will also be paid and vice versa.
 </div>
 
 <div markdown="span" class="alert alert-primary">
@@ -652,14 +653,14 @@ Furthermore, certain edits can cause the Tutorhub to behave in unexpected ways (
 **A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Tutorhub home folder.
 
 
-**Q**: Why does parents not have a schedule field?  
+**Q**: Why do parents not have a schedule field?<br>
 **A**: Schedule field is meant to track classes for students and since parents could have multiple students linked to them, it would be better to only allow students to have a schedule.
 
 
-**Q**: Can I import or export data in CSV format?  
+**Q**: Can I import or export data in CSV format?<br>
 **A**: Not in the current version. However, since data is stored as a JSON file, you can convert it manually to CSV using online tools if needed.
 
-**Q**: Can I change a student’s schedule or note using the `edit` command instead of `schedule` or `note`?  
+**Q**: Can I change a student’s schedule or note using the `edit` command instead of `schedule` or `note`?<br>
 **A**: Yes! Both note and schedule fields can be updated using either their respective commands or the edit command.
 Using schedule or note directly may be faster if you only want to change those fields.
 
@@ -669,8 +670,6 @@ Using schedule or note directly may be faster if you only want to change those f
 
 
 ## Known issues
-
-
 
 
 1. **When using multiple screens**, if you move the application to a secondary screen and later switch back to a single (primary) screen, the GUI may reopen off-screen.
@@ -697,23 +696,17 @@ Using schedule or note directly may be faster if you only want to change those f
    **Reason:** This accommodates group or concurrent lessons rather than enforcing one-to-one tutoring exclusivity.
    **Remedy:** None required; this behaviour is intended.
 
-6. **Filters reset after any new command**
+6. **Filters reset after any new command.**
     Performing another command (e.g., `add`, `edit`, `paid`) immediately after a filtered `list` command (such as `list paid` or `list monday`) resets the filter and displays the **entire contact list** again.
     **Reason:** The `list` filter is designed as a temporary view rather than a persistent mode.
     **Remedy:** Re-enter the desired `list` filter command after completing any action to restore the filtered view.
 
 
 
-
-
 --------------------------------------------------------------------------------------------------------------------
 
 
-
-
 ## Command summary
-
-
 
 
 Action | Format, Examples
@@ -725,16 +718,12 @@ Action | Format, Examples
 **Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
 **List** | `list`, `list paid`, `list unpaid`, `list schedule`, `list <DAY>`, `list <DATE>` <br> e.g., `list Monday` or `List 12-10-2025`
 **Help** | `help`
-**Schedule** | `schedule INDEX schedule/DAY TIME-TIME`
-**Note** | `note INDEX note/NOTE`
+**Schedule** | `schedule INDEX schedule/DAY STARTTIME-ENDTIME`, `schedule INDEX schedule/DATE STARTTIME-ENDTIME` ,`schedule INDEX`
+**Note** | `note INDEX note/NOTE`, `note INDEX`
 **Paid** | `paid INDEX` or `paid n/NAME`
 **Reset all** | `reset all`
 **Link** | `link student/INDEX parent/INDEX`
 **Unlink** | `unlink student/INDEX parent/INDEX`
-
-
-
-
 
 
 ## Command Parameters
@@ -765,8 +754,6 @@ leaving it blank (e.g., `n/NAME t/`) is treated as if it was omitted.
 | **Index** | (no prefix) | Identifies a contact’s position in the displayed list. | Must be a positive integer (e.g., `1`, `2`, `3`, …). |
 | **Relationship (Link)** | `student/` / `parent/` | Used in `link` and `unlink` commands to connect students with parents. | Both must be valid indices from the current list. |
 | **List Filters** | *(argument)* | Used in `list` to filter by payment or schedule. | Accepts: `paid`, `unpaid`, `schedule`, `<DAY>`, or `<DATE>`. Case and spacing insensitive. |
-
-
 
 
 ##  Glossary

@@ -278,25 +278,30 @@ Assigns weekly or date-specific lessons to a student.
 | Support overnight lessons | ❌ No | Lessons assumed not to cross midnight |
 |Can be modified through `edit` command |✅ Yes| Provide flexibility for users and maintain consistency
 
+**Activity Diagram**
+The following activity diagram illustrates how schedule input is validated and processed:
+
+<img src="images/ScheduleActivityDiagram.png" width="600" />
+
 ---
 
-### 3.2 note Feature
+### 3.2 `note` Feature
 
-Purpose:  
+Purpose:
 Allows tutors to record short remarks or progress notes for each student or parent.
 
-Key Classes:  
-- NoteCommand  
-- NoteCommandParser  
-- Person / Student / Parent  
+Key Classes:
+- NoteCommand
+- NoteCommandParser
+- Person / Student / Parent
 - Note
 
-Behaviour:  
-- Adds or replaces a note for the specified person (student or parent).  
-- Accepts text input of up to 100 characters.  
-- Supports removal by typing note INDEX without any content.  
-- Case and whitespace-insensitive for the command word and prefix.  
-- The same note field can also be edited using the edit command.  
+Behaviour:
+- Adds or replaces a note for the specified person (student or parent).
+- Accepts text input of up to 100 characters.
+- Supports removal by typing note INDEX without any content.
+- Case and whitespace-insensitive for the command word and prefix.
+- The same note field can also be edited using the edit command.
 
 Design Considerations
 
@@ -304,7 +309,7 @@ Design Considerations
 |--------|-----------|--------|
 | Store note as plain text | ✅ Yes | Easy to serialize and display. |
 | Restrict to students only | ❌ No | Tutors may wish to add notes for parents too. |
-| Restrict to 100 characters | ✅ Yes | Note should be short and simple | 
+| Restrict to 100 characters | ✅ Yes | Note should be short and simple |
 | Allow clearing existing notes | ✅ Yes | Gives users control to remove old notes easily. |
 | Can be modified through edit command | ✅ Yes | Ensures flexibility and consistent data handling. |
 
@@ -595,15 +600,15 @@ Use case ends.
 **Extensions:**
 * 2a. The type field is missing or invalid.
     * 2a1. System shows error message.
-  
+
       Use case resumes at step 1.
-  
+
 * 2b. Duplicate student detected.
     * 2b1. System shows error message.
 
       Use case ends.
-  
-* 2c. Phone number invalid 
+
+* 2c. Phone number invalid
     * 2c1. System shows error message.
 
       Use case resumes at step 1.
@@ -627,17 +632,17 @@ Use case ends.
 **Extensions:**
 * 2a. The type field is missing or invalid.
     * 2a1. System shows error message.
-  
+
       Use case resumes at step 1.
-  
+
 * 2b. Duplicate parent detected.
     * 2b1. System shows error message.
-  
+
       Use case ends.
-  
+
 * 2c. Phone number invalid.
     * 2c1. System shows error message.
-  
+
       Use case resumes at step 1.
 
 
@@ -661,12 +666,12 @@ Use case ends.
     * 2a1. System shows error message.
 
       Use case resumes at step 1.
-  
+
 * 2b. Student and parent already linked.
     * 2b1. System shows error message.
 
       Use case resumes at step 1.
-  
+
 * 2c. Parent entered in student field or vice versa.
     * 2c1. System shows appropriate error message.
 
@@ -688,14 +693,14 @@ Use case ends.
   * 1a1. System shows error message.
 
     Use case ends.
-  
+
 * 2a. Target is a parent with linked children.
   * 2a1. System toggles every linked child to the same paid/unpaid state before displaying success.
-   
+
     Use case resumes at step 3.
-  
+
 * 2b. Target is a parent without linked children.
-  * 2b1. System shows error message 
+  * 2b1. System shows error message
 
     Use case resumes at step 1.
 
@@ -718,17 +723,17 @@ Use case ends.
 **Extensions:**
 * 2a. Student or parent does not exist.
     * 2a1. System shows error message
-      
+
       Use case resumes at step 1.
-  
+
 * 2b. Student and parent not linked.
     * 2b1. System shows error message
-      
+
       Use case resumes at step 1.
-  
+
 * 2c. Parent entered in student field or vice versa.
     * 2c1. System shows error message
-      
+
       Use case resumes at step 1.
 
 
@@ -750,14 +755,14 @@ Use case ends.
 **Extensions:**
 * 2a. Student not found.
     * 2a1. System shows error message.
-  
+
       Use case resumes at step 1.
-  
+
 * 2b. Input format invalid.
     * 2b1. System shows error message.
-  
+
       Use case resumes at step 1.
-  
+
 * 2c. Editing of type disallowed.
     * 2c1. System shows error message.
 
@@ -784,12 +789,12 @@ Use case ends.
     * 2a1. System shows error message.
 
       Use case resumes at step 1.
-  
+
 * 2b. Person is a parent.
     * 2b1. System shows error message.
 
       Use case resumes at step 1.
-  
+
 * 2c. Schedule format invalid.
     * 2c1. System shows error message.
 
@@ -838,7 +843,7 @@ Use case ends.
     * 2a1. System shows error message
 
       Use case resumes at step 1.
-  
+
 * 3a. No contacts exist in the system.
     * 3a1. System shows warning.
 
@@ -865,7 +870,7 @@ Use case ends.
     * 2a1. System shows error message.
 
       Use case resumes at step 1.
-  
+
 ---
 
 **Use Case: UC12 - Filter contacts based on payment status/schedule**
@@ -880,8 +885,8 @@ Use case ends.
 
 **Extensions:**
 * 2a. Invalid argument entered.
-    * 2a1. System shows error message.
-    
+    * 2a1. System shows error message
+
       Use case resumes at step 1.
 
 
@@ -903,9 +908,7 @@ Use case ends.
 
 #### Data Integrity & Management
 - Data autosaves after each successful command.
-- Prevent deletion of linked contacts without unlinking first.
 - JSON data must remain human-readable and recoverable.
-- Reject invalid or overlapping schedule inputs.
 
 
 #### Technical Requirements
@@ -917,12 +920,11 @@ Use case ends.
 
 #### Performance & Scalability
 
-| Requirement       | Description                                                             |
-|-------------------|-------------------------------------------------------------------------|
-| **Response Time** | Commands should execute within **1 second** under normal load.          |
-| **Memory Usage**  | Should not exceed **512MB** during standard operations.                 |
+| Requirement       | Description                                                            |
+|-------------------|------------------------------------------------------------------------|
+| **Response Time** | Commands should execute within **1 second**.          |
 | **Data Capacity** | Supports at least **1000 contacts** and **2000 schedules** efficiently. |
-| **Startup Time**  | Application should launch within **3 seconds** on standard hardware.    |
+| **Startup Time**  | Application should launch within **3 seconds**.   |
 
 
 #### Usability & Maintainability
@@ -1028,25 +1030,25 @@ Expected after `list`:
 ### 6.1.6 Managing Schedules
 
 1. `schedule 1 schedule/Friday 18:00-19:30` → Alex’s card shows normalised slot “Friday 18:00-19:30”.
-2. `schedule 2 schedule/` → Betty’s schedule is cleared and the row disappears.
+2. `schedule 2 schedule/` → Betty’s schedule is cleared and the row disappears. (`schedule 2` works as well)
 3. `schedule 3 schedule/Monday 10:00-11:30` → Expect error “Cannot edit schedule for a parent.”
 
 
 ### 6.1.7 Notes for Students and Parents
 
 1. `note 3 note/Prefers evening calls.` → Grace gains a note; message “Added Note to Person: Grace Lee”.
-2. `note 3 note/` → Note removed with message “Removed Note from Person: Grace Lee”.
+2. `note 3 note/` → Note removed with message “Removed Note from Person: Grace Lee”. (`note 3` works as well)
 
 
 ### 6.1.8 Listing and Filtering Views
 
 1. `list` → Resets any filters.
-2. Payment filters:  
-   - `list paid` → Shows only contacts whose checkbox is selected (Grace only when both students are paid).  
+2. Payment filters:
+   - `list paid` → Shows only contacts whose checkbox is selected (Grace only when both students are paid).
    - `list unpaid` → Inverse set.
-3. Schedule filters (case/spacing insensitive):  
-   - `list schedule` → Students with a schedule (Alex only if Betty’s is empty).  
-   - `list friday` → Matches Alex’s weekday schedule.  
+3. Schedule filters (case/spacing insensitive):
+   - `list schedule` → Students with a schedule (Alex only if Betty’s is empty).
+   - `list friday` → Matches Alex’s weekday schedule.
    - `list 10-20-2025` → Matches Betty’s date-based schedule if previously set.
 4. Run `list` after each filter to restore the full view.
 
@@ -1060,25 +1062,31 @@ Expected after `list`:
 ### 6.1.10 Persistence Checks
 1. Make observable edits (e.g., toggle payments, change schedules).
 2. Close TutorHub normally.
-3. Relaunch with `./gradlew run`, execute `list`, and confirm all changes persisted (data stored in `data/addressbook.json`).
+3. Relaunch with `./gradlew run`, execute `list`, and confirm all changes persisted (data stored in `data/tutorhub.json`).
 1. _{ more test cases …​ }_
 
 ### 6.2 Appendix: Effort
 
 #### Overview
-TutorHub extends the original AddressBook3 (AB3) by managing two distinct entity types (Students and Parents), along with linked relationships, payment tracking, and lesson scheduling.  
+TutorHub extends the original AddressBook3 (AB3) by managing two distinct entity types (Students and Parents), along with linked relationships, payment tracking, and lesson scheduling.
+
 This introduced significantly higher data complexity, requiring new parsing, validation, and UI synchronization mechanisms.
 
 #### Challenges Faced
-1. Multi-entity Management:  
+1. Multi-entity Management:
+
    AB3 handled a single entity type (Person), but TutorHub needed dynamic type handling with different constraints and mutual relationships (Student ↔️ Parent).
-2. Schedule System:  
+2. Schedule System:
+
    Designing validation for both weekly and date-based lessons, while rejecting invalid times (e.g., midnight-crossing), required precise regex and logic.
-3. UI Synchronization:  
+3. UI Synchronization:
+
    Keeping the GUI reactive to edits in linked entities demanded careful Model–View–Controller coordination.
-4. Command Integration:  
+4. Command Integration:
+
    Multiple new commands (e.g., note, schedule, paid/unpaid, list <DAY>/<DATE>, link/unlink) needed consistent command structure and undo-safe behavior.
-5. Data Persistence:  
+5. Data Persistence:
+
    JSON serialization was adapted to support nested structures for linked entities and schedules.
 
 #### Achievements
@@ -1096,19 +1104,28 @@ Overall, TutorHub required ~1.5x the development effort of AB3 due to dual-entit
 
 ### 6.3 Appendix: Planned Enhancements
 
-Team size: 5  
+Team size: 5
 (Maximum allowed: 10 enhancements)
 
 ---
 
 #### 1. Support Overnight Lessons
-Current limitation: Schedule cannot cross midnight (e.g., 23:00–01:00).  
+Current limitation: Schedule cannot cross midnight (e.g., 23:00–01:00).
+
 Planned Enhancement: Allow lessons spanning midnight by splitting them into two logical segments internally.
 
 #### 2. Editable Person Type (Student ↔️ Parent)
-Currently disabled due to relational conflicts.  
+Currently disabled due to relational conflicts.
+
 Planned Enhancement: Implement safe conversion flow with auto-unlinking and re-validation.
 
 #### 3. UI Display for Linked Entities
-Current linking is text-based.  
+Current linking is text-based.
+
 Planned Enhancement: Add graphical indicators or tooltips showing parent–student relationships.
+
+#### 4. `list <DAY>` includes dated schedules that fall on that weekday
+
+Current Limitation: When a user runs list Monday, only schedules explicitly using weekday format (e.g., “Monday 14:00–16:00”) are shown. Schedules with specific dates (e.g., “11-3-2025 14:00–16:00”) that fall on a Monday are not included.
+
+Planned Enhancement: Enhance the list <DAY> command to identify and display all schedules whose dates fall on the specified weekday, even if they are stored in date format. This allows users to view all Monday lessons, whether recurring or date-specific in a single command.

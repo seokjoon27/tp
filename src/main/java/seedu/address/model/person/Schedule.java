@@ -17,7 +17,9 @@ import java.util.logging.Logger;
  */
 public class Schedule implements Comparable<Schedule> {
     public static final String MESSAGE_CONSTRAINTS =
-            "Invalid schedule format. Use either: 'Monday 14:00-16:00' or '10-20-2025 14:00-16:00'.";
+            "Invalid schedule format. Use either: DAY HH:mm-HH:mm or MM-DD-YYYY HH:mm-HH:mm "
+                    + "Example: 'Monday 14:00-16:00', '12-10-2025 14:00-16:00' End time must be after start time"
+                    + " and cannot cross midnight.";
     private static final DateTimeFormatter TIME_FORMAT = DateTimeFormatter.ofPattern("HH:mm");
     private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("MM-dd-yyyy");
     private static final Logger logger = Logger.getLogger(Schedule.class.getName());
@@ -157,16 +159,17 @@ public class Schedule implements Comparable<Schedule> {
     private static void parseTimeRange(String timeRange, ParsedSchedule result) {
         String[] parts = timeRange.split("\\s*-\\s*");
         if (parts.length != 2) {
-            throw new IllegalArgumentException("Invalid time range format. Use HH:mm-HH:mm");
+            throw new IllegalArgumentException("Invalid time range format. Use HH:mm-HH:mm (e.g., 14:00-16:00).");
         }
         try {
             result.startTime = LocalTime.parse(parts[0], TIME_FORMAT);
             result.endTime = LocalTime.parse(parts[1], TIME_FORMAT);
         } catch (DateTimeParseException e) {
-            throw new IllegalArgumentException("Invalid time format. Use HH:mm-HH:mm");
+            throw new IllegalArgumentException("Invalid time format. Time must be in HH:mm (24-hour) format.");
         }
         if (!result.endTime.isAfter(result.startTime)) {
-            throw new IllegalArgumentException("End time must be after start time.");
+            throw new IllegalArgumentException("Invalid time format. End time must be after start time "
+                    + "and cannot cross midnight (e.g., 14:00-16:00).");
         }
     }
 
@@ -185,7 +188,11 @@ public class Schedule implements Comparable<Schedule> {
                 result.date = LocalDate.parse(dayOrDate, DATE_FORMAT);
                 result.dayOfWeek = null;
             } catch (DateTimeParseException ex) {
-                throw new IllegalArgumentException(MESSAGE_CONSTRAINTS);
+                if (dayOrDate.matches(".*\\d.*")) {
+                    throw new IllegalArgumentException("Invalid date format. Use MM-DD-YYYY (e.g., 10-20-2025).");
+                } else {
+                    throw new IllegalArgumentException("Invalid day format. Use full day name (e.g., Monday).");
+                }
             }
         }
     }
