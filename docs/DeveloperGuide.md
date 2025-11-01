@@ -728,7 +728,7 @@ Use case ends.
 
 * 2b. Student and parent not linked.
     * 2b1. System shows error message
- 
+
       Use case resumes at step 1.
 
 * 2c. Parent entered in student field or vice versa.
@@ -1068,7 +1068,8 @@ Expected after `list`:
 ### 6.2 Appendix: Effort
 
 #### Overview
-TutorHub extends the original AddressBook3 (AB3) by managing two distinct entity types (Students and Parents), along with linked relationships, payment tracking, and lesson scheduling.  
+TutorHub extends the original AddressBook3 (AB3) by managing two distinct entity types (Students and Parents), along with linked relationships, payment tracking, and lesson scheduling.
+
 This introduced significantly higher data complexity, requiring new parsing, validation, and UI synchronization mechanisms.
 
 #### Challenges Faced
