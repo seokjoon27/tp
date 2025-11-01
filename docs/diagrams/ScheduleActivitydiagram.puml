@@ -1,0 +1,34 @@
+@startuml
+skin rose
+skinparam ActivityFontSize 15
+skinparam ArrowFontSize 12
+title Schedule Validation Logic
+
+start
+:                         Receive schedule input \n (e.g. "Monday 14:00-16:00" or "10-20-2025 14:00-16:00");
+:Trim whitespaces and normalize case;
+
+if () then ([matches expected format])
+    :Extract time component (HH:mm-HH:mm);
+    if () then ([valid time format])
+        if () then ([startTime < endTime])
+            :Extract day/date component;
+            if () then ([valid day or date])
+                :Standardize format;
+                :Save schedule;
+                :Display success;
+            else ([else])
+                :Display error (invalid day/date);
+            endif
+        else ([else])
+            :Display error (start ≥ end);
+        endif
+    else ([else])
+        :Display error (invalid time);
+    endif
+else ([else])
+    :Display error (invalid format);
+endif
+
+stop
+@enduml

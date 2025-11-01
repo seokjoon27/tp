@@ -278,9 +278,14 @@ Assigns weekly or date-specific lessons to a student.
 | Support overnight lessons | ❌ No | Lessons assumed not to cross midnight |
 |Can be modified through `edit` command |✅ Yes| Provide flexibility for users and maintain consistency
 
+**Activity Diagram**
+The following activity diagram illustrates how schedule input is validated and processed:
+
+<img src="images/ScheduleActivityDiagram.png" width="600" />
+
 ---
 
-### 3.2 note Feature
+### 3.2 `note` Feature
 
 Purpose:  
 Allows tutors to record short remarks or progress notes for each student or parent.
@@ -903,9 +908,7 @@ Use case ends.
 
 #### Data Integrity & Management
 - Data autosaves after each successful command.
-- Prevent deletion of linked contacts without unlinking first.
 - JSON data must remain human-readable and recoverable.
-- Reject invalid or overlapping schedule inputs.
 
 
 #### Technical Requirements
@@ -917,12 +920,11 @@ Use case ends.
 
 #### Performance & Scalability
 
-| Requirement       | Description                                                             |
-|-------------------|-------------------------------------------------------------------------|
-| **Response Time** | Commands should execute within **1 second** under normal load.          |
-| **Memory Usage**  | Should not exceed **512MB** during standard operations.                 |
+| Requirement       | Description                                                            |
+|-------------------|------------------------------------------------------------------------|
+| **Response Time** | Commands should execute within **1 second**.          |
 | **Data Capacity** | Supports at least **1000 contacts** and **2000 schedules** efficiently. |
-| **Startup Time**  | Application should launch within **3 seconds** on standard hardware.    |
+| **Startup Time**  | Application should launch within **3 seconds**.   |
 
 
 #### Usability & Maintainability
@@ -1028,14 +1030,14 @@ Expected after `list`:
 ### 6.1.6 Managing Schedules
 
 1. `schedule 1 schedule/Friday 18:00-19:30` → Alex’s card shows normalised slot “Friday 18:00-19:30”.
-2. `schedule 2 schedule/` → Betty’s schedule is cleared and the row disappears.
+2. `schedule 2 schedule/` → Betty’s schedule is cleared and the row disappears. (`schedule 2` works as well)
 3. `schedule 3 schedule/Monday 10:00-11:30` → Expect error “Cannot edit schedule for a parent.”
 
 
 ### 6.1.7 Notes for Students and Parents
 
 1. `note 3 note/Prefers evening calls.` → Grace gains a note; message “Added Note to Person: Grace Lee”.
-2. `note 3 note/` → Note removed with message “Removed Note from Person: Grace Lee”.
+2. `note 3 note/` → Note removed with message “Removed Note from Person: Grace Lee”. (`note 3` works as well)
 
 
 ### 6.1.8 Listing and Filtering Views
@@ -1060,7 +1062,7 @@ Expected after `list`:
 ### 6.1.10 Persistence Checks
 1. Make observable edits (e.g., toggle payments, change schedules).
 2. Close TutorHub normally.
-3. Relaunch with `./gradlew run`, execute `list`, and confirm all changes persisted (data stored in `data/addressbook.json`).
+3. Relaunch with `./gradlew run`, execute `list`, and confirm all changes persisted (data stored in `data/tutorhub.json`).
 1. _{ more test cases …​ }_
 
 ### 6.2 Appendix: Effort
@@ -1112,3 +1114,9 @@ Planned Enhancement: Implement safe conversion flow with auto-unlinking and re-v
 #### 3. UI Display for Linked Entities
 Current linking is text-based.  
 Planned Enhancement: Add graphical indicators or tooltips showing parent–student relationships.
+
+#### 4. `list <DAY>` includes dated schedules that fall on that weekday
+
+Current Limitation: When a user runs list Monday, only schedules explicitly using weekday format (e.g., “Monday 14:00–16:00”) are shown. Schedules with specific dates (e.g., “11-3-2025 14:00–16:00”) that fall on a Monday are not included.
+
+Planned Enhancement: Enhance the list <DAY> command to identify and display all schedules whose dates fall on the specified weekday, even if they are stored in date format. This allows users to view all Monday lessons, whether recurring or date-specific in a single command.

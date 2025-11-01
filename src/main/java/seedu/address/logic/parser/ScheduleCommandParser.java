@@ -43,10 +43,8 @@ public class ScheduleCommandParser implements Parser<ScheduleCommand> {
         try {
             schedule = new Schedule(scheduleString);
         } catch (IllegalArgumentException e) {
-            throw new ParseException("Invalid schedule format. Use either: "
-                    + "DAY HH:mm-HH:mm or MM-DD-YYYY HH:mm-HH:mm "
-                    + "Example: 'Monday 14:00-16:00', '12-10-2025 14:00-16:00'"
-                    + " End time must be after start time.");
+            logger.warning("Schedule parsing failed: " + e.getMessage());
+            throw new ParseException(e.getMessage());
         }
 
         return new ScheduleCommand(index, schedule);
