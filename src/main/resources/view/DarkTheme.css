@@ -132,6 +132,12 @@
     -fx-text-fill: #010504;
 }
 
+.label.list_label {
+    -fx-font-family: "Helvetica";
+    -fx-font-size: 13px;
+    -fx-text-fill: #ff9900;
+}
+
 .stack-pane {
     -fx-background-color: black;
 }

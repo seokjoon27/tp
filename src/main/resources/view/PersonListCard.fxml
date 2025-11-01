@@ -38,8 +38,12 @@
       <Label fx:id="cost" styleClass="cell_small_label" text="\$cost" />
       <Label fx:id="tagsLine" styleClass="cell_small_label" text="$tags" />
       <VBox fx:id="parentsContainer">
-        <Label text="Parents:" styleClass="cell_small_label" />
+        <Label text="Parents:" styleClass="list_label" />
         <FlowPane fx:id="parents" hgap="5" vgap="5" />
+      </VBox>
+      <VBox fx:id="childrenContainer">
+        <Label text="Children:" styleClass="list_label" />
+        <FlowPane fx:id="children" hgap="5" vgap="5"/>
       </VBox>
 
     </VBox>
