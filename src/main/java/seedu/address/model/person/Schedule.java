@@ -17,9 +17,9 @@ import java.util.logging.Logger;
  */
 public class Schedule implements Comparable<Schedule> {
     public static final String MESSAGE_CONSTRAINTS =
-            "Invalid schedule format. Use either: DAY HH:mm-HH:mm or MM-DD-YYYY HH:mm-HH:mm " +
-                    "Example: 'Monday 14:00-16:00', '12-10-2025 14:00-16:00' End time must be after start time" +
-                    " and cannot cross midnight.";
+            "Invalid schedule format. Use either: DAY HH:mm-HH:mm or MM-DD-YYYY HH:mm-HH:mm "
+                    + "Example: 'Monday 14:00-16:00', '12-10-2025 14:00-16:00' End time must be after start time"
+                    + " and cannot cross midnight.";
     private static final DateTimeFormatter TIME_FORMAT = DateTimeFormatter.ofPattern("HH:mm");
     private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("MM-dd-yyyy");
     private static final Logger logger = Logger.getLogger(Schedule.class.getName());
@@ -168,8 +168,8 @@ public class Schedule implements Comparable<Schedule> {
             throw new IllegalArgumentException("Invalid time format. Time must be in HH:mm (24-hour) format.");
         }
         if (!result.endTime.isAfter(result.startTime)) {
-            throw new IllegalArgumentException("Invalid time format. End time must be after start time " +
-                    "and cannot cross midnight (e.g., 14:00-16:00).");
+            throw new IllegalArgumentException("Invalid time format. End time must be after start time "
+                    + "and cannot cross midnight (e.g., 14:00-16:00).");
         }
     }
 
