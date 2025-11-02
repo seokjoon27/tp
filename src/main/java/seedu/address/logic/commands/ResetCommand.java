@@ -11,7 +11,6 @@ import seedu.address.model.Model;
 import seedu.address.model.person.Parent;
 import seedu.address.model.person.PaymentStatus;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.Student;
 
 /**
  * Resets payment status to UNPAID for all contacts.
