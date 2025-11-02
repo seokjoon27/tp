@@ -915,7 +915,7 @@ Use case ends.
 - Implemented in **Java 17** using **JavaFX**.
 - Must function **offline** for all core features.
 - Distributed as a **single JAR file** compatible with Windows, macOS, and Linux.
-- Data stored locally in `tutorhub.json`.
+- Data stored locally in `addressbook.json`.
 
 
 #### Performance & Scalability
@@ -956,15 +956,15 @@ Use case ends.
 
 * Student (s): A child receiving tuition.
 
-
 * Parent (p): A guardian linked to one or more students.
-
 
 * Schedule: The assigned day and time for a student’s lesson.
 
-
 * Note: Free-text field for extra information about a student or parent.
 
+* Reset all: Command to reset payment status of all contacts to unpaid, typically used at start of new billing cycle.
+
+* Link: Bidirectional relationship between a student and parent, allowing cost aggregation and relationship tracking.
 
 * Payment Status: Indicator (paid/unpaid) of whether a student’s lesson fees are settled.
 

@@ -625,7 +625,7 @@ Tutorhub data are saved in the hard disk automatically after any command that ch
 ### Editing the data file
 
 
-Tutorhub data are saved automatically as a JSON file `[JAR file location]/data/tutorhub.json`. Advanced users are welcome to update data directly by editing that data file.
+Tutorhub data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
 
 
 <div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
