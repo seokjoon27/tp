@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import java.math.BigDecimal;
 import java.util.Comparator;
 import java.util.stream.Collectors;
 
@@ -85,7 +86,7 @@ public class PersonCard extends UiPart<Region> {
         setRow(address, "Address", person.getAddress().value);
         setRow(email, "Email", person.getEmail().value);
         setRow(note, "Note", person.getNote() == null ? null : person.getNote().value);
-        setRow(cost, "Cost", person.getCost() == null ? null : person.getCost().toString());
+        setRow(cost, "Cost", renderCost(person));
 
         paidCaption.setStyle(PAID_CAPTION_STYLE);
 
@@ -131,7 +132,7 @@ public class PersonCard extends UiPart<Region> {
             childrenContainer.setVisible(false);
             children.getChildren().clear();
         } else {
-            assert person instanceof Parent : "Person is neither Student nor Parent";
+            assert person instanceof Parent : "Person is parent";
             Parent parent = (Parent) person;
             setRow(schedule, null, null);
 
@@ -168,7 +169,18 @@ public class PersonCard extends UiPart<Region> {
             label.setText("");
         }
     }
-
+    private String renderCost(Person person) {
+        if (person.getCost() == null) {
+            return null;
+        }
+        if (person.getType().isParent()) {
+            BigDecimal amount = new BigDecimal(person.getCost().value);
+            if (amount.compareTo(BigDecimal.ZERO) == 0) {
+                return null;
+            }
+        }
+        return person.getCost().toString();
+    }
     /** Returns a comma-joined list of tags or null if empty (so the row is hidden). */
     private String joinTags(Person p) {
         if (p.getTags() == null || p.getTags().isEmpty()) {
