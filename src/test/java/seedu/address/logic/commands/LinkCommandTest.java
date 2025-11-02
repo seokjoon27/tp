@@ -77,7 +77,8 @@ public class LinkCommandTest {
         Student linkedStudent = (Student) model.getFilteredPersonList().get(0);
         Parent linkedParent = (Parent) model.getFilteredPersonList().get(1);
         assertTrue(model.getFilteredPersonList().contains(linkedStudent));
-        assertTrue(model.getFilteredPersonList().contains(linkedParent));    }
+        assertTrue(model.getFilteredPersonList().contains(linkedParent));
+    }
 
     /**
      * EP2: Invalid index (out of range) → failure.
