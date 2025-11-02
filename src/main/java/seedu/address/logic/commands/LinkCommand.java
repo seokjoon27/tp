@@ -82,6 +82,7 @@ public class LinkCommand extends Command {
         // Update parent first so aggregate recalculations don't replace the reference
         model.setPerson(parent, parent);
         model.setPerson(student, student);
+        model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
 
         String result = String.format(MESSAGE_LINK_SUCCESS, student.getName(), parent.getName());
         return new CommandResult(result);

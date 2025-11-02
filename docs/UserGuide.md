@@ -164,11 +164,8 @@ With Tutorhub, you can:
 
 
 
-Shows a list of all commands accepted in Tutorhub, with the link to this user guide at the bottom.
-
-
-
-
+Shows a list of all commands accepted in Tutorhub.
+* The link to this User Guide can be found at the bottom.
 ![help message](images/helpMessage.png)
 ![helpMessage2.png](images/helpMessage2.png)
 
@@ -193,7 +190,7 @@ Adds a person to the address book. There are 2 types of person to be added: Pare
 
 
 
-Format: `add n/NAME type/TYPE p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG] [pay/COST] [note/NOTE] [schedule/SCHEDULE]​`
+Format: `add type/TYPE n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG] [pay/COST] [note/NOTE] [schedule/SCHEDULE]​`
 
 
 
@@ -210,9 +207,9 @@ Tag names must be alphanumeric and spaces only.  <br>
 
 
 Examples:
-* `add n/John Doe type/p p/98765432 e/johnd@example.com a/John street, block 123, #01-01 `
-* `add n/Betsy Crowe type/s e/betsycrowe@example.com a/Yishun avenue p/99999999 t/Bad at Math schedule/Monday 14:00-15:00 `
-* `add n/Jeremiah type/p p/92345489 e/jerry@example.con a/Bowling drive t/Likes golf t/friend`
+* `add type/p n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 `
+* `add type/s n/Betsy Crowe e/betsycrowe@example.com a/Yishun avenue p/99999999 t/Bad at Math schedule/Monday 14:00-15:00 `
+* `add type/p n/Jeremiah p/92345489 e/jerry@example.con a/Bowling drive t/Likes golf t/friend`
 
 
 <div markdown="block" class="alert alert-info">
@@ -291,7 +288,6 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 Examples:
 * `find John` returns `john` and `John Doe`
 * `find alex david` returns `Alex Yeoh`, `David Li`<br>
-
 ![result for 'find alex david'](images/findAlexDavidResult.png)
 
 
@@ -531,16 +527,12 @@ Examples:
 * `list` — Displays **all contacts** in the address book.
 * `list paid` — Shows only students whose payment status is marked as **Paid**.
 * `list unpaid` — Shows only students whose payment status is marked as **Unpaid**.
-* `list schedule` — Displays all contacts with **an existing schedule**.
 * `list Monday` — Displays students whose schedules fall on **Monday**.
 * `list 12-12-2025` — Displays students with a lesson scheduled on **12th December 2025**.
 * `LIST   PAID` — Works as well; command is **case-insensitive** and ignores extra spaces.
-
 ![listPaid.png](images/listPaid.png)
-![listUnpaid.png](images/listUnpaid.png)
+* `list schedule` — Displays all contacts with **an existing schedule**.
 ![listSchedule.png](images/listSchedule.png)
-![listDate.png](images/listDate.png)
-
 
 <div markdown="span" class="alert alert-info">
 :information_source: **Note:**<br>
@@ -735,6 +727,7 @@ If a command specifies that a prefix is optional (e.g., `n/NAME [t/TAG]`),
 leaving it blank (e.g., `n/NAME t/`) is treated as if it was omitted.
 </div>
 
+<div style="page-break-after: always;"></div>
 
 | **Parameter** | **Prefix** | **Description / Usage** | **Constraints / Accepted Values** |
 |----------------|------------|--------------------------|-----------------------------------|
@@ -756,10 +749,10 @@ leaving it blank (e.g., `n/NAME t/`) is treated as if it was omitted.
 
 ##  Glossary
 
-| Term | Definition |
-|------|-------------|
-| **CLI** | Command Line Interface: where you type commands |
-| **GUI** | Graphical User Interface: the visual screen Tutorhub displays |
-| **JSON** | Data format used to store Tutorhub information |
-| **Index** | The number shown beside each contact in the list panel |
-| **Parent / Student** | Contact roles used to manage tutoring relationships |
+| Term | Definition                                                                 |
+|------|----------------------------------------------------------------------------|
+| **CLI** | Command Line Interface: where you type commands                            |
+| **GUI** | Graphical User Interface: the visual screen Tutorhub displays              |
+| **JSON** | JavaScript Object Notation: Data format used to store Tutorhub information |
+| **Index** | The number shown beside each contact in the list panel                     |
+| **Parent / Student** | Contact roles used to manage tutoring relationships                        |
