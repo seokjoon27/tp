@@ -400,7 +400,6 @@ Format:
 
 
 * Adds a note to the person at the specified `INDEX`.
-* Duplicate notes are **allowed**.
 * Notes longer than **100 characters** are not allowed.
 * To delete the existing note(s) under a person, simply type `note INDEX` without adding a note value.
 
