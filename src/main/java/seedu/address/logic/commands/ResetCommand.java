@@ -2,14 +2,15 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Parent;
 import seedu.address.model.person.PaymentStatus;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.Student;
 
 /**
  * Resets payment status to UNPAID for all contacts.
@@ -27,46 +28,29 @@ public class ResetCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
+        model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
+        List<Person> people = new ArrayList<>(model.getFilteredPersonList());
 
-        List<Person> people = model.getAddressBook().getPersonList();
-
-        for (Person p : people) {
-            if (p.getPaymentStatus() != null && !p.getPaymentStatus().isPaid()) {
-                continue;
+        for (int i = 0; i < people.size(); i++) {
+            Person p = people.get(i);
+            if (p instanceof Parent && p.getPaymentStatus().isPaid()) {
+                try {
+                    new PaidCommand(Index.fromZeroBased(i)).execute(model);
+                } catch (CommandException e) {
+                    Parent par = (Parent) p;
+                    Parent updated = new Parent(par.getName(), par.getPhone(), par.getEmail(),
+                            par.getAddress(), par.getNote(), par.getCost(),
+                            new PaymentStatus(false), par.getTags());
+                    model.setPerson(par, updated);
+                }
             }
+        }
 
-            if (p instanceof Student) {
-                Student s = (Student) p;
-
-                Student updated = new Student(
-                        s.getName(),
-                        s.getPhone(),
-                        s.getEmail(),
-                        s.getAddress(),
-                        s.getNote(),
-                        s.getSchedule(),
-                        s.getCost(),
-                        new PaymentStatus(false),
-                        s.getTags()
-                );
-
-                model.setPerson(s, updated);
-
-            } else if (p instanceof Parent) {
-                Parent par = (Parent) p;
-
-                Parent updated = new Parent(
-                        par.getName(),
-                        par.getPhone(),
-                        par.getEmail(),
-                        par.getAddress(),
-                        par.getNote(),
-                        par.getCost(),
-                        new PaymentStatus(false),
-                        par.getTags()
-                );
-
-                model.setPerson(par, updated);
+        people = new ArrayList<>(model.getAddressBook().getPersonList());
+        for (int i = 0; i < people.size(); i++) {
+            Person p = people.get(i);
+            if (p.getPaymentStatus().isPaid()) {
+                new PaidCommand(Index.fromZeroBased(i)).execute(model);
             }
         }
 
