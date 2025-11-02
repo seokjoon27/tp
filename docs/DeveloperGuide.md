@@ -898,7 +898,7 @@ Use case ends.
 - Implemented in **Java 17** using **JavaFX**.
 - Must function **offline** for all core features.
 - Distributed as a **single JAR file** compatible with Windows, macOS, and Linux.
-- Data stored locally in `tutorhub.json`.
+- Data stored locally in `addressbook.json`.
 
 
 #### Performance & Scalability
@@ -939,15 +939,15 @@ Use case ends.
 
 * Student (s): A child receiving tuition.
 
-
 * Parent (p): A guardian linked to one or more students.
-
 
 * Schedule: The assigned day and time for a student’s lesson.
 
-
 * Note: Free-text field for extra information about a student or parent.
 
+* Reset all: Command to reset payment status of all contacts to unpaid, typically used at start of new billing cycle.
+
+* Link: Bidirectional relationship between a student and parent, allowing cost aggregation and relationship tracking.
 
 * Payment Status: Indicator (paid/unpaid) of whether a student’s lesson fees are settled.
 
@@ -973,11 +973,15 @@ The scenarios below chart one clean path through TutorHub’s tutor-focused feat
 
 Reset the sample data and add two students plus a parent. Paste these commands one at a time:
 
+
 ```text
 clear
-add type/s n/Alex Tan p/91234567 e/alex.tan@example.com a/123 Clementi Road note/Likes geometry schedule/Monday 15:00-17:00 pay/80 t/sec3
-add type/s n/Betty Lim p/93456789 e/b.lim@example.com a/22 Bellflower Street schedule/10-20-2025 09:00-10:30 pay/120 t/p6
-add type/p n/Grace Lee p/95551234 e/grace.lee@example.com a/88 Sunset Avenue note/Primary contact
+add type/s n/Alex Tan p/91234567 e/alex.tan@example.com a/123 Clementi Road
+    note/Likes geometry schedule/Monday 15:00-17:00 pay/80 t/sec3
+add type/s n/Betty Lim p/93456789 e/b.lim@example.com a/22 Bellflower Street
+    schedule/10-20-2025 09:00-10:30 pay/120 t/p6
+add type/p n/Grace Lee p/95551234 e/grace.lee@example.com a/88
+    Sunset Avenue note/Primary contact
 list
 ```
 
