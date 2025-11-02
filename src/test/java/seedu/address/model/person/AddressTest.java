@@ -79,21 +79,21 @@ public class AddressTest {
         String twoHundred = repeat('C', 200);
         String twoHundredOne = repeat('D', 201);
 
-        assertTrue(Address.isValidAddress(twoHundred));     // exactly 200: valid
+        assertTrue(Address.isValidAddress(twoHundred)); // exactly 200: valid
         assertFalse(Address.isValidAddress(twoHundredOne)); // 201: invalid
     }
 
     @Test
     public void isValidAddress_leadingWhitespace_invalid() {
-        assertFalse(Address.isValidAddress(" Leading"));   // leading space
-        assertFalse(Address.isValidAddress("\tTabbed"));   // leading tab
-        assertFalse(Address.isValidAddress("\nNewline"));  // leading newline
+        assertFalse(Address.isValidAddress(" Leading")); // leading space
+        assertFalse(Address.isValidAddress("\tTabbed")); // leading tab
+        assertFalse(Address.isValidAddress("\nNewline")); // leading newline
     }
 
     @Test
     public void isValidAddress_internalAndTrailingWhitespace_valid() {
         assertTrue(Address.isValidAddress("Blk 123, Main Road #02-01")); // internal spaces
-        assertTrue(Address.isValidAddress("A" + repeat(' ', 5)));        // trailing spaces ok
+        assertTrue(Address.isValidAddress("A" + repeat(' ', 5))); // trailing spaces ok
     }
 
     @Test
@@ -110,7 +110,7 @@ public class AddressTest {
     }
 
     @Test
-    public void equals_hashCode_longBoundary_consistent() {
+    public void equals_hashCode_longBoundary() {
         String s200 = repeat('Z', 200);
         Address a1 = new Address(s200);
         Address a2 = new Address(s200);
