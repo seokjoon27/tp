@@ -27,6 +27,9 @@ Person *--> PaymentStatus
 
 Student -left-|> Person
 Student *--> Schedule
+Student *--> "*" Parents
+
+Parent *--> "*" Children
 
 Parent -left-|> Person
 @enduml

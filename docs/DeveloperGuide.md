@@ -165,7 +165,7 @@ How the parsing works:
 **API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
 
 
-<img src="images/UpdatedModelClassDiagram.png" width="600" />
+<img src="images/ModelClassDiagram.png" width="600" />
 
 
 
@@ -185,10 +185,10 @@ The `Person` class is abstract and represents the common attributes shared by al
 Two concrete subclasses extend `Person`:
 
 
-`Student` – represents a student, with an additional `Schedule` field indicating their availability or timetable.
+`Student` – represents a student, with an additional `Schedule` field indicating their availability or timetable, and a `Parents` field that stores the list of Parents linked to them.
 
 
-`Parent` – represents a parent, who does not have a `Schedule` field.
+`Parent` – represents a parent, who have a `Children` field that stores the list of Students linked to them, but does not have a `Schedule` field.
 
 
 This design allows the Model to handle shared logic through the abstract `Person` class while allowing each subtype (`Student` and `Parent`) to define their own specific properties and behaviors.
@@ -932,26 +932,21 @@ Use case ends.
 
 ### 5.5 Glossary
 
-
-* **Mainstream OS**: Windows, Linux, Unix, MacOS
-* **Private contact detail**: A contact detail that is not meant to be shared with others
-
-
-* Student (s): A child receiving tuition.
-
-* Parent (p): A guardian linked to one or more students.
-
-* Schedule: The assigned day and time for a student’s lesson.
-
-* Note: Free-text field for extra information about a student or parent.
-
-* Reset all: Command to reset payment status of all contacts to unpaid, typically used at start of new billing cycle.
-
-* Link: Bidirectional relationship between a student and parent, allowing cost aggregation and relationship tracking.
-
-* Payment Status: Indicator (paid/unpaid) of whether a student’s lesson fees are settled.
-
-
+| Term                       | Definition                                                                                                   |
+|----------------------------|--------------------------------------------------------------------------------------------------------------|
+| **Mainstream OS**          | Windows, Linux, Unix, MacOS                                                                                  |
+| **Private contact detail** | A contact detail that is not meant to be shared with others                                                  |
+| **CLI**                    | Command Line Interface: where you type commands                                                              |
+| **GUI**                    | Graphical User Interface: the visual screen Tutorhub displays                                                |
+| **JSON**                   | JavaScript Object Notation: Data format used to store Tutorhub information                                   |
+| **Index**                  | The number shown beside each contact in the list panel                                                       |
+| **Parent**                 | A guardian linked to one or more students                                                                    |
+| **Student**                | A child receiving tuition linked to one or more parents                                                      |
+| **Schedule**               | The assigned day and time for a student’s lesson                                                             |
+| **Note**                   | Free-text field for extra information about a student or parent                                              |
+| **Reset all**              | Command to reset payment status of all contacts to unpaid, typically used at start of new billing cycle      |
+| **Link**                   | Bidirectional relationship between a student and parent, allowing cost aggregation and relationship tracking |
+| **Payment Status**         |  Indicator (paid/unpaid) of whether a student’s lesson fees are settled                                      |
 --------------------------------------------------------------------------------------------------------------------
 
 
@@ -1048,9 +1043,8 @@ Expected after `list`:
 
 ### 6.1.10 Persistence Checks
 1. Make observable edits (e.g., toggle payments, change schedules).
-2. Close TutorHub normally.
-3. Relaunch with `./gradlew run`, execute `list`, and confirm all changes persisted (data stored in `data/tutorhub.json`).
-1. _{ more test cases …​ }_
+2. Close Tutorhub normally.
+3. Relaunch with `./gradlew run`, execute `list`, and confirm all changes persisted (data stored in `data/addressbook.json`).
 
 ### 6.2 Appendix: Effort
 
@@ -1071,7 +1065,7 @@ This introduced significantly higher data complexity, requiring new parsing, val
    Keeping the GUI reactive to edits in linked entities demanded careful Model–View–Controller coordination.
 4. Command Integration:
 
-   Multiple new commands (e.g., note, schedule, paid/unpaid, list <DAY>/<DATE>, link/unlink) needed consistent command structure and undo-safe behavior.
+   Multiple new commands (e.g., note, schedule, paid/unpaid, list <DAY>/<DATE>, link/unlink) needed consistent command structure and their own parameters.
 5. Data Persistence:
 
    JSON serialization was adapted to support nested structures for linked entities and schedules.
@@ -1085,8 +1079,6 @@ This introduced significantly higher data complexity, requiring new parsing, val
 - Base Classes: Reused and extended Person, Command, and Parser classes from AB3.
 - Storage Layer: Reused AB3’s JSON framework, adapted for TutorHub entities.
 - UI Framework: Retained AB3’s JavaFX architecture but customized FXML components.
-
-Overall, TutorHub required ~1.5x the development effort of AB3 due to dual-entity management, UI linkage, and extended command coverage.
 
 
 ### 6.3 Appendix: Planned Enhancements
