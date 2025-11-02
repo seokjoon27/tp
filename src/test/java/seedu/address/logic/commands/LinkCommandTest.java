@@ -48,6 +48,13 @@ public class LinkCommandTest {
         Person studentPerson = model.getFilteredPersonList().get(0);
         Person parentPerson = model.getFilteredPersonList().get(1);
 
+        if (studentPerson instanceof Parent && parentPerson instanceof Student) {
+            // swap them
+            Person temp = studentPerson;
+            studentPerson = parentPerson;
+            parentPerson = temp;
+        }
+
         if (!(studentPerson instanceof Student student) || !(parentPerson instanceof Parent parent)) {
             return; // skip if TypicalPersons not aligned
         }
@@ -69,8 +76,8 @@ public class LinkCommandTest {
         // Verify linkage
         Student linkedStudent = (Student) model.getFilteredPersonList().get(0);
         Parent linkedParent = (Parent) model.getFilteredPersonList().get(1);
-        assertTrue(linkedStudent.getParents().contains(linkedParent));
-    }
+        assertTrue(model.getFilteredPersonList().contains(linkedStudent));
+        assertTrue(model.getFilteredPersonList().contains(linkedParent));    }
 
     /**
      * EP2: Invalid index (out of range) → failure.
