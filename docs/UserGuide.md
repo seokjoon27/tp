@@ -214,7 +214,7 @@ Examples:
 
 <div markdown="block" class="alert alert-info">
 **:information_source: Important:**<br>
-Only Students can add a schedule.
+Only Students can add a schedule.x
 </div>
 
 
@@ -287,7 +287,7 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 
 Examples:
 * `find John` returns `john` and `John Doe`
-* `find alex david` returns `Alex Yeoh`, `David Li`<br>
+* `find alex david` returns `Alex Yeoh`, `David Li`. It should appear as such:<br>
 ![result for 'find alex david'](images/findAlexDavidResult.png)
 
 
@@ -525,13 +525,13 @@ Format:
 
 Examples:
 * `list` — Displays **all contacts** in the address book.
-* `list paid` — Shows only students whose payment status is marked as **Paid**.
-* `list unpaid` — Shows only students whose payment status is marked as **Unpaid**.
+* `list unpaid` — Shows all contacts whose payment status is marked as **Unpaid**.
+* `LIST   UNPAID` — Works as well; command is **case-insensitive** and ignores extra spaces.
 * `list Monday` — Displays students whose schedules fall on **Monday**.
 * `list 12-12-2025` — Displays students with a lesson scheduled on **12th December 2025**.
-* `LIST   PAID` — Works as well; command is **case-insensitive** and ignores extra spaces.
+* `list paid` — Shows all contacts whose payment status is marked as **Paid**. It should appear in the GUI as such:
 ![listPaid.png](images/listPaid.png)
-* `list schedule` — Displays all contacts with **an existing schedule**.
+* `list schedule` — Displays only students with **an existing schedule**. It should appear in the GUI as such:
 ![listSchedule.png](images/listSchedule.png)
 
 <div markdown="span" class="alert alert-info">

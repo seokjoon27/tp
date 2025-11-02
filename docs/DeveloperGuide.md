@@ -1060,9 +1060,8 @@ Expected after `list`:
 
 ### 6.1.10 Persistence Checks
 1. Make observable edits (e.g., toggle payments, change schedules).
-2. Close TutorHub normally.
-3. Relaunch with `./gradlew run`, execute `list`, and confirm all changes persisted (data stored in `data/tutorhub.json`).
-1. _{ more test cases …​ }_
+2. Close Tutorhub normally.
+3. Relaunch with `./gradlew run`, execute `list`, and confirm all changes persisted (data stored in `data/addressbook.json`).
 
 ### 6.2 Appendix: Effort
 
@@ -1083,7 +1082,7 @@ This introduced significantly higher data complexity, requiring new parsing, val
    Keeping the GUI reactive to edits in linked entities demanded careful Model–View–Controller coordination.
 4. Command Integration:
 
-   Multiple new commands (e.g., note, schedule, paid/unpaid, list <DAY>/<DATE>, link/unlink) needed consistent command structure and undo-safe behavior.
+   Multiple new commands (e.g., note, schedule, paid/unpaid, list <DAY>/<DATE>, link/unlink) needed consistent command structure and their own parameters.
 5. Data Persistence:
 
    JSON serialization was adapted to support nested structures for linked entities and schedules.
@@ -1097,8 +1096,6 @@ This introduced significantly higher data complexity, requiring new parsing, val
 - Base Classes: Reused and extended Person, Command, and Parser classes from AB3.
 - Storage Layer: Reused AB3’s JSON framework, adapted for TutorHub entities.
 - UI Framework: Retained AB3’s JavaFX architecture but customized FXML components.
-
-Overall, TutorHub required ~1.5x the development effort of AB3 due to dual-entity management, UI linkage, and extended command coverage.
 
 
 ### 6.3 Appendix: Planned Enhancements
