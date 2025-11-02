@@ -853,7 +853,7 @@ Use case ends.
 ---
 
 
-**Use Case: UC11 - List All Contacts**
+**Use Case: UC11 - List All/filter contacts based on payment status/schedule**
 
 
 **Main Success Scenario (MSS):**
@@ -872,23 +872,6 @@ Use case ends.
       Use case resumes at step 1.
 
 ---
-
-**Use Case: UC12 - Filter contacts based on payment status/schedule**
-
-**Main Success Scenario (MSS):**
-1. User enters command
-2. System validates the argument (if any)
-3. System retrieves contacts according to specified argument
-4. System displays the list in the GUI with an appropriate message
-   Use case ends.
-
-
-**Extensions:**
-* 2a. Invalid argument entered.
-    * 2a1. System shows error message
-
-      Use case resumes at step 1.
-
 
 
 ### 5.4 Non-Functional Requirements

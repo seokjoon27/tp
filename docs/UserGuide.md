@@ -517,7 +517,7 @@ Format:
     - **Payment status** (`paid` / `unpaid`)
     - **Schedule status** (`schedule`, `<DAY>`, `<DATE>`)
 * Both command and arguments are **case-insensitive** (e.g., `LIST`, `List`, `list` all work).
-* Tutorhub is **whitespace-tolerant** — extra spaces before or after inputs are ignored (e.g., `list     paid` works).
+* Tutorhub is **whitespace-tolerant** — extra spaces before or after inputs are ignored 
 * The `<DAY>` argument accepts weekdays such as `Monday` to `Sunday`, regardless of case.
 * The `<DATE>` argument must follow the `MM-DD-YYYY` format (e.g., `12-12-2025`).
 * Invalid arguments will result in an error message prompting the correct format.
@@ -654,6 +654,9 @@ Furthermore, certain edits can cause the Tutorhub to behave in unexpected ways (
 **A**: Yes! Both note and schedule fields can be updated using either their respective commands or the edit command.
 Using schedule or note directly may be faster if you only want to change those fields.
 
+**Q**:  Why can I only add Singaporean phone numbers? <br>
+**A**: As we are currently only planning to release this for Singaporean tutors we only allow Singapore phone numbers for simplicity. 
+
 --------------------------------------------------------------------------------------------------------------------
 
 
@@ -662,33 +665,28 @@ Using schedule or note directly may be faster if you only want to change those f
 ## Known issues
 
 
-1. **When using multiple screens**, if you move the application to a secondary screen and later switch back to a single (primary) screen, the GUI may reopen off-screen.
+1. **When using multiple screens**, if you move the application to a secondary screen and later switch back to a single (primary) screen, the GUI may reopen off-screen.<BR>
    **Remedy:** Delete the `preferences.json` file created by the application before running it again.
 
 
-2. **If you minimize the Help Window** and then run the `help` command (or use the `Help` menu or `F1` shortcut) again, the original Help Window remains minimized and no new window appears.
+2. **If you minimize the Help Window** and then run the `help` command (or use the `Help` menu or `F1` shortcut) again, the original Help Window remains minimized and no new window appears.<BR>
    **Remedy:** Manually restore the minimized Help Window.
 
 
-3. **Changing a person's type is one-directional.**
-   You are unable to change a contact’s type from **Parent → Student** using the `edit` command, although changing from **Student → Parent** is possible.
-   **Remedy:** This limitation will be resolved in a future update by restricting type changes entirely.
-
-
-4. **Schedules cannot cross midnight.**
-   The `schedule` command does not allow time ranges that pass through midnight (e.g., `23:00-01:00`).
-   **Reason:** The system assumes lessons do not continue past midnight and currently enforces a same-day time window.
+3. **Schedules cannot cross midnight.**
+   The `schedule` command does not allow time ranges that pass through midnight (e.g., `23:00-01:00`).<BR>
+   **Reason:** The system assumes lessons do not continue past midnight and currently enforces a same-day time window.<BR>
    **Remedy:** None required; this is an intended safeguard.
 
 
-5. **Multiple students can share the same time slot.**
-   Tutorhub allows two or more students to have overlapping schedules (e.g., both `Monday 16:00-18:00`).
-   **Reason:** This accommodates group or concurrent lessons rather than enforcing one-to-one tutoring exclusivity.
+4. **Multiple students can share the same time slot.**
+   Tutorhub allows two or more students to have overlapping schedules (e.g., both `Monday 16:00-18:00`).<BR>
+   **Reason:** This accommodates group or concurrent lessons rather than enforcing one-to-one tutoring exclusivity.<BR>
    **Remedy:** None required; this behaviour is intended.
 
-6. **Filters reset after any new command.**
-    Performing another command (e.g., `add`, `edit`, `paid`) immediately after a filtered `list` command (such as `list paid` or `list monday`) resets the filter and displays the **entire contact list** again.
-    **Reason:** The `list` filter is designed as a temporary view rather than a persistent mode.
+5. **Filters reset after any new command.**
+    Performing another command (e.g., `add`, `edit`, `paid`) immediately after a filtered `list` command (such as `list paid` or `list monday`) resets the filter and displays the **entire contact list** again.<BR>
+    **Reason:** The `list` filter is designed as a temporary view rather than a persistent mode.<BR>
     **Remedy:** Re-enter the desired `list` filter command after completing any action to restore the filtered view.
 
 
@@ -734,7 +732,7 @@ leaving it blank (e.g., `n/NAME t/`) is treated as if it was omitted.
 | **Name** | `n/` | Specifies the full name of a contact. | Must contain only alphanumeric characters and spaces (whitespace-insensitive). Special characters (e.g., `/`, `-`) are not supported.                                             |
 | **Type** | `type/` | Indicates whether the contact is a **student** or **parent**. | Accepts `s` for student or `p` for parent (case-insensitive).                                                                                                                     |
 | **Phone Number** | `p/` | Specifies the contact’s phone number. | Must contain 8 digits.                                                                                                                                                            |
-| **Email** | `e/` | Stores the contact’s email address.   | Must follow the format `name@example.com`. Optional for parents or students.                                                                                                      |
+| **Email** | `e/` | Stores the contact’s email address. | Must follow the format `name@example.com`.                                                                                                       |
 | **Address** | `a/` | Stores the contact’s address or location. | Can take any value, up to 200 characters.                                                                                                                                         |
 | **Tag** | `t/` | Categorises the contact (e.g., subject or relationship). | Accepts any multiple-word tag. Multiple tags allowed.                                                                                                                             |
 | **Payment per Lesson** | `pay/` | Sets the cost of a student’s lesson.  | Must be a positive numeric value (e.g., `pay/80`).                                                                                                                                |
