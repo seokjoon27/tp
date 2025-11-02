@@ -749,10 +749,16 @@ leaving it blank (e.g., `n/NAME t/`) is treated as if it was omitted.
 
 ##  Glossary
 
-| Term | Definition                                                                 |
-|------|----------------------------------------------------------------------------|
-| **CLI** | Command Line Interface: where you type commands                            |
-| **GUI** | Graphical User Interface: the visual screen Tutorhub displays              |
-| **JSON** | JavaScript Object Notation: Data format used to store Tutorhub information |
-| **Index** | The number shown beside each contact in the list panel                     |
-| **Parent / Student** | Contact roles used to manage tutoring relationships                        |
+| Term                       | Definition                                                                                                   |
+|----------------------------|--------------------------------------------------------------------------------------------------------------|
+| **CLI**                    | Command Line Interface: where you type commands                                                              |
+| **GUI**                    | Graphical User Interface: the visual screen Tutorhub displays                                                |
+| **JSON**                   | JavaScript Object Notation: Data format used to store Tutorhub information                                   |
+| **Index**                  | The number shown beside each contact in the list panel                                                       |
+| **Parent**                 | A guardian linked to one or more students                                                                    |
+| **Student**                | A child receiving tuition linked to one or more parents                                                      |
+| **Schedule**               | The assigned day and time for a student’s lesson                                                             |
+| **Note**                   | Free-text field for extra information about a student or parent                                              |
+| **Reset all**              | Command to reset payment status of all contacts to unpaid, typically used at start of new billing cycle      |
+| **Link**                   | Bidirectional relationship between a student and parent, allowing cost aggregation and relationship tracking |
+| **Payment Status**         |  Indicator (paid/unpaid) of whether a student’s lesson fees are settled                                      |
