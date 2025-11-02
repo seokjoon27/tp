@@ -10,6 +10,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import seedu.address.model.person.Parent;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Student;
 
@@ -67,6 +68,10 @@ public class PersonCard extends UiPart<Region> {
     private VBox parentsContainer;
     @FXML
     private FlowPane parents;
+    @FXML
+    private VBox childrenContainer;
+    @FXML
+    private FlowPane children;
 
     /**
      * Creates a {@code PersonCode} with the given {@code Person} and index to display.
@@ -116,15 +121,35 @@ public class PersonCard extends UiPart<Region> {
                     .sorted(Comparator.comparing(parent -> parent.getName().fullName))
                     .map(parent -> parent.getName().fullName)
                     .collect(Collectors.joining(", "));
-
+            if (parentNames.isEmpty() || parentNames.isBlank()) {
+                parentsContainer.setManaged(false);
+                parentsContainer.setVisible(false);
+            }
             parents.getChildren().clear();
             parents.getChildren().add(new Label(parentNames));
+            childrenContainer.setManaged(false);
+            childrenContainer.setVisible(false);
+            children.getChildren().clear();
         } else {
+            assert person instanceof Parent : "Person is neither Student nor Parent";
+            Parent parent = (Parent) person;
             setRow(schedule, null, null);
 
             parentsContainer.setManaged(false);
             parentsContainer.setVisible(false);
             parents.getChildren().clear();
+            childrenContainer.setManaged(true);
+            childrenContainer.setVisible(true);
+            String childNames = parent.getChildren().stream()
+                    .sorted(Comparator.comparing(child -> child.getName().fullName))
+                    .map(child -> child.getName().fullName)
+                    .collect(Collectors.joining(", "));
+            if (childNames.isEmpty() || childNames.isBlank()) {
+                childrenContainer.setManaged(false);
+                childrenContainer.setVisible(false);
+            }
+            children.getChildren().clear();
+            children.getChildren().add(new Label(childNames));
         }
     }
 
