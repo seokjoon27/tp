@@ -54,7 +54,7 @@ Person *--> Email
 Person *--> Address
 Person *--> "*" Tag
 Person *--> "0..1" Note
-Person *--> "0..1" PaymentStatus
+Person *--> PaymentStatus
 Person *--> "0..1" Cost
 
 Student --|> Person
