@@ -293,8 +293,8 @@ Allows tutors to record short remarks or progress notes for each student or pare
 
 Key Classes:
 - `NoteCommand`
--`NoteCommandParser`
-- `Person`,`student`,`Parent`
+- `NoteCommandParser`
+- `Person`, `Student`, `Parent`
 - `Note`
 
 Behaviour:
@@ -368,7 +368,7 @@ Toggles the payment status of a student or parent, ensuring the UI and derived a
 - `PaidCommand`
 - `PaidCommandParser`
 - `ModelManager`
-- `Student`,`Parent`,`person`
+- `Person`, `Student`, `Parent`
 - `PaymentStatus`
 
 **Behaviour:**
@@ -405,7 +405,7 @@ Creates and removes relationships between a `Parent` and one or more `Students`.
 - `LinkCommandParser`
 - `UnlinkCommandParser`
 - `ModelManager`
-- `Person`, `Parent`, `Student`
+- `Person`, `Student`, `Parent`
 
 **Behaviour:**
 - `link` establishes a bidirectional relationship: both the parent and the student reference each other.
