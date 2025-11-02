@@ -448,7 +448,7 @@ Resets payment status of all contacts (Students and Parents) to unpaid with a si
 
 | Option                                           | Decision | Reason                                                      |
 |--------------------------------------------------|-----------|-------------------------------------------------------------|
-| Allow partial reset (e.g., only unpaid students) | ❌ No | Ensures predictable behaviour with clarity.                       |
+| Allow partial reset (e.g., only unpaid students) | ❌ No | Ensures predictable behaviour with clarity                       |
 | Accept variants or extra tokens                  | ❌ No | Prevents accidental mass resets and stays consistent |
 
 
