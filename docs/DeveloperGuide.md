@@ -36,6 +36,7 @@ Refer to the guide [_Setting up and getting started_](SettingUp.md).
 :bulb: **Tip:** The `.puml` files used to create diagrams are in this document `docs/diagrams` folder. Refer to the [_PlantUML Tutorial_ at se-edu/guides](https://se-education.org/guides/tutorials/plantUml.html) to learn how to create and edit diagrams.
 </div>
 
+<div style="page-break-after: always;"></div>
 
 ### 2.1 Architecture
 
@@ -291,10 +292,10 @@ Purpose:
 Allows tutors to record short remarks or progress notes for each student or parent.
 
 Key Classes:
-- NoteCommand
-- NoteCommandParser
-- Person / Student / Parent
-- Note
+- `NoteCommand`
+-`NoteCommandParser`
+- `Person`,`student`,`Parent`
+- `Note`
 
 Behaviour:
 - Adds or replaces a note for the specified person (student or parent).
@@ -367,8 +368,7 @@ Toggles the payment status of a student or parent, ensuring the UI and derived a
 - `PaidCommand`
 - `PaidCommandParser`
 - `ModelManager`
-- `Student`
-- `Parent`
+- `Student`,`Parent`,`person`
 - `PaymentStatus`
 
 **Behaviour:**
@@ -559,9 +559,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 
 1.  User requests to list persons
-2.  Tutorhub shows a list of persons
+2.  System shows a list of persons
 3.  User requests to delete a specific person in the list
-4.  Tutorhub deletes the person
+4.  System deletes the person
 
 
 Use case ends.
@@ -579,7 +579,7 @@ Use case ends.
 * 3a. The given index is invalid.
 
 
-* 3a1. Tutorhub shows an error message.
+* 3a1. System shows an error message.
 
 
   Use case resumes at step 2.
