@@ -521,7 +521,7 @@ Format:
     - **Payment status** (`paid` / `unpaid`)
     - **Schedule status** (`schedule`, `<DAY>`, `<DATE>`)
 * Both command and arguments are **case-insensitive** (e.g., `LIST`, `List`, `list` all work).
-* Tutorhub is **whitespace-tolerant** — extra spaces before or after inputs are ignored (e.g., `list     paid` works).
+* Tutorhub is **whitespace-tolerant** — extra spaces before or after inputs are ignored 
 * The `<DAY>` argument accepts weekdays such as `Monday` to `Sunday`, regardless of case.
 * The `<DATE>` argument must follow the `MM-DD-YYYY` format (e.g., `12-12-2025`).
 * Invalid arguments will result in an error message prompting the correct format.
