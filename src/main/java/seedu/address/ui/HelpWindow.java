@@ -57,7 +57,6 @@ public class HelpWindow extends UiPart<Stage> {
                 + "unlink student/INDEX parent/INDEX\n\n"
                 + "-----------------------------------------------------------\n"
                 + "For detailed information, refer to the User Guide below:";
-                
     public static final String USERGUIDE_URL =
             "https://ay2526s1-cs2103t-w10-1.github.io/tp/UserGuide.html";
     private static final Logger logger = LogsCenter.getLogger(HelpWindow.class);
