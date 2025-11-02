@@ -942,7 +942,6 @@ Use case ends.
 
 * Student (s): A child receiving tuition.
 
-
 * Parent (p): A guardian linked to one or more students.
 
 
@@ -951,6 +950,9 @@ Use case ends.
 
 * Note: Free-text field for extra information about a student or parent.
 
+* Reset all: Command to reset payment status of all contacts to unpaid, typically used at start of new billing cycle.
+
+* Link: Bidirectional relationship between a student and parent, allowing cost aggregation and relationship tracking.
 
 * Payment Status: Indicator (paid/unpaid) of whether a student’s lesson fees are settled.
 
