@@ -271,7 +271,7 @@ Assigns weekly or date-specific lessons to a student.
 | Support overnight lessons | ❌ No | Lessons assumed not to cross midnight |
 |Can be modified through `edit` command |✅ Yes| Provide flexibility for users and maintain consistency
 
-**Activity Diagram**
+**Activity Diagram**<br>
 The following activity diagram illustrates how schedule input is validated and processed:
 
 <img src="images/ScheduleActivityDiagram.png" width="600" />
