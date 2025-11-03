@@ -185,7 +185,7 @@ Format: `help`
 
 
 
-Adds a person to the address book. There are 2 types of person to be added: Parent and Student. Simply indicate which one you wish to add with type/
+Adds a person to the address book. There are 2 types of person to be added: **Parent** and **Student**. Simply indicate which one you wish to add with `type/`
 
 
 
@@ -227,7 +227,7 @@ Only Students can add a schedule.
 
 
 
-Edits an existing person in the address book.
+Edits an **existing person** in the address book.
 
 
 
@@ -238,24 +238,24 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG] [pay/COST] 
 
 
 * Edits the person at the specified `INDEX`.
-* At least one of the optional fields must be provided.
+* At least one of the **optional** fields must be provided.
 * Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed e.g. adding of tags is not cumulative.
+* When editing tags, the existing tags of the person will be **removed** e.g. adding of tags is not cumulative.
 * You can remove all the person’s tags by typing `t/` without
   specifying any tags after it.
 
 
 
 Examples:
-*  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-*  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+*  `edit 1 p/91234567 e/johndoe@example.com` Edits the **phone number** and **email address** of the 1st person to be `91234567` and `johndoe@example.com` respectively.
+*  `edit 2 n/Betsy Crower t/` Edits the **name** of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
 <div markdown="span" class="alert alert-warning">
 :exclamation: **Caution:**<br>
 
 
-You cannot edit a person's type. Delete and re-add with the desired type. <br>
-You cannot edit a parent's cost. The parent's cost is linked to their children.
+You **cannot** edit a person's type. Delete and re-add with the desired type. <br>
+You **cannot** edit a parent's cost. The parent's cost is linked to their children.
 </div>
 
 
@@ -276,11 +276,11 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 
 
 
-* The search is case-insensitive. e.g. `hans` will match `Hans`
+* The search is **case-insensitive**. e.g. `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * Only the name is searched.
 * Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search).
+* Persons matching **at least one** keyword will be returned (i.e. `OR` search).
   e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 
 
@@ -472,11 +472,11 @@ For more information on the parameters, click [here](#command-parameters).
 
 
 
-Assigns a cost to a contact when adding them as contact. This allows tutors to keep track of the tuition costs of each student.
+Assigns a **cost** to a contact when adding them as contact. This allows tutors to keep track of the tuition costs of each student.
 
 
 * Assigns a specific cost of lesson to the student
-* COST must be a numeric value, e.g. 72.5
+* COST **must be a numeric value**, e.g. 72.5
 * To edit the COST of a specific student, simply type `edit INDEX ... pay/COST`
 
 
