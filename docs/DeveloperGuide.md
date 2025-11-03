@@ -7,7 +7,6 @@ title: Developer Guide
 
 
 --------------------------------------------------------------------------------------------------------------------
-<div style="page-break-after: always;"></div>
 
 
 ## **Acknowledgements**
@@ -17,7 +16,6 @@ TutorHub is a greenfield group project that is based on [addressbook-level3](htt
 
 
 --------------------------------------------------------------------------------------------------------------------
-<div style="page-break-after: always;"></div>
 
 
 ## **1. Setting up, getting started**
@@ -27,7 +25,6 @@ Refer to the guide [_Setting up and getting started_](SettingUp.md).
 
 
 --------------------------------------------------------------------------------------------------------------------
-<div style="page-break-after: always;"></div>
 
 
 ## **2. Design**
@@ -236,7 +233,6 @@ Classes used by multiple components are in the `seedu.address.commons` package.
 
 
 --------------------------------------------------------------------------------------------------------------------
-<div style="page-break-after: always;"></div>
 
 
 ## **3. Implementation**
@@ -457,7 +453,6 @@ Resets payment status of all contacts (Students and Parents) to unpaid with a si
 
 
 --------------------------------------------------------------------------------------------------------------------
-<div style="page-break-after: always;"></div>
 
 
 ## **4. Documentation, logging, testing, configuration, dev-ops**
@@ -471,7 +466,6 @@ Resets payment status of all contacts (Students and Parents) to unpaid with a si
 
 
 --------------------------------------------------------------------------------------------------------------------
-<div style="page-break-after: always;"></div>
 
 
 ## **5. Appendix: Requirements**
@@ -1101,7 +1095,7 @@ Current limitation: disabled due to relational conflicts.
 
 Planned Enhancement: Implement safe conversion flow with auto-unlinking and re-validation.
 
-#### 3. Name cannot have a / 
+#### 3. `name` cannot have a / 
 Current limitation: disabled due to conflict with commands 
 
 Planned enhancement: Implement safe way of including / in names without issues with commands.
@@ -1121,7 +1115,7 @@ Current limitation: only singaporean numbers can be added
 
 Planned enhancement: Roll out the app internationally and allow for international phone number formats. 
 
-#### 7. paid command success message 
+#### 7. `paid` command success message 
 Current limitation: paid command success message only shows target person instead of all affected contacts 
 
 Planned enhancement: Implement paid command to show all affected contacts in success message. 
