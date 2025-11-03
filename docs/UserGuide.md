@@ -10,7 +10,7 @@ It helps tutors quickly manage **students, parents, lesson schedules, and paymen
 {:toc}
 
 --------------------------------------------------------------------------------------------------------------------
-
+<div style="page-break-after: always;"></div>
 
 ## Target Users
 
@@ -50,7 +50,6 @@ With Tutorhub, you can:
    A GUI similar to the one below should appear in a few seconds. Note how the app contains some sample data.<br>
 
 
-<br>
 
 ##  GUI Overview
 
@@ -538,7 +537,6 @@ Examples:
 * `list paid` — Shows all contacts whose payment status is marked as **Paid**. It should appear in the GUI as such:
 ![listPaid.png](images/listPaid.png)
 
-<div style="page-break-after: always;"></div>
 
 * `list schedule` — Displays only students with **an existing schedule**. It should appear in the GUI as such:
 ![listSchedule.png](images/listSchedule.png)
