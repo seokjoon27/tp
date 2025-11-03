@@ -585,7 +585,7 @@ Use the `paid` command to track whether a student has paid you for a lesson. The
 
 
 ### Resetting payment status for every Student : `reset all`
-**Resets** the payment status of all contacts (**both Students and Parents**) to 'unpaid'.
+**Resets** the payment status of all contacts (**both Students and Parents**) to `unpaid`.
 Useful for starting a new billing cycle (e.g., weekly or monthly) when **all payments** need to be cleared.
 
 
