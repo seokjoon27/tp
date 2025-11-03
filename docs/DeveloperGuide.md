@@ -1091,17 +1091,31 @@ Current limitation: Schedule cannot cross midnight (e.g., 23:00–01:00).
 Planned Enhancement: Allow lessons spanning midnight by splitting them into two logical segments internally.
 
 #### 2. Editable Person Type (Student ↔️ Parent)
-Currently disabled due to relational conflicts.
+Current limitation: disabled due to relational conflicts.
 
 Planned Enhancement: Implement safe conversion flow with auto-unlinking and re-validation.
 
-#### 3. UI Display for Linked Entities
-Current linking is text-based.
+#### 3. Name cannot have a / 
+Current limitation: disabled due to conflict with commands 
 
-Planned Enhancement: Add graphical indicators or tooltips showing parent–student relationships.
+Planned enhancement: Implement safe way of including / in names without issues with commands.
 
 #### 4. `list <DAY>` includes dated schedules that fall on that weekday
+Current limitation: When a user runs list Monday, only schedules explicitly using weekday format (e.g., “Monday 14:00–16:00”) are shown. Schedules with specific dates (e.g., “11-3-2025 14:00–16:00”) that fall on a Monday are not included.
 
-Current Limitation: When a user runs list Monday, only schedules explicitly using weekday format (e.g., “Monday 14:00–16:00”) are shown. Schedules with specific dates (e.g., “11-3-2025 14:00–16:00”) that fall on a Monday are not included.
+Planned enhancement: Enhance the list <DAY> command to identify and display all schedules whose dates fall on the specified weekday, even if they are stored in date format. This allows users to view all Monday lessons, whether recurring or date-specific in a single command.
 
-Planned Enhancement: Enhance the list <DAY> command to identify and display all schedules whose dates fall on the specified weekday, even if they are stored in date format. This allows users to view all Monday lessons, whether recurring or date-specific in a single command.
+#### 5. `clear` command confirmation
+Current limitation: `clear` command executes without any checks or commands 
+
+Planned enhancement: When users type `clear` command, system will prompt them with a confirmation before running.
+
+#### 6. International phone numbers 
+Current limitation: only singaporean numbers can be added 
+
+Planned enhancement: Roll out the app internationally and allow for international phone number formats. 
+
+#### 7. paid command success message 
+Current limitation: paid command success message only shows target person instead of all affected contacts 
+
+Planned enhancement: Implement paid command to show all affected contacts in success message. 

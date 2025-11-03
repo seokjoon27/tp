@@ -664,6 +664,8 @@ Using schedule or note directly may be faster if you only want to change those f
 **Q**:  Why can I only add Singaporean phone numbers? <br>
 **A**: As we are currently only planning to release this for Singaporean tutors we only allow Singapore phone numbers for simplicity. 
 
+**Q**: Why can I input contacts with the same email or phone number 
+**A**: We understand that for some students, they may not have an email address or phone number set up, so you can input their parents phone number/email address for easy reference. 
 --------------------------------------------------------------------------------------------------------------------
 
 
