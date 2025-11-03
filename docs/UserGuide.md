@@ -10,7 +10,6 @@ It helps tutors quickly manage **students, parents, lesson schedules, and paymen
 {:toc}
 
 --------------------------------------------------------------------------------------------------------------------
-<div style="page-break-after: always;"></div>
 
 
 ## Target Users
@@ -24,7 +23,6 @@ With Tutorhub, you can:
 - Link parents to students for easy coordination
 
 --------------------------------------------------------------------------------------------------------------------
-<div style="page-break-after: always;"></div>
 
 
 ## Quick start
@@ -109,7 +107,6 @@ With Tutorhub, you can:
 
 
 --------------------------------------------------------------------------------------------------------------------
-<div style="page-break-after: always;"></div>
 
 
 
