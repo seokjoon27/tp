@@ -611,7 +611,7 @@ Use the `reset all` command at the start of each billing cycle to quickly clear 
 
 ### Exiting the program : `exit`
 
-Exits the program.
+**Exits** the program.
 
 
 Format: `exit`
