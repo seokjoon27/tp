@@ -679,7 +679,7 @@ Use case ends.
 
 ---
 
-**Use Case: UC5 - Toggle Payment Status :**
+**Use Case: UC5 - Toggle Payment Status **
 
 **Main Success Scenario (MSS):**
 1. User enters command

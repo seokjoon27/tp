@@ -402,13 +402,13 @@ Format:
 * Adds a note to the person at the specified `INDEX`.
 * Duplicate notes are **allowed**.
 * Notes longer than **100 characters** are not allowed.
-* To delete the existing note(s) under a person, simply type `note INDEX` without adding a note value.
+* To **delete** the existing note under a person, simply type `note INDEX` without adding a note value.
 
 
 
 Examples:
-* `note 1 note/Good at Science` — Adds a note under the first person.
-* `note 1` — Deletes the note(s) under the first person.
+* `note 1 note/Good at Science` — **Adds a note** under the first person.
+* `note 1` — **Deletes the note** under the first person.
 
 
 <div markdown="span" class="alert alert-primary">
@@ -422,26 +422,26 @@ For more information on the parameters, click [here](#command-parameters).
 ### Assigning a lesson schedule: `schedule`
 
 
-The `schedule` command assigns a **fixed weekly day and time** or a **specific date and time** to an existing student. This allows tutors to keep track of each student’s class timing directly from the application.
+The `schedule` command assigns a **fixed weekly day and time** or a **specific date and time** to an existing **student**. This allows tutors to keep track of each student’s class timing directly from the application.
 
 
 Format:
 `schedule INDEX schedule/DAY STARTTIME-ENDTIME`, `schedule INDEX schedule/DATE STARTTIME-ENDTIME`
 
 
-* Assigns a weekly or date-based lesson schedule to the student at the specified `INDEX`.
+* Assigns a **weekly** or **date-based** lesson schedule to the student at the specified `INDEX`.
 * The `DAY` must be one of `Monday`, `Tuesday`, `Wednesday`, `Thursday`, `Friday`, `Saturday`, or `Sunday` (case-insensitive).
-* The `DATE` must be in MM-DD-YYYY format, e.g. `12-10-2025`, `04-29-2025`.
+* The `DATE` must be in **MM-DD-YYYY** format, e.g. `12-10-2025`, `04-29-2025`.
 * The `STARTTIME` and `ENDTIME` must be in **24-hour format**, e.g. `10:30`, `14:00`.
-* `ENDTIME` must be after `STARTTIME`.
+* `ENDTIME` **must be after** `STARTTIME`.
 * If a student already has a schedule, the old one will be **replaced** by the new schedule.
-* To delete the existing schedule, simply type `schedule INDEX` without specifying any day or time.
+* To **delete** the existing schedule, simply type `schedule INDEX` without specifying any day or time.
 
 
 Examples:
-* `schedule 1 schedule/Monday 16:00-18:00` — Assigns a Monday schedule to the first student.
-* `schedule 2 schedule/12-10-2025 09:00-10:30` — Assigns a fixed date schedule to the second student.
-* `schedule 1` — Deletes the existing schedule under the first student.
+* `schedule 1 schedule/Monday 16:00-18:00` — **Assigns a Monday schedule** to the first student.
+* `schedule 2 schedule/12-10-2025 09:00-10:30` — **Assigns a fixed date schedule** to the second student.
+* `schedule 1` — **Deletes** the existing schedule under the first student.
 
 <div markdown="span" class="alert alert-info">
 :information_source: **Note:**<br>
@@ -520,7 +520,7 @@ Format:
 * Tutorhub is **whitespace-tolerant** — extra spaces before or after inputs are ignored 
 * The `<DAY>` argument accepts weekdays such as `Monday` to `Sunday`, regardless of case.
 * The `<DATE>` argument must follow the `MM-DD-YYYY` format (e.g., `12-12-2025`).
-* Invalid arguments will result in an error message prompting the correct format.
+* **Invalid arguments** will result in an error message prompting the correct format.
 
 
 Examples:
@@ -727,22 +727,22 @@ leaving it blank (e.g., `n/NAME t/`) is treated as if it was omitted.
 
 <div style="page-break-after: always;"></div>
 
-| **Parameter** | **Prefix** | **Description / Usage**               | **Constraints / Accepted Values**                                                                                                                                                 |
-|----------------|------------|---------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Name** | `n/` | Specifies the full name of a contact. | Must contain only alphanumeric characters and spaces (whitespace-insensitive). Special characters (e.g., `/`, `-`) are not supported.                                             |
-| **Type** | `type/` | Indicates whether the contact is a **student** or **parent**. | Accepts `s` for student or `p` for parent (case-insensitive).                                                                                                                     |
-| **Phone Number** | `p/` | Specifies the contact’s phone number. | Must contain 8 digits.                                                                                                                                                            |
+| **Parameter** | **Prefix** | **Description / Usage**               | **Constraints / Accepted Values**                                                                                                                                                |
+|----------------|------------|---------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Name** | `n/` | Specifies the full name of a contact. | Must contain only alphanumeric characters and spaces (whitespace-insensitive). Special characters (e.g., `/`, `-`) are not supported.                                            |
+| **Type** | `type/` | Indicates whether the contact is a **student** or **parent**. | Accepts `s` for student or `p` for parent (case-insensitive).                                                                                                                    |
+| **Phone Number** | `p/` | Specifies the contact’s phone number. | Must contain 8 digits.                                                                                                                                                           |
 | **Email** | `e/` | Stores the contact’s email address. | Must follow the format `name@example.com`.                                                                                                       |
-| **Address** | `a/` | Stores the contact’s address or location. | Can take any value, up to 200 characters.                                                                                                                                         |
-| **Tag** | `t/` | Categorises the contact (e.g., subject or relationship). | Accepts any multiple-word tag. Multiple tags allowed.                                                                                                                             |
-| **Payment per Lesson** | `pay/` | Sets the cost of a student’s lesson.  | Must be a positive numeric value (e.g., `pay/80`).                                                                                                                                |
+| **Address** | `a/` | Stores the contact’s address or location. | Can take any value, up to 200 characters.                                                                                                                                        |
+| **Tag** | `t/` | Categorises the contact (e.g., subject or relationship). | Accepts any multiple-word tag. Multiple tags allowed.                                                                                                                            |
+| **Payment per Lesson** | `pay/` | Sets the cost of a student’s lesson.  | Must be a positive numeric value (e.g., `pay/80`).                                                                                                                               |
 | **Schedule** | `schedule/` | Sets the student’s weekly or date-specific class timing. | Accepts either a **day** (`Monday`–`Sunday`) or **date** (`MM-DD-YYYY`), followed by `STARTTIME-ENDTIME` in 24-hour format. Does **not** support time ranges that cross midnight. |
-| **Note** | `note/` | Adds a note to a student’s profile.   | Any text up to 100 characters. Typing `note INDEX` removes existing notes.                                                                                                        |
-| **Status (Payment)** | `paid` / `unpaid` | Indicates whether a student has paid for their lesson. | Used only in `list` filters or toggled via the `paid` command.                                                                                                                    |
-| **Day / Date** | `<DAY>` / `<DATE>` | Used in filtering or scheduling commands. | `<DAY>` accepts weekdays (case-insensitive). `<DATE>` follows `MM-DD-YYYY` format.                                                                                                |
-| **Index** | (no prefix) | Identifies a contact’s position in the displayed list. | Must be a positive integer (e.g., `1`, `2`, `3`, …).                                                                                                                              |
-| **Relationship (Link)** | `student/` / `parent/` | Used in `link` and `unlink` commands to connect students with parents. | Both must be valid indices from the current list.                                                                                                                                 |
-| **List Filters** | *(argument)* | Used in `list` to filter by payment or schedule. | Accepts: `paid`, `unpaid`, `schedule`, `<DAY>`, or `<DATE>`. Case and spacing insensitive.                                                                                        |
+| **Note** | `note/` | Adds a note to a student’s profile.   | Any text up to 100 characters. Typing `note INDEX` removes existing note.                                                                                                        |
+| **Status (Payment)** | `paid` / `unpaid` | Indicates whether a student has paid for their lesson. | Used only in `list` filters or toggled via the `paid` command.                                                                                                                   |
+| **Day / Date** | `<DAY>` / `<DATE>` | Used in filtering or scheduling commands. | `<DAY>` accepts weekdays (case-insensitive). `<DATE>` follows `MM-DD-YYYY` format.                                                                                               |
+| **Index** | (no prefix) | Identifies a contact’s position in the displayed list. | Must be a positive integer (e.g., `1`, `2`, `3`, …).                                                                                                                             |
+| **Relationship (Link)** | `student/` / `parent/` | Used in `link` and `unlink` commands to connect students with parents. | Both must be valid indices from the current list.                                                                                                                                |
+| **List Filters** | *(argument)* | Used in `list` to filter by payment or schedule. | Accepts: `paid`, `unpaid`, `schedule`, `<DAY>`, or `<DATE>`. Case and spacing insensitive.                                                                                       |
 
 
 ##  Glossary
