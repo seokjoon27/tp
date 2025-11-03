@@ -36,7 +36,7 @@ With Tutorhub, you can:
 
 
 
-1. Download the latest `.jar` file from [here](https://github.com/AY2526S1-CS2103T-W10-1/tp/releases/tag/v1.6.0).
+1. Download the latest `.jar` file from [here](https://github.com/AY2526S1-CS2103T-W10-1/tp/releases/tag/v1.6).
 
 
 
