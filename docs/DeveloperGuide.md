@@ -210,6 +210,7 @@ This class hierarchy improves extensibility and maintainability:
 
 
 
+<div style="page-break-after: always;"></div>
 
 ### 2.5 Storage component
 
