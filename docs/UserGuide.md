@@ -214,7 +214,7 @@ Examples:
 
 <div markdown="block" class="alert alert-info">
 **:information_source: Important:**<br>
-Only Students can add a schedule.x
+Only Students can add a schedule.
 </div>
 
 
@@ -255,6 +255,7 @@ Examples:
 
 
 You cannot edit a person's type. Delete and re-add with the desired type. <br>
+You cannot edit a parent's cost. The parent's cost is linked to their children.
 </div>
 
 
@@ -328,13 +329,17 @@ Examples:
 
 
 
-Clears all entries from the address book.
+**Clears all** entries from the address book.
 
 
 
 
 Format: `clear`
 
+<div markdown="span" class="alert alert-warning">
+:exclamation: **Caution:**<br>
+You cannot undo a clear command. 
+</div>
 
 
 
@@ -343,14 +348,14 @@ Format: `clear`
 
 
 
-Tutors often need to know which parents belong to which students and vice versa. This feature allows maintaining a clear relationship map.
+Tutors often need to know which parents belong to which students and vice versa. This feature allows **maintaining a clear relationship map**.
 
 
 
 
-* Students can have multiple Parents (e.g., mother and father).
-* Parents can be linked to multiple Students (e.g., siblings).
-* The linkage is bidirectional: once linked, both profiles are updated.
+* Students can be **linked to multiple Parents** (e.g., mother and father).
+* Parents can be **linked to multiple Students** (e.g., siblings).
+* The linkage is **bidirectional**: once linked, **both profiles** are updated.
 
 
 Format: `link student/INDEX parent/INDEX`
@@ -360,6 +365,7 @@ Format: `link student/INDEX parent/INDEX`
 * The index refers to the index number shown in the displayed person list.
 * The index **must be a positive integer** 1, 2, 3, …​.
 * Each index must correspond to the correct type.
+* The order of prefixes is flexible.
 
 
 Example:
@@ -400,7 +406,6 @@ Format:
 
 
 * Adds a note to the person at the specified `INDEX`.
-* Duplicate notes are **allowed**.
 * Notes longer than **100 characters** are not allowed.
 * To **delete** the existing note under a person, simply type `note INDEX` without adding a note value.
 
@@ -556,12 +561,14 @@ For more information on the parameters, click [here](#command-parameters).
 
 
 
-Toggles payment status of specified contact between paid and unpaid. This allows tutors to keep track of the payment status of individual students as well as the parents.
+Toggles **payment status** of specified contact between `paid` and `unpaid`. This allows tutors to keep track of the **payment status of individual students** as well as the parents.
 
+Format: 
+`paid INDEX` 
 
 Examples:
-* `paid 1`-toggles payment status of contact at INDEX 1
-* `paid n/Alex yeoh`- toggles payment status of contact named Alex Yeoh
+* `paid 1`-toggles **payment status** of contact at **INDEX 1**
+* `paid n/Alex yeoh`- toggles **payment status** of contact named **Alex Yeoh**
 
 
 <div markdown="span" class="alert alert-info">
@@ -610,7 +617,7 @@ Use the `reset all` command at the start of each billing cycle to quickly clear 
 
 ### Exiting the program : `exit`
 
-Exits the program.
+**Exits** the program.
 
 
 Format: `exit`
@@ -741,7 +748,7 @@ leaving it blank (e.g., `n/NAME t/`) is treated as if it was omitted.
 | **Status (Payment)** | `paid` / `unpaid` | Indicates whether a student has paid for their lesson. | Used only in `list` filters or toggled via the `paid` command.                                                                                                                   |
 | **Day / Date** | `<DAY>` / `<DATE>` | Used in filtering or scheduling commands. | `<DAY>` accepts weekdays (case-insensitive). `<DATE>` follows `MM-DD-YYYY` format.                                                                                               |
 | **Index** | (no prefix) | Identifies a contact’s position in the displayed list. | Must be a positive integer (e.g., `1`, `2`, `3`, …).                                                                                                                             |
-| **Relationship (Link)** | `student/` / `parent/` | Used in `link` and `unlink` commands to connect students with parents. | Both must be valid indices from the current list.                                                                                                                                |
+| **Relationship (Link)** | `student/` `parent/` | Used in `link` and `unlink` commands to connect students with parents. | Both must be valid indices from the current list.                                                                                                                                |
 | **List Filters** | *(argument)* | Used in `list` to filter by payment or schedule. | Accepts: `paid`, `unpaid`, `schedule`, `<DAY>`, or `<DATE>`. Case and spacing insensitive.                                                                                       |
 
 
