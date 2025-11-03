@@ -1106,16 +1106,16 @@ Current limitation: When a user runs list Monday, only schedules explicitly usin
 Planned enhancement: Enhance the list <DAY> command to identify and display all schedules whose dates fall on the specified weekday, even if they are stored in date format. This allows users to view all Monday lessons, whether recurring or date-specific in a single command.
 
 #### 5. `clear` Command Confirmation
-Current limitation: `clear` command executes without any checks or commands 
+Current limitation: `clear` command executes without any checks or commands.
 
 Planned enhancement: When users type `clear` command, system will prompt them with a confirmation before running.
 
 #### 6. International Phone Numbers 
-Current limitation: Only Singaporean numbers can be added 
+Current limitation: Only Singaporean numbers can be added.
 
 Planned enhancement: Roll out the app internationally and allow for international phone number formats. 
 
 #### 7. `paid` Command Success Message 
-Current limitation: `paid` command success message only shows target person instead of all affected contacts 
+Current limitation: `paid` command success message only shows target person instead of all affected contacts.
 
-Planned enhancement: Implement paid command to show all affected contacts in success message. 
+Planned enhancement: Implement `paid` command to show all affected contacts in success message. 
