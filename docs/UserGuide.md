@@ -344,14 +344,14 @@ Format: `clear`
 
 
 
-Tutors often need to know which parents belong to which students and vice versa. This feature allows maintaining a clear relationship map.
+Tutors often need to know which parents belong to which students and vice versa. This feature allows **maintaining a clear relationship map**.
 
 
 
 
-* Students can have multiple Parents (e.g., mother and father).
-* Parents can be linked to multiple Students (e.g., siblings).
-* The linkage is bidirectional: once linked, both profiles are updated.
+* Students can be **linked to multiple Parents** (e.g., mother and father).
+* Parents can be **linked to multiple Students** (e.g., siblings).
+* The linkage is **bidirectional**: once linked, **both profiles** are updated.
 
 
 Format: `link student/INDEX parent/INDEX`
@@ -361,7 +361,7 @@ Format: `link student/INDEX parent/INDEX`
 * The index refers to the index number shown in the displayed person list.
 * The index **must be a positive integer** 1, 2, 3, …​.
 * Each index must correspond to the correct type.
-* The order of prefixes is flexible 
+* The order of prefixes is flexible.
 
 
 Example:
@@ -742,7 +742,7 @@ leaving it blank (e.g., `n/NAME t/`) is treated as if it was omitted.
 | **Status (Payment)** | `paid` / `unpaid` | Indicates whether a student has paid for their lesson. | Used only in `list` filters or toggled via the `paid` command.                                                                                                                   |
 | **Day / Date** | `<DAY>` / `<DATE>` | Used in filtering or scheduling commands. | `<DAY>` accepts weekdays (case-insensitive). `<DATE>` follows `MM-DD-YYYY` format.                                                                                               |
 | **Index** | (no prefix) | Identifies a contact’s position in the displayed list. | Must be a positive integer (e.g., `1`, `2`, `3`, …).                                                                                                                             |
-| **Relationship (Link)** | `student/` / `parent/` | Used in `link` and `unlink` commands to connect students with parents. | Both must be valid indices from the current list.                                                                                                                                |
+| **Relationship (Link)** | `student/` `parent/` | Used in `link` and `unlink` commands to connect students with parents. | Both must be valid indices from the current list.                                                                                                                                |
 | **List Filters** | *(argument)* | Used in `list` to filter by payment or schedule. | Accepts: `paid`, `unpaid`, `schedule`, `<DAY>`, or `<DATE>`. Case and spacing insensitive.                                                                                       |
 
 
