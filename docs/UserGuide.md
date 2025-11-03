@@ -10,6 +10,7 @@ It helps tutors quickly manage **students, parents, lesson schedules, and paymen
 {:toc}
 
 --------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
 
 
 ## Target Users
@@ -23,6 +24,7 @@ With Tutorhub, you can:
 - Link parents to students for easy coordination
 
 --------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
 
 
 ## Quick start
@@ -50,6 +52,7 @@ With Tutorhub, you can:
    A GUI similar to the one below should appear in a few seconds. Note how the app contains some sample data.<br>
 
 
+<div style="page-break-after: always;"></div>
 
 ##  GUI Overview
 
@@ -106,6 +109,7 @@ With Tutorhub, you can:
 
 
 --------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
 
 
 
@@ -536,6 +540,9 @@ Examples:
 * `list 12-12-2025` — Displays students with a lesson scheduled on **12th December 2025**.
 * `list paid` — Shows all contacts whose payment status is marked as **Paid**. It should appear in the GUI as such:
 ![listPaid.png](images/listPaid.png)
+
+<div style="page-break-after: always;"></div>
+
 * `list schedule` — Displays only students with **an existing schedule**. It should appear in the GUI as such:
 ![listSchedule.png](images/listSchedule.png)
 
@@ -556,6 +563,7 @@ Invalid inputs such as `list 2025-12-12` or `list abc` will produce an error mes
 For more information on the parameters, click [here](#command-parameters).
 
 
+<div style="page-break-after: always;"></div>
 
 ### Tracking payment status of each Student : `paid`
 
@@ -643,6 +651,7 @@ Furthermore, certain edits can cause the Tutorhub to behave in unexpected ways (
 
 
 --------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
 
 ## FAQ
 
@@ -667,6 +676,7 @@ Using schedule or note directly may be faster if you only want to change those f
 **Q**: Why can I input contacts with the same email or phone number 
 **A**: We understand that for some students, they may not have an email address or phone number set up, so you can input their parents phone number/email address for easy reference. 
 --------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
 
 
 
@@ -701,6 +711,7 @@ Using schedule or note directly may be faster if you only want to change those f
 
 
 --------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
 
 
 ## Command summary
