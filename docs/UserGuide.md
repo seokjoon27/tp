@@ -47,9 +47,11 @@ With Tutorhub, you can:
 
 
 1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar tutorhub.jar` command to run the application.<br>
-   A GUI similar to the one below should appear in a few seconds. Note how the app contains some sample data.<br>
+   A GUI similar to the one in **GUI Overview** should appear in a few seconds. Note how the app contains some sample data.<br>
 
+--------------------------------------------------------------------------------------------------------------------
 
+<div style="page-break-after: always;"></div>
 
 ##  GUI Overview
 
@@ -531,7 +533,6 @@ Format:
 Examples:
 * `list` — Displays **all contacts** in the address book.
 * `list unpaid` — Shows all contacts whose payment status is marked as **Unpaid**.
-* `LIST   UNPAID` — Works as well; command is **case-insensitive** and ignores extra spaces.
 * `list Monday` — Displays students whose schedules fall on **Monday**.
 * `list 12-12-2025` — Displays students with a lesson scheduled on **12th December 2025**.
 * `list paid` — Shows all contacts whose payment status is marked as **Paid**. It should appear in the GUI as such:
@@ -558,7 +559,6 @@ Invalid inputs such as `list 2025-12-12` or `list abc` will produce an error mes
 For more information on the parameters, click [here](#command-parameters).
 
 
-<div style="page-break-after: always;"></div>
 
 ### Tracking payment status of each Student : `paid`
 
@@ -740,7 +740,6 @@ If a command specifies that a prefix is optional (e.g., `n/NAME [t/TAG]`),
 leaving it blank (e.g., `n/NAME t/`) is treated as if it was omitted.
 </div>
 
-<div style="page-break-after: always;"></div>
 
 | **Parameter** | **Prefix** | **Description / Usage**               | **Constraints / Accepted Values**                                                                                                                                                |
 |----------------|------------|---------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -759,6 +758,7 @@ leaving it blank (e.g., `n/NAME t/`) is treated as if it was omitted.
 | **Relationship (Link)** | `student/` `parent/` | Used in `link` and `unlink` commands to connect students with parents. | Both must be valid indices from the current list.                                                                                                                                |
 | **List Filters** | *(argument)* | Used in `list` to filter by payment or schedule. | Accepts: `paid`, `unpaid`, `schedule`, `<DAY>`, or `<DATE>`. Case and spacing insensitive.                                                                                       |
 
+<div style="page-break-after: always;"></div>
 
 ##  Glossary
 
