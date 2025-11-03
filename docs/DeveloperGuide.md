@@ -7,7 +7,6 @@ title: Developer Guide
 
 
 --------------------------------------------------------------------------------------------------------------------
-<div style="page-break-after: always;"></div>
 
 
 ## **Acknowledgements**
@@ -17,7 +16,6 @@ TutorHub is a greenfield group project that is based on [addressbook-level3](htt
 
 
 --------------------------------------------------------------------------------------------------------------------
-<div style="page-break-after: always;"></div>
 
 
 ## **1. Setting up, getting started**
@@ -27,7 +25,6 @@ Refer to the guide [_Setting up and getting started_](SettingUp.md).
 
 
 --------------------------------------------------------------------------------------------------------------------
-<div style="page-break-after: always;"></div>
 
 
 ## **2. Design**
@@ -236,7 +233,6 @@ Classes used by multiple components are in the `seedu.address.commons` package.
 
 
 --------------------------------------------------------------------------------------------------------------------
-<div style="page-break-after: always;"></div>
 
 
 ## **3. Implementation**
@@ -457,7 +453,6 @@ Resets payment status of all contacts (Students and Parents) to unpaid with a si
 
 
 --------------------------------------------------------------------------------------------------------------------
-<div style="page-break-after: always;"></div>
 
 
 ## **4. Documentation, logging, testing, configuration, dev-ops**
@@ -471,7 +466,6 @@ Resets payment status of all contacts (Students and Parents) to unpaid with a si
 
 
 --------------------------------------------------------------------------------------------------------------------
-<div style="page-break-after: always;"></div>
 
 
 ## **5. Appendix: Requirements**
@@ -1097,12 +1091,12 @@ Current limitation: Schedule cannot cross midnight (e.g., 23:00–01:00).
 Planned Enhancement: Allow lessons spanning midnight by splitting them into two logical segments internally.
 
 #### 2. Editable Person Type (Student ↔️ Parent)
-Current limitation: disabled due to relational conflicts.
+Current limitation: Disabled due to relational conflicts.
 
 Planned Enhancement: Implement safe conversion flow with auto-unlinking and re-validation.
 
-#### 3. Name cannot have a / 
-Current limitation: disabled due to conflict with commands 
+#### 3. Names cannot have a `/`
+Current limitation: Disabled due to conflict with commands. 
 
 Planned enhancement: Implement safe way of including / in names without issues with commands.
 
@@ -1111,17 +1105,17 @@ Current limitation: When a user runs list Monday, only schedules explicitly usin
 
 Planned enhancement: Enhance the list <DAY> command to identify and display all schedules whose dates fall on the specified weekday, even if they are stored in date format. This allows users to view all Monday lessons, whether recurring or date-specific in a single command.
 
-#### 5. `clear` command confirmation
-Current limitation: `clear` command executes without any checks or commands 
+#### 5. `clear` Command Confirmation
+Current limitation: `clear` command executes without any checks or commands.
 
 Planned enhancement: When users type `clear` command, system will prompt them with a confirmation before running.
 
-#### 6. International phone numbers 
-Current limitation: only singaporean numbers can be added 
+#### 6. International Phone Numbers 
+Current limitation: Only Singaporean numbers can be added.
 
 Planned enhancement: Roll out the app internationally and allow for international phone number formats. 
 
-#### 7. paid command success message 
-Current limitation: paid command success message only shows target person instead of all affected contacts 
+#### 7. `paid` Command Success Message 
+Current limitation: `paid` command success message only shows target person instead of all affected contacts.
 
-Planned enhancement: Implement paid command to show all affected contacts in success message. 
+Planned enhancement: Implement `paid` command to show all affected contacts in success message. 

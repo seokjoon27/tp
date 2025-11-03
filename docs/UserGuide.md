@@ -10,7 +10,6 @@ It helps tutors quickly manage **students, parents, lesson schedules, and paymen
 {:toc}
 
 --------------------------------------------------------------------------------------------------------------------
-<div style="page-break-after: always;"></div>
 
 
 ## Target Users
@@ -24,7 +23,6 @@ With Tutorhub, you can:
 - Link parents to students for easy coordination
 
 --------------------------------------------------------------------------------------------------------------------
-<div style="page-break-after: always;"></div>
 
 
 ## Quick start
@@ -38,7 +36,7 @@ With Tutorhub, you can:
 
 
 
-1. Download the latest `.jar` file from [here](https://github.com/AY2526S1-CS2103T-W10-1/tp/releases/tag/v1.3.0).
+1. Download the latest `.jar` file from [here](https://github.com/AY2526S1-CS2103T-W10-1/tp/releases/tag/v1.6).
 
 
 
@@ -109,7 +107,6 @@ With Tutorhub, you can:
 
 
 --------------------------------------------------------------------------------------------------------------------
-<div style="page-break-after: always;"></div>
 
 
 
@@ -201,7 +198,7 @@ Format: `add type/TYPE n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG] [pay/COST
 
 <div markdown="span" class="alert alert-primary">
 :bulb: **Tip:**<br>
-A person can have any number of tags (including 0) <br>
+A person can have any number of tags (including 0). <br>
 Tag names may contain spaces (e.g., t/needs review, t/very important). <br>
 Leading and trailing whitespace is ignored (e.g., t/ math → math). <br>
 Tag names must be alphanumeric and spaces only.  <br>
@@ -213,7 +210,7 @@ Tag names must be alphanumeric and spaces only.  <br>
 Examples:
 * `add type/p n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 `
 * `add type/s n/Betsy Crowe e/betsycrowe@example.com a/Yishun avenue p/99999999 t/Bad at Math schedule/Monday 14:00-15:00 `
-* `add type/p n/Jeremiah p/92345489 e/jerry@example.con a/Bowling drive t/Likes golf t/friend`
+* `add type/p n/Jeremiah p/92345489 e/jerry@example.com a/Bowling drive t/Likes golf t/friend`
 
 
 <div markdown="block" class="alert alert-info">
@@ -489,7 +486,7 @@ Format:
 
 
 Examples:
-* `add n/malcolm type/s ... pay/100` - Adds a student named malcolm whose cost per lesson is $100
+* `add n/Malcolm type/s ... pay/100` - Adds a student named malcolm whose cost per lesson is $100
 * `edit 1 pay/100` - edits contact at INDEX 1 to have cost be $100
 
 
@@ -754,7 +751,7 @@ leaving it blank (e.g., `n/NAME t/`) is treated as if it was omitted.
 | **Phone Number** | `p/` | Specifies the contact’s phone number. | Must contain 8 digits.                                                                                                                                                           |
 | **Email** | `e/` | Stores the contact’s email address. | Must follow the format `name@example.com`.                                                                                                       |
 | **Address** | `a/` | Stores the contact’s address or location. | Can take any value, up to 200 characters.                                                                                                                                        |
-| **Tag** | `t/` | Categorises the contact (e.g., subject or relationship). | Accepts any multiple-word tag. Multiple tags allowed.                                                                                                                            |
+| **Tag** | `t/` | Categorises the contact (e.g., subject or relationship). | must be alphanumberic| Multiple tags allowed.                                                                                                                            |
 | **Payment per Lesson** | `pay/` | Sets the cost of a student’s lesson.  | Must be a positive numeric value (e.g., `pay/80`).                                                                                                                               |
 | **Schedule** | `schedule/` | Sets the student’s weekly or date-specific class timing. | Accepts either a **day** (`Monday`–`Sunday`) or **date** (`MM-DD-YYYY`), followed by `STARTTIME-ENDTIME` in 24-hour format. Does **not** support time ranges that cross midnight. |
 | **Note** | `note/` | Adds a note to a student’s profile.   | Any text up to 100 characters. Typing `note INDEX` removes existing note.                                                                                                        |
