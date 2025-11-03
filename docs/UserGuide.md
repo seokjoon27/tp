@@ -198,7 +198,7 @@ Format: `add type/TYPE n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG] [pay/COST
 
 <div markdown="span" class="alert alert-primary">
 :bulb: **Tip:**<br>
-A person can have any number of tags (including 0) <br>
+A person can have any number of tags (including 0). <br>
 Tag names may contain spaces (e.g., t/needs review, t/very important). <br>
 Leading and trailing whitespace is ignored (e.g., t/ math → math). <br>
 Tag names must be alphanumeric and spaces only.  <br>
