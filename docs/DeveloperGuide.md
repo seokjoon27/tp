@@ -30,10 +30,6 @@ Refer to the guide [_Setting up and getting started_](SettingUp.md).
 ## **2. Design**
 
 
-<div markdown="span" class="alert alert-primary">
-
-<div style="page-break-after: always;"></div>
-
 ### 2.1 Architecture
 
 
