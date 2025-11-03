@@ -1,0 +1,84 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":AddressBookParser" as AddressBookParser LOGIC_COLOR
+participant ":PaidCommandParser" as PaidCommandParser LOGIC_COLOR
+participant "p:PaidCommand" as PaidCommand LOGIC_COLOR
+participant "r:CommandResult" as CommandResult LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant "m:Model" as Model MODEL_COLOR
+end box
+
+[-> LogicManager : execute("paid 1")
+activate LogicManager
+
+LogicManager -> AddressBookParser : parseCommand("paid 1")
+activate AddressBookParser
+
+create PaidCommandParser
+AddressBookParser -> PaidCommandParser
+activate PaidCommandParser
+
+PaidCommandParser --> AddressBookParser
+deactivate PaidCommandParser
+
+AddressBookParser -> PaidCommandParser : parse("1")
+activate PaidCommandParser
+
+create PaidCommand
+PaidCommandParser -> PaidCommand
+activate PaidCommand
+
+PaidCommand --> PaidCommandParser :
+deactivate PaidCommand
+
+PaidCommandParser --> AddressBookParser : p
+deactivate PaidCommandParser
+
+PaidCommandParser -[hidden]-> AddressBookParser
+destroy PaidCommandParser
+
+AddressBookParser --> LogicManager : p
+deactivate AddressBookParser
+
+
+LogicManager -> PaidCommand : execute(m)
+activate PaidCommand
+
+PaidCommand -> Model : getFilteredPersonList()
+activate Model
+Model --> PaidCommand : lastShownList
+
+PaidCommand -> Model : setPerson(personToMark, markedPerson)
+PaidCommand -> Model : updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS)
+
+Model --> PaidCommand
+deactivate Model
+
+create CommandResult
+PaidCommand -> CommandResult
+activate CommandResult
+
+CommandResult --> PaidCommand
+deactivate CommandResult
+
+PaidCommand --> LogicManager : r
+deactivate PaidCommand
+
+[<-- LogicManager
+deactivate LogicManager
+
+alt valid input (index provided)
+    PaidCommandParser -> PaidCommand : new PaidCommand(Index)
+else valid input (name provided)
+    PaidCommandParser -> PaidCommand : new PaidCommand(Name)
+else invalid input
+    PaidCommandParser --> AddressBookParser : throw ParseException
+end
+
+@enduml
