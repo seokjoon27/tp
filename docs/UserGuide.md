@@ -329,13 +329,17 @@ Examples:
 
 
 
-Clears all entries from the address book.
+**Clears all** entries from the address book.
 
 
 
 
 Format: `clear`
 
+<div markdown="span" class="alert alert-warning">
+:exclamation: **Caution:**<br>
+You cannot undo a clear command. 
+</div>
 
 
 
