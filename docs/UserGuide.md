@@ -584,7 +584,7 @@ Useful for starting a new billing cycle (e.g., weekly or monthly) when all payme
 
 
 * Resets all contacts’ `PaymentStatus` to `unpaid`.
-* The command is **not case-sensitive** (e.g., `RESET ALL`, `Reset All` work).
+* The command is **case-insensitive** (e.g., `RESET ALL`, `Reset All` work).
 * Only accepts the exact phrase `reset all`. Any extra words or tokens are rejected.
 * Has no effect on contacts that are already unpaid.
 
