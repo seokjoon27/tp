@@ -50,7 +50,7 @@ With Tutorhub, you can:
    A GUI similar to the one below should appear in a few seconds. Note how the app contains some sample data.<br>
 
 
-<div style="page-break-after: always;"></div>
+<br>
 
 ##  GUI Overview
 
