@@ -7,6 +7,7 @@ title: Developer Guide
 
 
 --------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
 
 
 ## **Acknowledgements**
@@ -16,6 +17,7 @@ TutorHub is a greenfield group project that is based on [addressbook-level3](htt
 
 
 --------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
 
 
 ## **1. Setting up, getting started**
@@ -25,6 +27,7 @@ Refer to the guide [_Setting up and getting started_](SettingUp.md).
 
 
 --------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
 
 
 ## **2. Design**
@@ -233,6 +236,7 @@ Classes used by multiple components are in the `seedu.address.commons` package.
 
 
 --------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
 
 
 ## **3. Implementation**
@@ -453,6 +457,7 @@ Resets payment status of all contacts (Students and Parents) to unpaid with a si
 
 
 --------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
 
 
 ## **4. Documentation, logging, testing, configuration, dev-ops**
@@ -466,6 +471,7 @@ Resets payment status of all contacts (Students and Parents) to unpaid with a si
 
 
 --------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
 
 
 ## **5. Appendix: Requirements**
