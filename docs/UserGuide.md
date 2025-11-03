@@ -329,13 +329,17 @@ Examples:
 
 
 
-Clears all entries from the address book.
+**Clears all** entries from the address book.
 
 
 
 
 Format: `clear`
 
+<div markdown="span" class="alert alert-warning">
+:exclamation: **Caution:**<br>
+You cannot undo a clear command. 
+</div>
 
 
 
@@ -586,7 +590,7 @@ Useful for starting a new billing cycle (e.g., weekly or monthly) when all payme
 
 
 * Resets all contacts’ `PaymentStatus` to `unpaid`.
-* The command is **not case-sensitive** (e.g., `RESET ALL`, `Reset All` work).
+* The command is **case-insensitive** (e.g., `RESET ALL`, `Reset All` work).
 * Only accepts the exact phrase `reset all`. Any extra words or tokens are rejected.
 * Has no effect on contacts that are already unpaid.
 
@@ -613,7 +617,7 @@ Use the `reset all` command at the start of each billing cycle to quickly clear 
 
 ### Exiting the program : `exit`
 
-Exits the program.
+**Exits** the program.
 
 
 Format: `exit`
