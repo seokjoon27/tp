@@ -168,9 +168,8 @@ With Tutorhub, you can:
 
 Shows a list of all commands accepted in Tutorhub.
 * The link to this User Guide can be found at the bottom.
-![help message](images/helpMessage.png)
-![helpMessage2.png](images/helpMessage2.png)
-
+  <img src="images/helpMessage.png" width="600" />
+  <img src="images/helpMessage2.png" width="600" />
 
 
 Format: `help`
