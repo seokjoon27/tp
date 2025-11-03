@@ -214,7 +214,7 @@ Examples:
 
 <div markdown="block" class="alert alert-info">
 **:information_source: Important:**<br>
-Only Students can add a schedule.x
+Only Students can add a schedule.
 </div>
 
 
@@ -255,6 +255,7 @@ Examples:
 
 
 You cannot edit a person's type. Delete and re-add with the desired type. <br>
+You cannot edit a parent's cost. The parent's cost is linked to their children.
 </div>
 
 
@@ -360,6 +361,7 @@ Format: `link student/INDEX parent/INDEX`
 * The index refers to the index number shown in the displayed person list.
 * The index **must be a positive integer** 1, 2, 3, …​.
 * Each index must correspond to the correct type.
+* The order of prefixes is flexible 
 
 
 Example:
@@ -400,7 +402,6 @@ Format:
 
 
 * Adds a note to the person at the specified `INDEX`.
-* Duplicate notes are **allowed**.
 * Notes longer than **100 characters** are not allowed.
 * To **delete** the existing note under a person, simply type `note INDEX` without adding a note value.
 

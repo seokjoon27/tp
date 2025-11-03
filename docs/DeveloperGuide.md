@@ -30,13 +30,6 @@ Refer to the guide [_Setting up and getting started_](SettingUp.md).
 ## **2. Design**
 
 
-<div markdown="span" class="alert alert-primary">
-
-
-:bulb: **Tip:** The `.puml` files used to create diagrams are in this document `docs/diagrams` folder. Refer to the [_PlantUML Tutorial_ at se-edu/guides](https://se-education.org/guides/tutorials/plantUml.html) to learn how to create and edit diagrams.
-</div>
-
-
 ### 2.1 Architecture
 
 
@@ -291,10 +284,10 @@ Purpose:
 Allows tutors to record short remarks or progress notes for each student or parent.
 
 Key Classes:
-- NoteCommand
-- NoteCommandParser
-- Person / Student / Parent
-- Note
+- `NoteCommand`
+- `NoteCommandParser`
+- `Person`, `Student`, `Parent`
+- `Note`
 
 Behaviour:
 - Adds or replaces a note for the specified person (student or parent).
@@ -367,8 +360,7 @@ Toggles the payment status of a student or parent, ensuring the UI and derived a
 - `PaidCommand`
 - `PaidCommandParser`
 - `ModelManager`
-- `Student`
-- `Parent`
+- `Person`, `Student`, `Parent`
 - `PaymentStatus`
 
 **Behaviour:**
@@ -405,7 +397,7 @@ Creates and removes relationships between a `Parent` and one or more `Students`.
 - `LinkCommandParser`
 - `UnlinkCommandParser`
 - `ModelManager`
-- `Person`, `Parent`, `Student`
+- `Person`, `Student`, `Parent`
 
 **Behaviour:**
 - `link` establishes a bidirectional relationship: both the parent and the student reference each other.
@@ -452,7 +444,7 @@ Resets payment status of all contacts (Students and Parents) to unpaid with a si
 
 | Option                                           | Decision | Reason                                                      |
 |--------------------------------------------------|-----------|-------------------------------------------------------------|
-| Allow partial reset (e.g., only unpaid students) | ❌ No | Ensures predictable behaviour with clarity.                       |
+| Allow partial reset (e.g., only unpaid students) | ❌ No | Ensures predictable behaviour with clarity                       |
 | Accept variants or extra tokens                  | ❌ No | Prevents accidental mass resets and stays consistent |
 
 
@@ -559,9 +551,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 
 1.  User requests to list persons
-2.  Tutorhub shows a list of persons
+2.  System shows a list of persons
 3.  User requests to delete a specific person in the list
-4.  Tutorhub deletes the person
+4.  System deletes the person
 
 
 Use case ends.
@@ -579,7 +571,7 @@ Use case ends.
 * 3a. The given index is invalid.
 
 
-* 3a1. Tutorhub shows an error message.
+* 3a1. System shows an error message.
 
 
   Use case resumes at step 2.
@@ -932,22 +924,23 @@ Use case ends.
 
 ### 5.5 Glossary
 
-| Term                       | Definition                                                                                                   |
-|----------------------------|--------------------------------------------------------------------------------------------------------------|
-| **Mainstream OS**          | Windows, Linux, Unix, MacOS                                                                                  |
-| **Private contact detail** | A contact detail that is not meant to be shared with others                                                  |
-| **CLI**                    | Command Line Interface: where you type commands                                                              |
-| **GUI**                    | Graphical User Interface: the visual screen Tutorhub displays                                                |
-| **JSON**                   | JavaScript Object Notation: Data format used to store Tutorhub information                                   |
-| **Index**                  | The number shown beside each contact in the list panel                                                       |
-| **Parent**                 | A guardian linked to one or more students                                                                    |
-| **Student**                | A child receiving tuition linked to one or more parents                                                      |
-| **Schedule**               | The assigned day and time for a student’s lesson                                                             |
-| **Note**                   | Free-text field for extra information about a student or parent                                              |
-| **Reset all**              | Command to reset payment status of all contacts to unpaid, typically used at start of new billing cycle      |
-| **Link**                   | Bidirectional relationship between a student and parent, allowing cost aggregation and relationship tracking |
-| **Payment Status**         |  Indicator (paid/unpaid) of whether a student’s lesson fees are settled                                      |
---------------------------------------------------------------------------------------------------------------------
+| Term | Definition |
+| --- | --- |
+| **Mainstream OS** | Windows, Linux, Unix, MacOS |
+| **Private contact detail** | A contact detail that is not meant to be shared with others |
+| **CLI** | Command Line Interface: where you type commands |
+| **GUI** | Graphical User Interface: the visual screen Tutorhub displays |
+| **JSON** | JavaScript Object Notation: Data format used to store Tutorhub information |
+| **Index** | The number shown beside each contact in the list panel |
+| **Parent** | A guardian linked to one or more students |
+| **Student** | A child receiving tuition linked to one or more parents |
+| **Schedule** | The assigned day and time for a student’s lesson |
+| **Note** | Free-text field for extra information about a student or parent |
+| **Reset all** | Command to reset payment status of all contacts to unpaid, typically used at start of new billing cycle |
+| **Link** | Bidirectional relationship between a student and parent, allowing cost aggregation and relationship tracking |
+| **Payment Status** | Indicator (paid/unpaid) of whether a student’s lesson fees are settled |
+
+---
 
 
 ## **6. Appendix: Instructions for Manual Testing**
