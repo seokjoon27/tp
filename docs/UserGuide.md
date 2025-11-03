@@ -170,7 +170,6 @@ Shows a list of all commands accepted in Tutorhub.
   <img src="images/helpMessage2.png" width="600" />
 
 
-
 Format: `help`
 
 
