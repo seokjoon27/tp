@@ -53,7 +53,7 @@ With Tutorhub, you can:
 
 ##  GUI Overview
 
-![Ui](images/Ui.png)
+<img src="images/Ui.png" width="600" />
 
 
 | Component          | Description                                               |
@@ -289,7 +289,7 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 Examples:
 * `find John` returns `john` and `John Doe`
 * `find alex david` returns `Alex Yeoh`, `David Li`. It should appear as such:<br>
-![result for 'find alex david'](images/findAlexDavidResult.png)
+  <img src="images/findAlexDavidResult.png" width="600" />
 
 
 
@@ -374,7 +374,7 @@ Example:
 
 
 All parents linked to a student will appear under the student's profile in the GUI as such:
-![linkResult.png](images/linkResult.png)
+<img src="images/linkResult.png" width="600" />
 
 
 ### Unlinking Parents from Students: `unlink`
@@ -535,11 +535,11 @@ Examples:
 * `list Monday` — Displays students whose schedules fall on **Monday**.
 * `list 12-12-2025` — Displays students with a lesson scheduled on **12th December 2025**.
 * `list paid` — Shows all contacts whose payment status is marked as **Paid**. It should appear in the GUI as such:
-![listPaid.png](images/listPaid.png)
+  <img src="images/listPaid.png" width="600" />
 
 
 * `list schedule` — Displays only students with **an existing schedule**. It should appear in the GUI as such:
-![listSchedule.png](images/listSchedule.png)
+  <img src="images/listSchedule.png" width="600" />
 
 <div markdown="span" class="alert alert-info">
 :information_source: **Note:**<br>
