@@ -380,6 +380,10 @@ Toggles the payment status of a student or parent, ensuring the UI and derived a
 | Allow toggling parents without children | ❌ No | Prevents ambiguous states when no data is available |
 | Recompute aggregates on every mutation | ✅ Yes | Ensures UI, storage, and business logic remain consistent |
 
+The sequence diagram below illustrates the interactions between classes within the `Logic` component, taking `execute("paid 1")` API call as an example.
+
+![Interactions Inside the Logic Component for the `paid 1` Command](images/PaidSequenceDiagram.png)
+
 ---
 
 ### 3.5 `link` / `unlink` Features
