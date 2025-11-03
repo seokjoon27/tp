@@ -556,7 +556,7 @@ For more information on the parameters, click [here](#command-parameters).
 
 
 
-Toggles **payment status** of specified contact between **paid** and **unpaid**. This allows tutors to keep track of the **payment status of individual students** as well as the parents.
+Toggles **payment status** of specified contact between `paid` and `unpaid`. This allows tutors to keep track of the **payment status of individual students** as well as the parents.
 
 Format: 
 `paid INDEX` 
